@@ -1,0 +1,120 @@
+mysql> use upm_database;
+Database changed
+mysql> show tables;
+Empty set (0.01 sec)
+
+mysql> show tables;
++------------------------+
+| Tables_in_upm_database |
++------------------------+
+| admin                  |
+| building               |
+| flat                   |
+| owner                  |
+| rent                   |
+| tenant                 |
+| users                  |
+| utility                |
++------------------------+
+8 rows in set (0.00 sec)
+
+mysql> desc admin;\
++-------------+--------+------+-----+---------+-------+
+| Field       | Type   | Null | Key | Default | Extra |
++-------------+--------+------+-----+---------+-------+
+| building_id | bigint | NO   | PRI | NULL    |       |
+| user_id     | bigint | NO   | UNI | NULL    |       |
++-------------+--------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> desc building;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | bigint       | NO   | PRI | NULL    | auto_increment |
+| added_date  | date         | YES  |     | NULL    |                |
+| address     | varchar(200) | YES  |     | NULL    |                |
+| floor_count | bigint       | YES  |     | NULL    |                |
+| made_year   | date         | YES  |     | NULL    |                |
+| name        | varchar(40)  | YES  |     | NULL    |                |
+| phone       | varchar(15)  | YES  | UNI | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> desc owner;
++---------+--------+------+-----+---------+-------+
+| Field   | Type   | Null | Key | Default | Extra |
++---------+--------+------+-----+---------+-------+
+| user_id | bigint | NO   | PRI | NULL    |       |
++---------+--------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> desc users;
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| id                | bigint       | NO   | PRI | NULL    | auto_increment |
+| added_date        | date         | YES  |     | NULL    |                |
+| contact           | varchar(15)  | YES  | UNI | NULL    |                |
+| email_id          | varchar(255) | YES  | UNI | NULL    |                |
+| image_path        | varchar(200) | YES  |     | NULL    |                |
+| name              | varchar(40)  | YES  |     | NULL    |                |
+| password          | varchar(40)  | NO   |     | NULL    |                |
+| permanent_address | varchar(200) | YES  |     | NULL    |                |
+| role              | varchar(20)  | YES  |     | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> desc flat;
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| flat_id           | bigint       | NO   | PRI | NULL    | auto_increment |
+| flat_no           | bigint       | YES  |     | NULL    |                |
+| flat_type         | varchar(255) | YES  |     | NULL    |                |
+| floor_no          | bigint       | YES  |     | NULL    |                |
+| full_empty_status | bit(1)       | YES  |     | NULL    |                |
+| building_id       | bigint       | YES  | MUL | NULL    |                |
+| owner_id          | bigint       | YES  | MUL | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> desc tenant;
++------------+--------+------+-----+---------+-------+
+| Field      | Type   | Null | Key | Default | Extra |
++------------+--------+------+-----+---------+-------+
+| user_id    | bigint | NO   | PRI | NULL    |       |
+| deposite   | double | YES  |     | NULL    |       |
+| leave_date | date   | YES  |     | NULL    |       |
+| status     | bit(1) | YES  |     | NULL    |       |
+| flat_id    | bigint | NO   | UNI | NULL    |       |
++------------+--------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> desc rent;
++----------------+--------+------+-----+---------+-------+
+| Field          | Type   | Null | Key | Default | Extra |
++----------------+--------+------+-----+---------+-------+
+| rent_id        | bigint | NO   | PRI | NULL    |       |
+| rent_amount    | double | YES  |     | NULL    |       |
+| rent_paid_date | date   | YES  |     | NULL    |       |
+| rent_status    | bit(1) | YES  |     | NULL    |       |
+| flat_rent_id   | bigint | YES  | MUL | NULL    |       |
+| tenant_rent_id | bigint | YES  | MUL | NULL    |       |
++----------------+--------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> desc utility;
++------------------+--------+------+-----+---------+----------------+
+| Field            | Type   | Null | Key | Default | Extra          |
++------------------+--------+------+-----+---------+----------------+
+| id               | bigint | NO   | PRI | NULL    | auto_increment |
+| added_date       | date   | YES  |     | NULL    |                |
+| electricity_bill | double | YES  |     | NULL    |                |
+| gas_bill         | double | YES  |     | NULL    |                |
+| status           | bit(1) | YES  |     | NULL    |                |
+| water_bill       | double | YES  |     | NULL    |                |
+| flat_id          | bigint | YES  | MUL | NULL    |                |
++------------------+--------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
