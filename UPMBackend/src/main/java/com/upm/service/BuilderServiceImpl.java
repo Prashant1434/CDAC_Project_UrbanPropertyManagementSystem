@@ -11,6 +11,8 @@ import com.upm.dao.BuilderDao;
 import com.upm.dao.BuildingDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.AddAdminDto;
+import com.upm.dto.AddBuildingDto;
+import com.upm.dto.AssignBuildingToAdminDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Builder;
 import com.upm.entities.Building;
@@ -47,5 +49,26 @@ public class BuilderServiceImpl implements BuilderService {
 	    usersDao.save(user);
 		return "admin added";	
 	}
+
+	@Override
+	public String addBuilding(AddBuildingDto addbuildingDto) {
+		Builder builder=builderDao.findById(addbuildingDto.getBuilderId()).orElseThrow();
+		builder.addBuilding(mapper.map(addbuildingDto, Building.class));
+		builderDao.save(builder);
+		return "building added successfully";
+	}
+
+
+	@Override
+	public String assignBuildingToAdmin(AssignBuildingToAdminDto asssignBuildingToAdminDto) {
+		Admin admin=adminDao.findById(asssignBuildingToAdminDto.getAdminId()).orElseThrow();
+		System.out.println(admin.toString());
+		admin.addBuilding(buildingDao.findById(asssignBuildingToAdminDto.getBuildingId()).orElseThrow());
+		adminDao.save(admin);
+		return "building assigned to admin successfully";
+	}
+
+
+	
 
 }
