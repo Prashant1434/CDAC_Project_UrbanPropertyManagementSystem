@@ -1,0 +1,78 @@
+package com.upm.entities;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.bytebuddy.asm.Advice.Local;
+
+@Entity
+@Table(name = "admin")
+@NoArgsConstructor
+@AllArgsConstructor
+public class Admin extends BaseEntity{
+		
+	@OneToOne
+	@JoinColumn(name ="user_admin_id")
+	private Users admin;
+	
+	@ManyToOne
+	@JoinColumn(name="builder_admin_id")
+	private Builder builder;
+	
+	@OneToMany(mappedBy = "adminsBuilding",cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<Building> buildingList = new ArrayList<Building>();
+	
+
+	public Users getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Users admin) {
+		this.admin = admin;
+	}
+
+	public Builder getBuilder() {
+		return builder;
+	}
+
+	public void setBuilder(Builder builder) {
+		this.builder = builder;
+	}
+	
+	public void addBuilding(Building building)
+	{
+		buildingList.add(building);
+		building.setAdminsBuilding(this);
+	}
+	public void removeBuilding(Building building)
+	{
+		buildingList.remove(building);
+		building.setAdminsBuilding(null);
+	}
+
+	@Override
+	public String toString() {
+		return "Admin [admin=" + admin + ", builder=" + builder + "]";
+	}
+	
+	
+}
