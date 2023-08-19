@@ -1,7 +1,5 @@
 package com.upm.dto;
-
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,9 +18,7 @@ import lombok.Setter;
 public class AddAdminDto {
 
 	private Long id;
-	
 	private LocalDate addedDate;
-	
 	private String name;
 	
 	private String emailId;

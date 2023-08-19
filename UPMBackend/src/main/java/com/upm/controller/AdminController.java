@@ -1,5 +1,4 @@
 package com.upm.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,4 +30,4 @@ public class AdminController {
 	public String addFlatToOwner(@RequestBody Flat flat,@PathVariable Long id) {
 		return adminService.addFaltToOwner(flat,id);
 	}
-}
+

@@ -14,6 +14,15 @@ import com.upm.dto.AddAdminDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Builder;
 import com.upm.entities.Building;
+import com.upm.dao.FlatDao;
+import com.upm.dao.UsersDao;
+import com.upm.dto.AddAdminDto;
+import com.upm.dto.AddBuildingDto;
+import com.upm.dto.AssignBuildingToAdminDto;
+import com.upm.entities.Admin;
+import com.upm.entities.Builder;
+import com.upm.entities.Building;
+import com.upm.entities.Flat;
 import com.upm.entities.Users;
 
 @org.springframework.transaction.annotation.Transactional
@@ -30,6 +39,8 @@ public class BuilderServiceImpl implements BuilderService {
 	private BuildingDao buildingDao;
 	@Autowired
 	private UsersDao usersDao;
+	@Autowired
+	private FlatDao flatDao;
 	
 	@Override
 	public String addAdmin(AddAdminDto adminDto) {
@@ -48,4 +59,41 @@ public class BuilderServiceImpl implements BuilderService {
 		return "admin added";	
 	}
 
+	@Override
+	public String addBuilding(AddBuildingDto addbuildingDto) {
+		Builder builder=builderDao.findById(addbuildingDto.getBuilderId()).orElseThrow();
+		builder.addBuilding(mapper.map(addbuildingDto, Building.class));
+		builderDao.save(builder);
+		return "building added successfully";
+	}
+
+
+	@Override
+	public String assignBuildingToAdmin(AssignBuildingToAdminDto asssignBuildingToAdminDto) {
+		Admin admin=adminDao.findById(asssignBuildingToAdminDto.getAdminId()).orElseThrow();
+		System.out.println(admin.toString());
+		admin.addBuilding(buildingDao.findById(asssignBuildingToAdminDto.getBuildingId()).orElseThrow());
+		adminDao.save(admin);
+		return "building assigned to admin successfully";
+	}
+
+	@Override
+	public String removeBuilding(Long buildingId) {
+		// TODO Auto-generated method stub
+		 buildingDao.deleteById(buildingId);
+		 return "building deleted successfully";
+	}
+
+	@Override
+	public String updateAdmin(Long adminId) {
+		return null;
+	}
+
+	@Override
+	public String addFlat(Flat flat,Long buildingId) {
+		Building building=buildingDao.findById(buildingId).orElseThrow();
+		building.addFlat(flat);
+		flatDao.save(flat);
+		return "flat added successfully";
+	}
 }

@@ -61,6 +61,24 @@ public class Flat {
 	
 	@OneToMany(mappedBy = "flatUtility",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Utility> utilityList =new ArrayList<Utility>();
-	
-
+	public void addRent(Rent rent)
+	{
+		rentList.add(rent);
+		rent.setFlatRent(this);
+	}
+	public void removeRent(Rent rent)
+	{
+		rentList.remove(rent);
+		rent.setFlatRent(null);
+	}
+	public void addUtility(Utility utility)
+	{
+		utilityList.add(utility);
+		utility.setFlatUtility(this);
+	}
+	public void removeUtility(Utility utility)
+	{
+		utilityList.remove(utility);
+		utility.setFlatUtility(null);
+	}
 }

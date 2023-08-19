@@ -61,15 +61,9 @@ public class Users extends RoleBaseEntity{
 	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "tenant" , orphanRemoval = true)
 	private Tenant tenant;
 	
-	
 	@Override
 	public String toString() {
 		return "Users [name=" + name + ", emailId=" + emailId + ", contact=" + contact + ", password=" + password
 				+ ", permanentAddress=" + permanentAddress + ", imagePath=" + imagePath + ", role=" + role + "]";
 	}
-
-	
-	
-	
-		
 }
