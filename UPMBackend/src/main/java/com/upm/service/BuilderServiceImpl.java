@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.upm.dao.AdminDao;
 import com.upm.dao.BuilderDao;
 import com.upm.dao.BuildingDao;
+import com.upm.dao.FlatDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
@@ -16,6 +17,7 @@ import com.upm.dto.AssignBuildingToAdminDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Builder;
 import com.upm.entities.Building;
+import com.upm.entities.Flat;
 import com.upm.entities.Users;
 
 @org.springframework.transaction.annotation.Transactional
@@ -32,6 +34,8 @@ public class BuilderServiceImpl implements BuilderService {
 	private BuildingDao buildingDao;
 	@Autowired
 	private UsersDao usersDao;
+	@Autowired
+	private FlatDao flatDao;
 	
 	@Override
 	public String addAdmin(AddAdminDto adminDto) {
@@ -68,7 +72,27 @@ public class BuilderServiceImpl implements BuilderService {
 		return "building assigned to admin successfully";
 	}
 
+	@Override
+	public String removeBuilding(Long buildingId) {
+		// TODO Auto-generated method stub
+		 buildingDao.deleteById(buildingId);
+		 return "building deleted successfully";
+	}
 
+	@Override
+	public String updateAdmin(Long adminId) {
+		return null;
+	}
+
+	@Override
+	public String addFlat(Flat flat,Long buildingId) {
+		Building building=buildingDao.findById(buildingId).orElseThrow();
+		building.addFlat(flat);
+		flatDao.save(flat);
+		return "flat added successfully";
+	}
+
+	
 	
 
 }
