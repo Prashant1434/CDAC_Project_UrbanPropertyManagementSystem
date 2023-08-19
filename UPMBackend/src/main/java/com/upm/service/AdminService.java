@@ -6,5 +6,5 @@ import com.upm.entities.Users;
 public interface AdminService {
 
 	public String addOwner(AddAdminDto adminDto);
-	public String addFaltToOwner(Flat flat,Long id);
+	public String addFaltToOwner(Long id,Long oId);
 }

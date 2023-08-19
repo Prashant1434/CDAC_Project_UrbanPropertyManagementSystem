@@ -30,11 +30,11 @@ import net.bytebuddy.asm.Advice.Local;
 @Table(name = "admin")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admin{
+public class Admin extends BaseEntity{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long id;
 	
 	@OneToOne
 	@JoinColumn(name ="user_admin_id")

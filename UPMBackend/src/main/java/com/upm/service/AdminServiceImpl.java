@@ -49,8 +49,9 @@ public class AdminServiceImpl implements AdminService {
 		return "Owner Added Successfully";
 	}
 
-	public String addFaltToOwner(Flat flat,Long id) {
-		Owner owner = ownerDao.findById(id).orElseThrow();
+	public String addFaltToOwner(Long id,Long oId) {
+		Flat flat = flatDao.findById(id).orElseThrow();
+		Owner owner = ownerDao.findById(oId).orElseThrow();
 		owner.addFlat(flat);
 		flatDao.save(flat);
 		return "flat added to owner successfully";

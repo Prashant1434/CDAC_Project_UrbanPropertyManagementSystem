@@ -2,6 +2,7 @@ package com.upm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,8 +27,9 @@ public class AdminController {
 		return adminService.addOwner(adminDto);
 	}
 	
-	@PostMapping("/addFlatToOwner/{id}")
-	public String addFlatToOwner(@RequestBody Flat flat,@PathVariable Long id) {
-		return adminService.addFaltToOwner(flat,id);
+	@PutMapping("/addFlatToOwner/{id}/{oId}")
+	public String addFlatToOwner(@PathVariable Long id,@PathVariable Long oId) {
+		return adminService.addFaltToOwner(id,oId);
 	}
 
+}

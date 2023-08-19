@@ -66,6 +66,7 @@ public class Building {
 	
 	@OneToMany(mappedBy = "building",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Flat> flatList =new ArrayList<Flat>();
+	
 	public void addFlat(Flat flat)
 	{
 		flatList.add(flat);
