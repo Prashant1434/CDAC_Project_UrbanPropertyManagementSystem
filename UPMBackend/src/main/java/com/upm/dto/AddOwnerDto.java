@@ -1,8 +1,6 @@
 package com.upm.dto;
+
 import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 import com.upm.entities.Role;
 
@@ -15,25 +13,27 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddAdminDto {
-
+public class AddOwnerDto {
 	private Long id;
+
 	private LocalDate addedDate;
+
 	private String name;
-	
+
 	private String emailId;
-	
+
 	private String contact;
-	
+
 	private String password;
-	
+
 	private String permanentAddress;
-	
+
 	private String imagePath;
-	
+
 	private Role role;
+
+	private Long flatId;
 	
-	private Long builderId;
 	
-	private Long buildingId;
+
 }

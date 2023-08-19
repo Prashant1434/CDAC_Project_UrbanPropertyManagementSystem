@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import com.upm.dao.AdminDao;
 import com.upm.dao.BuilderDao;
 import com.upm.dao.BuildingDao;
+import com.upm.dao.UsersDao;
+import com.upm.dto.AddAdminDto;
+import com.upm.entities.Admin;
+import com.upm.entities.Builder;
+import com.upm.entities.Building;
 import com.upm.dao.FlatDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.AddAdminDto;
@@ -91,8 +96,4 @@ public class BuilderServiceImpl implements BuilderService {
 		flatDao.save(flat);
 		return "flat added successfully";
 	}
-
-	
-	
-
 }

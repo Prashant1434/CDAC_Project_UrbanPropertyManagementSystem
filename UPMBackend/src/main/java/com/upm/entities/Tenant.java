@@ -7,6 +7,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
@@ -26,26 +29,34 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tenant extends BaseEntity{
+public class Tenant   {
 
-	private Boolean status;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private boolean status;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate leaveDate;
 	private Double deposite;
 
 	@OneToOne
-	@MapsId
 	@JoinColumn(name = "user_id")
 	private Users tenant;
 
-	@OneToOne
-	@JoinColumn(name = "flat_id")
-	@MapsId
+	@OneToOne(cascade = CascadeType.ALL,mappedBy = "tenantFlat",orphanRemoval = true)
 	private Flat flat;
-	
-	@OneToMany(mappedBy = "tenantRent",cascade = CascadeType.ALL,orphanRemoval = true)
+
+	@OneToMany(mappedBy = "tenantRent", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Rent> rentList = new ArrayList<>();
 	
-	
 
+	public Tenant(Boolean status, LocalDate leaveDate, Double deposite) {
+		super();
+		this.status = status;
+		this.leaveDate = leaveDate;
+		this.deposite = deposite;
+	}
+
+	
 }

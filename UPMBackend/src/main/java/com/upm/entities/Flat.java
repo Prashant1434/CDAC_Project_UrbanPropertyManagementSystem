@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -51,12 +52,15 @@ public class Flat {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 	
+	@OneToOne
+	@JoinColumn(name = "tenant_id")
+	private Tenant tenantFlat;
+	
 	@OneToMany(mappedBy = "flatRent",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Rent> rentList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "flatUtility",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Utility> utilityList =new ArrayList<Utility>();
-	
 	public void addRent(Rent rent)
 	{
 		rentList.add(rent);
@@ -77,5 +81,4 @@ public class Flat {
 		utilityList.remove(utility);
 		utility.setFlatUtility(null);
 	}
-
 }

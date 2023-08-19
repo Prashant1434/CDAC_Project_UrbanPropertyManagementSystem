@@ -1,5 +1,9 @@
 package com.upm.service;
 
-public interface OwnerService {
+import com.upm.dto.AddTenantDto;
+import com.upm.entities.Flat;
 
+public interface OwnerService {
+	public String addTenant(AddTenantDto tenantDto);
+	public String assignFlatToTenant(Long id,Long tId);
 }
