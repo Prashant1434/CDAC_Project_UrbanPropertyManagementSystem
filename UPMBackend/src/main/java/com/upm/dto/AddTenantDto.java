@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.upm.entities.Flat;
-import com.upm.entities.Rent;
 import com.upm.entities.Role;
 import com.upm.entities.Users;
 

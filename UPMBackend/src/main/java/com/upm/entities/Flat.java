@@ -34,7 +34,6 @@ public class Flat {
 
 	@Column(name = "floor_no")
 	private Long floorNo;
-	
 	@Column(name = "flat_no")
 	private Long flatNo;
 	
@@ -78,6 +77,39 @@ public class Flat {
 	}
 	public void removeUtility(Utility utility)
 	{
+		utilityList.remove(utility);
+		utility.setFlatUtility(null);
+	}
+	@Column(name = "flat_no")
+	private Long flatNo;
+
+	@Column(name = "full_empty_status")
+	private boolean fullEmptyStatus;
+
+	@Column(name = "flat_type")
+	private String flatType;
+
+	@ManyToOne
+	@JoinColumn(name = "building_id")
+	private Building building;
+
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	private Owner owner;
+
+	@OneToOne
+	@JoinColumn(name = "tenant_id")
+	private Tenant tenantFlat;
+
+	@OneToMany(mappedBy = "flatUtility", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RentUtility> utilityList = new ArrayList<RentUtility>();
+
+	public void addUtility(RentUtility utility) {
+		utilityList.add(utility);
+		utility.setFlatUtility(this);
+	}
+
+	public void removeUtility(RentUtility utility) {
 		utilityList.remove(utility);
 		utility.setFlatUtility(null);
 	}

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upm.dto.AddTenantDto;
+import com.upm.dto.AddUtilityDto;
 import com.upm.service.OwnerService;
 
 @RestController
@@ -16,7 +17,7 @@ public class OwnerController {
 	private OwnerService ownerService;
 
 	public OwnerController() {
-		System.out.println("in ctor : "+getClass());
+		System.out.println("in ctor : " + getClass());
 	}
 
 	@PostMapping("/addTenant")
@@ -24,9 +25,13 @@ public class OwnerController {
 		System.out.println(tenantDto.toString());
 		return ownerService.addTenant(tenantDto);
 	}
-	
 	@PostMapping("/assignFlatToTenant/{id}/{tId}")
 	public String assignFlatToTenant(@PathVariable Long id, @PathVariable Long tId) {
 		return ownerService.assignFlatToTenant(id, tId);
+	}
+	@PostMapping("/assignUtilityToTenant/{fid}/{tid}")
+	public String assignUtilityToTenant(@PathVariable Long fid, @PathVariable Long tid,
+			@RequestBody AddUtilityDto addUtilityDto) {
+		return ownerService.assignUtilityToTenant(fid, tid, addUtilityDto);
 	}
 }

@@ -22,6 +22,5 @@ public interface BuilderService {
 	String updateAdmin(Long adminId);
 	
 	String addFlat(Flat flat,Long builddingId);
-
 	String findByEmailAndPasswordService(String emailId);
 }

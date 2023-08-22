@@ -2,7 +2,6 @@ package com.upm.service;
 
 
 import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,7 +97,6 @@ public class BuilderServiceImpl implements BuilderService {
 		flatDao.save(flat);
 		return "flat added successfully";
 	}
-
 	@Override
 	public String findByEmailAndPasswordService(String emailId) {
 		// TODO Auto-generated method stub
