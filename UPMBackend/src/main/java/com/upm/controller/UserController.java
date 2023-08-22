@@ -35,38 +35,35 @@ public class UserController {
 
 	@Autowired
 	private BuilderService builderService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ImageHandlingService imageHandlingService;
-	
-	@PostMapping("/builderLogin")
-	public String builderLogin(@RequestBody LoginDto loginDto)
-	{
-		return builderService.findByEmailAndPasswordService(loginDto.getEmailId());
-	}
-	
-	@PostMapping(value = "/images/{usersId}", consumes = "multipart/form-data")
-	public String uploadImage(@PathVariable Long usersId,@RequestParam MultipartFile imageFile) throws IOException
-	{
-		return imageHandlingService.uploadImage(usersId, imageFile);
-	}
-	
-	@GetMapping(value = "/images/{usersId}", produces = {IMAGE_GIF_VALUE,IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE})
-	public byte[] downloadImage(@PathVariable Long usersId) throws IOException
-	{
-		return imageHandlingService.downloadImage(usersId);
-	private UserService userService;
-	
+
 	public UserController() {
 		System.out.println("In ctor : " + getClass());
 	}
-	
+
+	@PostMapping("/builderLogin")
+	public String builderLogin(@RequestBody LoginDto loginDto) {
+		return builderService.findByEmailAndPasswordService(loginDto.getEmailId());
+	}
+
+	@PostMapping(value = "/images/{usersId}", consumes = "multipart/form-data")
+	public String uploadImage(@PathVariable Long usersId, @RequestParam MultipartFile imageFile) throws IOException {
+		return imageHandlingService.uploadImage(usersId, imageFile);
+	}
+
+	@GetMapping(value = "/images/{usersId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
+	public byte[] downloadImage(@PathVariable Long usersId) throws IOException {
+		return imageHandlingService.downloadImage(usersId);
+	}
+
 	@PostMapping("/login")
 	public String loginUsers(@RequestBody LoginDto loginDto) {
-		System.out.println("login Dto : "+loginDto.toString());
+		System.out.println("login Dto : " + loginDto.toString());
 		return userService.loginUser(loginDto);
 	}
 }

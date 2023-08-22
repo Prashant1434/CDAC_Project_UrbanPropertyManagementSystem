@@ -55,9 +55,6 @@ public class OwnerServiceImpl implements OwnerService {
 	@Override
 	public String assignFlatToTenant(Long id, Long tId) {
 		Flat flat = flatDao.findById(id).orElseThrow();
-		System.out.println("flat : "+flat.toString());
-		Tenant tenant = tenantDao.findById(tId).orElseThrow();
-		System.out.println("tenant : "+tenant.toString());
 		System.out.println("flat : " + flat.toString());
 		Tenant tenant = tenantDao.findById(tId).orElseThrow();
 		System.out.println("tenant : " + tenant.toString());
