@@ -1,5 +1,7 @@
 package com.upm.service;
 
-public interface UserService {
+import com.upm.dto.LoginDto;
 
+public interface UserService {
+	String loginUser(LoginDto loginDto);
 }
