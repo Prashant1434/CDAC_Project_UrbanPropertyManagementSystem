@@ -30,11 +30,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tenant {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private boolean status;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate leaveDate;

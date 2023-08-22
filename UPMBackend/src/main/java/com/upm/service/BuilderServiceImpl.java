@@ -1,6 +1,7 @@
 package com.upm.service;
 
 
+import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import com.upm.dao.UsersDao;
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.AssignBuildingToAdminDto;
+import com.upm.dto.LoginDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Builder;
 import com.upm.entities.Building;
@@ -94,5 +96,18 @@ public class BuilderServiceImpl implements BuilderService {
 		building.addFlat(flat);
 		flatDao.save(flat);
 		return "flat added successfully";
+	}
+	@Override
+	public String findByEmailAndPasswordService(String emailId) {
+		// TODO Auto-generated method stub
+		try {
+			 Optional<Builder> builder=builderDao.findByEmail(emailId);
+			
+			 return "builder Login successful";
+		}
+		catch(Exception e)
+		{
+			return "Oops wrong credentials!!";
+		}
 	}
 }

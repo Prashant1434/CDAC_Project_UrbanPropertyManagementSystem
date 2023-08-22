@@ -1,5 +1,4 @@
 package com.upm.service;
-
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -13,6 +12,9 @@ import com.upm.dao.OwnerDao;
 import com.upm.dao.TenantDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.AddTenantDto;
+import com.upm.entities.Flat;
+import com.upm.entities.Tenant;
+import com.upm.entities.Users;
 import com.upm.dto.AddUtilityDto;
 import com.upm.entities.Flat;
 import com.upm.entities.Tenant;
@@ -53,6 +55,9 @@ public class OwnerServiceImpl implements OwnerService {
 	@Override
 	public String assignFlatToTenant(Long id, Long tId) {
 		Flat flat = flatDao.findById(id).orElseThrow();
+		System.out.println("flat : "+flat.toString());
+		Tenant tenant = tenantDao.findById(tId).orElseThrow();
+		System.out.println("tenant : "+tenant.toString());
 		System.out.println("flat : " + flat.toString());
 		Tenant tenant = tenantDao.findById(tId).orElseThrow();
 		System.out.println("tenant : " + tenant.toString());
@@ -72,5 +77,4 @@ public class OwnerServiceImpl implements OwnerService {
 		utility.setTenantUtility(tenant); 	
 		return "Utility Assigned To Tenant Successfully !!! ";
 	}
-
 }

@@ -1,5 +1,4 @@
 package com.upm.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,12 +25,10 @@ public class OwnerController {
 		System.out.println(tenantDto.toString());
 		return ownerService.addTenant(tenantDto);
 	}
-
 	@PostMapping("/assignFlatToTenant/{id}/{tId}")
 	public String assignFlatToTenant(@PathVariable Long id, @PathVariable Long tId) {
 		return ownerService.assignFlatToTenant(id, tId);
 	}
-
 	@PostMapping("/assignUtilityToTenant/{fid}/{tid}")
 	public String assignUtilityToTenant(@PathVariable Long fid, @PathVariable Long tid,
 			@RequestBody AddUtilityDto addUtilityDto) {
