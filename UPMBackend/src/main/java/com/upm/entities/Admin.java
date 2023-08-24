@@ -42,10 +42,11 @@ public class Admin extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name="builder_admin_id")
-	private Builder adminBuilder;
+	private Builder builder;
 	
 	@OneToMany(mappedBy = "adminsBuilding",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Building> buildingList = new ArrayList<Building>();
+	
 
 	public Users getAdmin() {
 		return admin;
@@ -55,12 +56,12 @@ public class Admin extends BaseEntity{
 		this.admin = admin;
 	}
 
-	public Builder getadminBuilder() {
-		return adminBuilder;
+	public Builder getBuilder() {
+		return builder;
 	}
 
-	public void setadminBuilder(Builder builder) {
-		this.adminBuilder = builder;
+	public void setBuilder(Builder builder) {
+		this.builder = builder;
 	}
 	
 	public void addBuilding(Building building)
@@ -76,7 +77,7 @@ public class Admin extends BaseEntity{
 
 	@Override
 	public String toString() {
-		return "Admin [admin=" + admin + ", builder=" + adminBuilder + "]";
+		return "Admin [admin=" + admin + ", builder=" + builder + "]";
 	}
 	
 	

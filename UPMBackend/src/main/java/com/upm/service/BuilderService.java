@@ -1,7 +1,5 @@
 package com.upm.service;
 
-import java.util.List;
-
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.AssignBuildingToAdminDto;
@@ -24,10 +22,5 @@ public interface BuilderService {
 	String updateAdmin(Long adminId);
 	
 	String addFlat(Flat flat,Long builddingId);
-
 	String findByEmailAndPasswordService(String emailId);
-
-	List<AddBuildingDto> getBuildingList(Long builderId);
-
-	List<AddAdminDto> getAdminList(Long builderId);
 }
