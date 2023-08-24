@@ -1,37 +1,28 @@
 package com.upm.dto;
 
-import java.time.LocalDate;
-
-import com.upm.entities.Role;
+import javax.persistence.Column;
 
 import lombok.AllArgsConstructor;
-
-import lombok.Setter;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+@ToString
+public class UpdateProfileDto {
 
-	private Long id;
-
-	private LocalDate addedDate;
 
 	private String name;
-
+	
 	private String emailId;
-
+	
 	private String contact;
-
+	
 	private String password;
-
+	
 	private String permanentAddress;
-
-	private String imagePath;
-
-	private Role role;
 }
