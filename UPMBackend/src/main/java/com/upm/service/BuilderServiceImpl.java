@@ -1,12 +1,7 @@
 package com.upm.service;
 
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,17 +49,14 @@ public class BuilderServiceImpl implements BuilderService {
 //		Builder builder= builderDao.findById(adminDto.getBuilderId()).orElseThrow();
 		Admin admin=new Admin();
 		Users user=mapper.map(adminDto, Users.class);
-		Builder builder=builderDao.findById(adminDto.getBuilderId()).orElseThrow();
 //		Users userAdmin=mapper.map(adminDto, Users.class);
 //		System.out.println(userAdmin.toString());
 //		usersDao.save(userAdmin);
 //		admin.addBuilding(building);
 //		admin.setBuilder(builder);
 		user.setAdmin(admin);
-		builder.addAdmin(admin);
 		admin.setAdmin(user);
-	   // builderDao.save(builder);
-		usersDao.save(user);
+	    usersDao.save(user);
 		return "admin added";	
 	}
 
@@ -105,7 +97,6 @@ public class BuilderServiceImpl implements BuilderService {
 		flatDao.save(flat);
 		return "flat added successfully";
 	}
-
 	@Override
 	public String findByEmailAndPasswordService(String emailId) {
 		// TODO Auto-generated method stub
@@ -118,26 +109,5 @@ public class BuilderServiceImpl implements BuilderService {
 		{
 			return "Oops wrong credentials!!";
 		}
-	}
-
-	@Override
-	public List<AddBuildingDto> getBuildingList(Long builderId) {
-		// TODO Auto-generated method stub
-		Builder builder=builderDao.findById(builderId).orElseThrow();
-		List<Building> buildingList = buildingDao.findByBuildingBuilder(builder);
-		return buildingList.stream()
-				.map(building ->mapper.map(building, AddBuildingDto.class))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<AddAdminDto> getAdminList(Long builderId) {
-		// TODO Auto-generated method stub
-		Builder builder=builderDao.findById(builderId).orElseThrow();
-		System.out.println(builder.toString());
-		List<Admin> adminList = adminDao.findByAdminBuilder(builder);
-		return adminList.stream()
-				.map(admin ->mapper.map(admin, AddAdminDto.class))
-				.collect(Collectors.toList());
 	}
 }

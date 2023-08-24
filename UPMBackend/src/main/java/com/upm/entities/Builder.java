@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,32 +48,32 @@ public class Builder {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@OneToMany(mappedBy = "buildingBuilder",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "builder",cascade = CascadeType.ALL,orphanRemoval = true)
 	List<Building> buildingList =new  ArrayList<Building>();
 	
-	@OneToMany(mappedBy = "adminBuilder",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "builder",cascade = CascadeType.ALL,orphanRemoval = true)
 	List<Admin> adminList =new ArrayList<>();
 	
 	public void addAdmin(Admin admin)
 	{
 		adminList.add(admin);
-		admin.setadminBuilder(this);
+		admin.setBuilder(this);
 	}
 	public void removeAdmin(Admin admin)
 	{
 		adminList.remove(admin);
-		admin.setadminBuilder(null);
+		admin.setBuilder(null);
 	}
 	
 	public void addBuilding(Building building)
 	{
 		buildingList.add(building);
-		building.setBuildingBuilder(this);
+		building.setBuilder(this);
 	}
 	public void removeBuilding(Building building)
 	{
 		buildingList.remove(building);
-		building.setBuildingBuilder(null);
+		building.setBuilder(null);
 	}
 	
 	@Override
