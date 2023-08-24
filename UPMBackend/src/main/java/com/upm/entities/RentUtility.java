@@ -27,7 +27,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RentUtility extends RoleBaseEntity {
+public class RentUtility {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
