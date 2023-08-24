@@ -16,6 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddBuildingDto {
+	private Long id;
+	
 	private String name;
 	
 	private String address;
