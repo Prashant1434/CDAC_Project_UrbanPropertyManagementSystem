@@ -3,6 +3,7 @@ package com.upm.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ import com.upm.service.UserService;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
 
 	@Autowired
@@ -65,7 +67,7 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String loginUsers(@RequestBody LoginDto loginDto) {
+	public UserDto loginUsers(@RequestBody LoginDto loginDto) {
 		System.out.println("login Dto : " + loginDto.toString());
 		return userService.loginUser(loginDto);
 	}

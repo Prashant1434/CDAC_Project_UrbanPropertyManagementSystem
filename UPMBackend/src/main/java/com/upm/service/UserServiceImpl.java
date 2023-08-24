@@ -24,17 +24,18 @@ public class UserServiceImpl implements UserService {
 	private ModelMapper mapper;
 
 	@Override
-	public String loginUser(LoginDto loginDto) {
-		Users user = userDao.findByEmailId(loginDto.getEmailId()).orElseThrow();
-		System.out.println("user : " + user.toString());
+	public UserDto loginUser(LoginDto loginDto) {
+		Users user1 = userDao.findByEmailId(loginDto.getEmailId()).orElseThrow();
+		UserDto user = mapper.map(user1,UserDto.class);
+//		System.out.println("user : " + user.toString());
 		if ((user.getPassword().equals(loginDto.getPassword())) && (user.getRole().name() == "ADMIN")) {
-			return "Admin Login SuccessFully";
+			return user;
 		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "OWNER") {
-			return "Owner Login Successfully";
+			return user;
 		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "TENANT") {
-			return "Tenant Login Successfully";
+			return user;
 		} else
-			return "Oops !! Wrong Credentials !!!";
+			return null;
 	}
 
 	@Override
