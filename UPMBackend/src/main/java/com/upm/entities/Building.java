@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.aspectj.weaver.tools.Trace;
 import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -55,7 +57,6 @@ public class Building {
 	@Column(name ="floor_count")
 	private Long floorCount;
 
-	
 	@ManyToOne
 	@JoinColumn(name="builder_building_id")
 	private Builder builder;
@@ -66,6 +67,10 @@ public class Building {
 	
 	@OneToMany(mappedBy = "building",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Flat> flatList =new ArrayList<Flat>();
+	
+	
+//	@OneToOne(mappedBy = "building" , cascade = CascadeType.ALL ,orphanRemoval = true)
+//	private Owner owner;
 	
 	public void addFlat(Flat flat)
 	{

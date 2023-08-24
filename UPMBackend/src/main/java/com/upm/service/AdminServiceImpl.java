@@ -15,6 +15,7 @@ import com.upm.dao.FlatDao;
 import com.upm.dao.OwnerDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.AddAdminDto;
+import com.upm.entities.Building;
 import com.upm.entities.Flat;
 import com.upm.entities.Owner;
 import com.upm.entities.Users;
@@ -28,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private UsersDao userDao;
-	
+
 	@Autowired
 	private FlatDao flatDao;
 
@@ -43,18 +44,22 @@ public class AdminServiceImpl implements AdminService {
 	public String addOwner(AddAdminDto adminDto) {
 		Users user = mapper.map(adminDto, Users.class);
 		Owner owner = new Owner();
+//		Building building = new Building();
+//		owner.setBuilding(building);
 		owner.setOwner(user);
 		user.setOwner(owner);
 		userDao.save(user);
 		return "Owner Added Successfully";
 	}
 
-	public String addFaltToOwner(Long id,Long oId) {
+	public String addFaltToOwner(Long id, Long oId) {
 		Flat flat = flatDao.findById(id).orElseThrow();
 		Owner owner = ownerDao.findById(oId).orElseThrow();
 		owner.addFlat(flat);
 		flatDao.save(flat);
 		return "flat added to owner successfully";
 	}
+
+	
 
 }

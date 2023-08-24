@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upm.dto.AddAdminDto;
-import com.upm.entities.Flat;
-import com.upm.entities.Users;
 import com.upm.service.AdminService;
 
 @RestController

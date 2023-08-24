@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @MappedSuperclass
-@Setter
-@Getter
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleBaseEntity {
@@ -29,4 +28,23 @@ public class RoleBaseEntity {
 	@Column(name = "added_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate addedDate;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDate getAddedDate() {
+		return addedDate;
+	}
+
+	public void setAddedDate(LocalDate addedDate) {
+		this.addedDate = addedDate;
+	}
+	
+	
+	
 }

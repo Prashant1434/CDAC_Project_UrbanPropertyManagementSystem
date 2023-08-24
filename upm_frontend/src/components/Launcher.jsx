@@ -1,5 +1,7 @@
+import Login from "./Login";
+
 function Launcher() {
-    return ( <><h1> Hi From Launcher</h1></> );
+    return ( <Login/> );
 }
 
 export default Launcher;

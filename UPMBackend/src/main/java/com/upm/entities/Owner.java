@@ -40,6 +40,10 @@ public class Owner {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private Users owner;
+	
+//	@OneToOne
+//	@JoinColumn(name  = "building_id")
+//	private Building building;
 
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Flat> flatList = new ArrayList<Flat>();
