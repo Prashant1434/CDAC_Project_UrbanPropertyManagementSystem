@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.upm.dao.TenantDao;
+import com.upm.dao.UtilityDao;
+import com.upm.entities.RentUtility;
+import com.upm.entities.Tenant;
 import com.upm.dao.UsersDao;
 import com.upm.dao.UtilityDao;
 import com.upm.entities.RentUtility;
@@ -20,6 +23,8 @@ public class TenantServiceImpl implements TenantService {
 	private TenantDao tenantDao;
 
 	@Autowired
+	private UtilityDao utilityDao;
+
 	private UsersDao userDao;
 
 	@Autowired
@@ -34,7 +39,4 @@ public class TenantServiceImpl implements TenantService {
 		utilityDao.save(rent);
 		return "Payment Successful...!!!!";
 	}
-
-	
-
 }

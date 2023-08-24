@@ -9,6 +9,6 @@ import com.upm.entities.Tenant;
 import com.upm.entities.Users;
 
 public interface TenantDao extends JpaRepository<Tenant, Long> {
+//	Optional<Tenant> findByStatusAndTenantId(boolean status,Long uId);
 	Optional<Tenant> findByTenantId(Long id);
-	
 }

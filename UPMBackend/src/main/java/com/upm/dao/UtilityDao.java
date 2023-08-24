@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.upm.entities.RentUtility;
 
 public interface UtilityDao extends JpaRepository<RentUtility, Long> {
-
+	Optional<RentUtility> findByTenantUtilityId(Long id);
 	Optional<RentUtility> findByBillStatusAndTenantUtilityId(boolean status, Long tId);
 }
