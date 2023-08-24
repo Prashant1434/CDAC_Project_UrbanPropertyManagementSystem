@@ -1,22 +1,22 @@
 package com.upm.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import com.upm.entities.Flat;
 import com.upm.entities.Role;
-import com.upm.entities.Users;
 
 import lombok.AllArgsConstructor;
+
+import lombok.Setter;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddTenantDto {
+public class UserDto {
+
 	private Long id;
 
 	private LocalDate addedDate;
@@ -34,15 +34,4 @@ public class AddTenantDto {
 	private String imagePath;
 
 	private Role role;
-
-	private boolean status;
-
-	private LocalDate leaveDate;
-
-	private Double deposite;
-	
-	public boolean getStatus() {
-		return status;
-	}
-
 }
