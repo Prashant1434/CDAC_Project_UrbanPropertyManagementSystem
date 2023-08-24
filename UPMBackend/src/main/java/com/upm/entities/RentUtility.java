@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -26,6 +29,14 @@ import lombok.ToString;
 @ToString
 public class RentUtility extends RoleBaseEntity {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "added_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate addedDate;
+	
 	@Column(name = "gas_bill")
 	private double gasBill;
 
@@ -40,9 +51,6 @@ public class RentUtility extends RoleBaseEntity {
 
 	@Column(name = "rent_amount")
 	private double rentAmount;
-
-	@Column(name = "rent_status")
-	private boolean rentStatus;
 
 	@Column(name = "rent_paid_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

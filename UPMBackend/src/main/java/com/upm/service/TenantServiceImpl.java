@@ -9,6 +9,11 @@ import com.upm.dao.TenantDao;
 import com.upm.dao.UtilityDao;
 import com.upm.entities.RentUtility;
 import com.upm.entities.Tenant;
+import com.upm.dao.UsersDao;
+import com.upm.dao.UtilityDao;
+import com.upm.entities.RentUtility;
+import com.upm.entities.Tenant;
+import com.upm.entities.Users;
 
 @Transactional
 @Service
@@ -20,13 +25,18 @@ public class TenantServiceImpl implements TenantService {
 	@Autowired
 	private UtilityDao utilityDao;
 
-//	@Override
-//	public String updateRent(boolean status,Long userId) {
-//		Tenant tenant = tenantDao.findByStatusAndTenantId(status==false,userId).orElseThrow();
-//		RentUtility utility = utilityDao.findByTenantUtilityId(tenant.getId()).orElseThrow();
-//		utility.setBillStatus(true);
-//		utilityDao.save(utility);
-//		return "Payement Done Successfully !!!";
-//	}
+	private UsersDao userDao;
 
+	@Autowired
+	private UtilityDao utilityDao;
+
+	@Override
+	public String updateRentStatus(boolean status, Long uid) {
+		Tenant tenant = tenantDao.findByTenantId(uid).orElseThrow();
+		RentUtility rent = utilityDao.findByBillStatusAndTenantUtilityId(status, tenant.getId()).orElseThrow();
+		System.out.println("rent : " + rent.toString());
+		rent.setBillStatus(true);
+		utilityDao.save(rent);
+		return "Payment Successful...!!!!";
+	}
 }
