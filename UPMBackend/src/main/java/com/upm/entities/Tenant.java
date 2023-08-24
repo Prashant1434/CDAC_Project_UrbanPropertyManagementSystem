@@ -47,8 +47,8 @@ public class Tenant   {
 	@OneToOne(cascade = CascadeType.ALL,mappedBy = "tenantFlat",orphanRemoval = true)
 	private Flat flat;
 
-	@OneToMany(mappedBy = "tenantRent", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Rent> rentList = new ArrayList<>();
+	@OneToMany(mappedBy = "tenantUtility", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RentUtility> rentList = new ArrayList<>();
 	
 
 	public Tenant(Boolean status, LocalDate leaveDate, Double deposite) {

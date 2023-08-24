@@ -1,8 +1,8 @@
 package com.upm.service;
 
-import com.upm.entities.Rent;
+import com.upm.entities.RentUtility;
 
 public interface FlatService {
 	
-	String addRent(Rent rent);
+	String addRent(RentUtility rent);
 }
