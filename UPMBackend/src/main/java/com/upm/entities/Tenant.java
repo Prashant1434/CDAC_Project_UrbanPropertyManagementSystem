@@ -29,10 +29,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tenant {
+public class Tenant   {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private boolean status;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate leaveDate;
@@ -42,11 +44,12 @@ public class Tenant {
 	@JoinColumn(name = "user_id")
 	private Users tenant;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "tenantFlat", orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.ALL,mappedBy = "tenantFlat",orphanRemoval = true)
 	private Flat flat;
 
-	@OneToMany(mappedBy = "tenantUtility", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<RentUtility> utilityList = new ArrayList<>();
+	@OneToMany(mappedBy = "tenantRent", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Rent> rentList = new ArrayList<>();
+	
 
 	public Tenant(Boolean status, LocalDate leaveDate, Double deposite) {
 		super();
@@ -55,4 +58,5 @@ public class Tenant {
 		this.deposite = deposite;
 	}
 
+	
 }
