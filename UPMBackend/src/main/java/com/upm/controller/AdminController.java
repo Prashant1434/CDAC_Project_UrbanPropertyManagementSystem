@@ -25,9 +25,9 @@ public class AdminController {
 		return adminService.addOwner(adminDto);
 	}
 	
-	@PutMapping("/addFlatToOwner/{id}/{oId}")
-	public String addFlatToOwner(@PathVariable Long id,@PathVariable Long oId) {
-		return adminService.addFaltToOwner(id,oId);
+	@PutMapping("/addFlatToOwner/{fid}/{oId}")
+	public String addFlatToOwner(@PathVariable Long fid,@PathVariable Long oId) {
+		return adminService.addFaltToOwner(fid,oId);
 	}
 
 }

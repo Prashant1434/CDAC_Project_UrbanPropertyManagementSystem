@@ -27,8 +27,6 @@ public class TenantServiceImpl implements TenantService {
 
 	private UsersDao userDao;
 
-	@Autowired
-	private UtilityDao utilityDao;
 
 	@Override
 	public String updateRentStatus(boolean status, Long uid) {
