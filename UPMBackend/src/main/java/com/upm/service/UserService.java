@@ -1,9 +1,9 @@
 package com.upm.service;
 
-import com.upm.dto.LoginDto;
-import com.upm.dto.UserDto;
+import com.upm.dto.UpdateProfileDto;
 
 public interface UserService {
-	String loginUser(LoginDto loginDto);
-	String updateUser(Long id, UserDto userDto);
+
+	String editProfile(UpdateProfileDto updateProfileDto,Long userId);
+
 }
