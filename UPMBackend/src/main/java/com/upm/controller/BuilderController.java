@@ -22,34 +22,32 @@ import com.upm.service.UserService;
 @RestController
 @RequestMapping("/builder")
 public class BuilderController {
-	
+
 	@Autowired
 	private BuilderService builderService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@PostMapping("/addAdmin")
-	public String addAdmin(@RequestBody AddAdminDto admin)
-	{   
-		System.out.println(admin.getPassword());;
+	public String addAdmin(@RequestBody AddAdminDto admin) {
+		System.out.println(admin.getPassword());
+		;
 		return builderService.addAdmin(admin);
 	}
+
 	@PostMapping("/addBuilding")
-	public String addBuilding(@RequestBody AddBuildingDto buildingDto)
-	{
+	public String addBuilding(@RequestBody AddBuildingDto buildingDto) {
 		return builderService.addBuilding(buildingDto);
 	}
-	
+
 	@PutMapping("/assignBuilding")
-	public String asignBuildingToAdmin(@RequestBody AssignBuildingToAdminDto asssignBuildingToAdminDto)
-	{
+	public String asignBuildingToAdmin(@RequestBody AssignBuildingToAdminDto asssignBuildingToAdminDto) {
 		return builderService.assignBuildingToAdmin(asssignBuildingToAdminDto);
 	}
-	
+
 	@PostMapping("/addFlat/{buildingId}")
-	public String addFlatInBuilding(@RequestBody Flat flat,@PathVariable Long buildingId)
-	{
-		return builderService.addFlat(flat,buildingId);
+	public String addFlatInBuilding(@RequestBody Flat flat, @PathVariable Long buildingId) {
+		return builderService.addFlat(flat, buildingId);
 	}
 }

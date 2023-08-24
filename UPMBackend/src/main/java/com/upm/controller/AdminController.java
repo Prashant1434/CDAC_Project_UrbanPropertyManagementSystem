@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upm.dto.AddAdminDto;
-import com.upm.entities.Flat;
-import com.upm.entities.Users;
 import com.upm.service.AdminService;
 
 @RestController
@@ -27,9 +25,9 @@ public class AdminController {
 		return adminService.addOwner(adminDto);
 	}
 	
-	@PutMapping("/addFlatToOwner/{id}/{oId}")
-	public String addFlatToOwner(@PathVariable Long id,@PathVariable Long oId) {
-		return adminService.addFaltToOwner(id,oId);
+	@PutMapping("/addFlatToOwner/{fid}/{oId}")
+	public String addFlatToOwner(@PathVariable Long fid,@PathVariable Long oId) {
+		return adminService.addFaltToOwner(fid,oId);
 	}
 
 }

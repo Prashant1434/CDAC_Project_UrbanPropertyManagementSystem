@@ -9,6 +9,4 @@ function Launcher() {
             <Route exact path='/Navbar' Component={Navbar}/>
         </Routes>
     </Router>);
-}
-
 export default Launcher;
