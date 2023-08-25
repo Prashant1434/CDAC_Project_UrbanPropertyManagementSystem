@@ -10,6 +10,8 @@ import Tenant from "./Tenant";
 import OwnerDetails from "./OwnerDetails";
 import BuildingList from "./BuildingList";
 import GetFlatList from "./GetFlatList";
+import UpdateProfile from './UpdateProfile';
+import ViewProfile from './ViewProfile';
 function Launcher() {
     return (<Router>
         <Routes>
@@ -23,7 +25,9 @@ function Launcher() {
             <Route exact path='/addowner' Component={AddOwner} />
             <Route exact path="/ownerDetails" Component={OwnerDetails} />
             <Route exact path="/buildingDetails" Component={BuildingList} />
-            <Route exact path="getflatlist" Component={GetFlatList}/>
+            <Route exact path="/getflatlist/:id" Component={GetFlatList}/>
+            <Route exact path="/updateprofile" Component={UpdateProfile}/>
+            <Route exact path="/viewprofile" Component={ViewProfile}/>
         </Routes>
     </Router>);
 }

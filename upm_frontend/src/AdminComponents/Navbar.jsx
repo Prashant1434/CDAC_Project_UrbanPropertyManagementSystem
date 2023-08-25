@@ -23,7 +23,7 @@ function Navbar(props) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Urban Proerty Management</a>
+                    <a class="navbar-brand" href="/">Urban Property Management</a>
 
                 </div>
                 {

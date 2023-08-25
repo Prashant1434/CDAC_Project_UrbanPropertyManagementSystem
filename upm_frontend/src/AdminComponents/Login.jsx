@@ -5,19 +5,8 @@ import Logo from '../assets/icons/logo black line.png'
 import { useNavigate } from 'react-router-dom';
 function Login() {
     const [Credentials, setCredentials] = useState({ emailId: "", password: "" });
-    // const [User, setUser] = useState(
-    //     {
-    //         "id": 0,
-    //         "addedDate": "",
-    //         "name": "",
-    //         "emailId": "",
-    //         "contact": "",
-    //         "password": "",
-    //         "permanentAddress": "",
-    //         "imagePath": null,
-    //         "role": ""
-    //     });
-    const option = ['BUILDER','ADMIN', 'OWNER', 'TENANT'];
+    // const [User, setUser] = useState({});
+    const option = ['BUILDER', 'ADMIN', 'OWNER', 'TENANT'];
     var [Role, SetRole] = useState("");
     const onOptionChange = (event) => {
         SetRole(event.target.value);
@@ -40,7 +29,7 @@ function Login() {
                 debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
-                    // setUser(responseReceived);
+
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.email == Credentials.emailId && responseReceived.password == Credentials.password) {
                         navigate("/" + Role);
@@ -61,7 +50,6 @@ function Login() {
                 debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
-                    // setUser(responseReceived);
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password && Role == responseReceived.role) {
                         navigate("/" + Role);
