@@ -3,32 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 
 function AddOwner() {
-    const [buildingId, setBuildingId] = useState("")
-    var [flatId, setFlatId] = useState("1")
-    
+    var buildingId = sessionStorage.getItem("buildingId");
+    // var [buildingId, setBuildingId] = useState("")
+    // var [flatId, setFlatId] = useState("1")
+    var flatId = sessionStorage.getItem("flatId");
+
     const navigate = useNavigate()
 
     const [buildingList, setBuildingList] = useState([])
-    
+
     const [flatList, setFlatList] = useState([])
-    
+
     const ReverseToOwner = () => {
         navigate("/ADMIN");
 
     }
-
-    // const [User, setUser] = useState(
-    //         {
-    //             "id": 0,
-    //             "addedDate": "",
-    //             "name": "",
-    //             "emailId": "",
-    //             "contact": "",
-    //             "password": "",
-    //             "permanentAddress": "",
-    //             "imagePath": null,
-    //             "role": ""
-    //         });
 
     useEffect(() => {
         getBuildingList();
@@ -41,16 +30,17 @@ function AddOwner() {
     const onOptionChange = (event) => {
         debugger;
         var id = event.target.value;
-        setBuildingId(id);
+        sessionStorage.setItem("buildingId", id);
         console.log("building iD  : " + buildingId);
-        getFlatList(id);
-        debugger;
+        getFlatList();
     }
-
     const onOptionChangeFlat = (event) => {
-        // debugger;
+        debugger;
+        var id = event.target.value;
         // setFlatId(event.target.value);
-        // console.log(flatId);
+        sessionStorage.setItem("flatId", id);
+
+        console.log("flat Id" + flatId);
     }
 
     const getBuildingList = () => {
@@ -69,12 +59,12 @@ function AddOwner() {
         helper.open("GET", "http://localhost:7078/admin/buildinglist/" + adminId);
         helper.send();
     }
-    const getFlatList = (buildingId) => {
+    const getFlatList = () => {
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             debugger;
             if (helper.readyState == 4 && helper.status == 200) {
-                var responseReceived = (helper.responseText);
+                var responseReceived = JSON.parse(helper.responseText);
                 console.log(responseReceived);
                 setFlatList(responseReceived);
                 console.log(flatList);
@@ -99,10 +89,6 @@ function AddOwner() {
         helper.send(JSON.stringify(Owner));
 
     }
-
-
-    // private Long id;
-
 
     const [Owner, setOwner] = useState(
         {
@@ -176,14 +162,20 @@ function AddOwner() {
 
                     </div>
                     <div className="form-group">
-                        <select onChange={onOptionChange} className='inputBox'>
-                            <option>Select Flat</option>
-                            {flatList.map((item) => {
-                                return <option key={item.id} value={item.id}>
-                                    {item.flatNo}
-                                </option>
-                            })}
-                        </select>
+                        {flatList.length == 0
+                            ?
+                            <select className='inputBox'>
+                                <option>No Flat Available</option>  </select>
+                            :
+                            <select onChange={onOptionChangeFlat} className='inputBox'>
+                                <option>Select Flat</option>
+                                {flatList.map((item) => {
+                                    return <option key={item.id} value={item.id}>
+                                        {item.flatId}
+                                    </option>
+                                })}
+                            </select>
+                        }
 
                     </div>
                     <center>
@@ -194,7 +186,7 @@ function AddOwner() {
         </div>
     </>);
 
-    
+
 }
 
 export default AddOwner;

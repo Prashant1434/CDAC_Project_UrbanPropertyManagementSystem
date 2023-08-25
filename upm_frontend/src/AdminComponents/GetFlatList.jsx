@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-function GEtFlatList() {
-
-    var [Flat,setFlat] = useState([])
-    useEffect(()=>{getFlatList()},[])
-    const getFlatList = (buildingId) => {
+function GetFlatList() {
+    var [Flat, setFlat] = useState([]);
+    var { id } = useParams()
+    useEffect(() => { getFlatList() }, [])
+    const getFlatList = () => {
         var helper = new XMLHttpRequest()
         helper.onreadystatechange = () => {
             debugger;
             if (helper.readyState == 4 && helper.status == 200) {
-                var responseReceived = (helper.responseText)
+                var responseReceived = JSON.parse(helper.responseText)
+
                 console.log(responseReceived)
                 setFlat(responseReceived)
                 console.log(Flat)
             }
         };
 
-        helper.open("GET", "http://localhost:7078/admin/emptyflats/" + 1)
+        helper.open("GET", "http://localhost:7078/admin/flatlist/" + id)
         helper.send()
     }
     return (<>
@@ -38,9 +40,10 @@ function GEtFlatList() {
                                 return <tr>
                                     <td>{f.flatId}</td>
                                     <td>{f.floorNo}</td>
-                                    <td>{f.flatNo}</td>
-                                    <td>{f.fullEmptyStatus}</td>
+                                    <td>{f.flatNo == null ? "-" : f.flatNo}</td>
+                                    <td>{f.fullEmptyStatus == true ? "full" : "empty"}</td>
                                     <td>{f.flatType}</td>
+                                    <td>{f.fullEmptyStatus == true ? "---" : <Link to="/addowner">assign Owner </Link>}</td>
                                 </tr>
                             })
 
@@ -53,4 +56,4 @@ function GEtFlatList() {
     </>);
 }
 
-export default GEtFlatList;
+export default GetFlatList;
