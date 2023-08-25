@@ -1,5 +1,5 @@
 import '../css/Homepage.css'
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import img1 from '../assets/building1.jpg';
 import img2 from '../assets/image2.jpg';
