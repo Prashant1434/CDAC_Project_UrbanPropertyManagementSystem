@@ -15,7 +15,7 @@ function Builder() {
     return ( <><h1>THis is Builder</h1>
     
     <center>
-                        <button type="button" className="btn btn-primary" onClick={getBuildingList}>Add Owner</button>
+                        {/* <button type="button" className="btn btn-primary" onClick={getBuildingList}>Add Owner</button> */}
                     </center>
     </> );
 }
