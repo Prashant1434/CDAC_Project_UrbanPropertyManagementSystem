@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Homepage from "./Homepage";
+import Homepage from "../AdminComponents/Homepage";
 import Navbar from "./Navbar";
-import Login from './Login';
-import Admin from './Admin';
-import Owner from './Owner';
-import AddOwner from "./AddOwner";
-import Builder from "./Builder";
-import Tenant from "./Tenant";
-import OwnerDetails from "./OwnerDetails";
-import BuildingList from "./BuildingList";
-import GetFlatList from "./GetFlatList";
-import UpdateProfile from './UpdateProfile';
-import ViewProfile from './ViewProfile';
+import Login from '../AdminComponents/Login';
+import Admin from '../AdminComponents/Admin';
+import Owner from '../AdminComponents/Owner';
+import AddOwner from "../AdminComponents/AddOwner";
+import Builder from "../AdminComponents/Builder";
+import Tenant from "../AdminComponents/Tenant";
+import OwnerDetails from "../AdminComponents/OwnerDetails";
+import BuildingList from "../AdminComponents/BuildingList";
+import GetFlatList from "../AdminComponents/GetFlatList";
+import UpdateProfile from '../AdminComponents/UpdateProfile';
+import ViewProfile from '../AdminComponents/ViewProfile';
 function Launcher() {
     return (<Router>
         <Routes>
