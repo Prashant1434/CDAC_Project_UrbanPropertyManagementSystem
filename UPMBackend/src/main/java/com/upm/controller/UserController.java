@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import static org.springframework.http.MediaType.*;
 
 import com.upm.dao.BuilderDao;
 import com.upm.dto.LoginDto;
+import com.upm.dto.UserDto;
 import com.upm.entities.Builder;
 import com.upm.entities.Users;
 import com.upm.service.BuilderService;
@@ -51,5 +53,17 @@ public class UserController {
 	public byte[] downloadImage(@PathVariable Long usersId) throws IOException
 	{
 		return imageHandlingService.downloadImage(usersId);
+	}
+	
+	@PostMapping("/login")
+	public UserDto loginUsers(@RequestBody LoginDto loginDto) {
+		System.out.println("login Dto : " + loginDto.toString());
+		return userService.loginUser(loginDto);
+	}
+	
+
+	@PutMapping("/updateUser/{id}")
+	public String updateUser(@PathVariable Long id  , @RequestBody UserDto userDto) {
+		return userService.updateUser(id, userDto);
 	}
 }
