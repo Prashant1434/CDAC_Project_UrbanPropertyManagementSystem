@@ -48,7 +48,7 @@ function BuildingList() {
                                     <td>{b.madeYear}</td>
                                     <td>{b.floorCount}</td>
                                     <td>
-                                        <Link to="/getflatlist">View Flats</Link>
+                                        <Link to={`/getflatlist/${b.id}`}>View Flats</Link>
                                     </td>
 
                                 </tr>

@@ -11,6 +11,8 @@ function Navbar(props) {
     const Logout = () =>{
         sessionStorage.removeItem("UserName");
         sessionStorage.removeItem("UserId");
+        sessionStorage.removeItem("buildingId");
+        sessionStorage.removeItem("flatId");
         navigate("/login");
     }
     return (

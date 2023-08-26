@@ -14,7 +14,7 @@ function OwnerDetails() {
                 console.log("responseReceived : " + responseReceived);
             }
         }
-        helper.open("GET", "http://localhost:7078/admin/ownerlist/" + 1);
+        helper.open("GET", "http://localhost:7078/admin/ownerlist/" + sessionStorage.getItem("UserId"));
         helper.send();
     }
     return (<>
