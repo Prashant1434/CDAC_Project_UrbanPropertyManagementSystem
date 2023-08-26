@@ -1,12 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Homepage from "../AdminComponents/Homepage";
+import Homepage from "./Homepage";
 import Navbar from "./Navbar";
 import Login from '../AdminComponents/Login';
 import Admin from '../AdminComponents/Admin';
-import Owner from '../AdminComponents/Owner';
 import AddOwner from "../AdminComponents/AddOwner";
-import Builder from "../AdminComponents/Builder";
-import Tenant from "../AdminComponents/Tenant";
 import OwnerDetails from "../AdminComponents/OwnerDetails";
 import BuildingList from "../AdminComponents/BuildingList";
 import GetFlatList from "../AdminComponents/GetFlatList";
@@ -19,9 +16,6 @@ function Launcher() {
             <Route exact path='/navbar' Component={Navbar} />
             <Route exact path='/login' Component={Login} />
             <Route exact path='/ADMIN' Component={Admin} />
-            <Route exact path='/OWNER' Component={Owner} />
-            <Route exact path='/BUILDER' Component={Builder} />
-            <Route exact path='/TENANT' Component={Tenant} />
             <Route exact path='/addowner' Component={AddOwner} />
             <Route exact path="/ownerDetails" Component={OwnerDetails} />
             <Route exact path="/buildingDetails" Component={BuildingList} />
