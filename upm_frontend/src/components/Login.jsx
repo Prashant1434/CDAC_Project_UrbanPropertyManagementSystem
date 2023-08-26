@@ -5,8 +5,19 @@ import Logo from '../assets/icons/logo black line.png'
 import { useNavigate } from 'react-router-dom';
 function Login() {
     const [Credentials, setCredentials] = useState({ emailId: "", password: "" });
-    // const [User, setUser] = useState({});
-    const option = ['BUILDER', 'ADMIN', 'OWNER', 'TENANT'];
+    // const [User, setUser] = useState(
+    //     {
+    //         "id": 0,
+    //         "addedDate": "",
+    //         "name": "",
+    //         "emailId": "",
+    //         "contact": "",
+    //         "password": "",
+    //         "permanentAddress": "",
+    //         "imagePath": null,
+    //         "role": ""
+    //     });
+    const option = ['BUILDER','ADMIN', 'OWNER', 'TENANT','SUPERADMIN'];
     var [Role, SetRole] = useState("");
     const onOptionChange = (event) => {
         SetRole(event.target.value);
@@ -23,24 +34,23 @@ function Login() {
 
     const SignIn = () => {
         debugger;
-        if (Role == "BUILDER") {
+        if (Role == "SUPERADMIN") {
             var helper = new XMLHttpRequest();
             helper.onreadystatechange = () => {
                 debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
-
+                    // setUser(responseReceived);
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
-                    if (responseReceived.email == Credentials.emailId && responseReceived.password == Credentials.password) {
-                        navigate("/" + Role);
-                        sessionStorage.setItem("UserName", responseReceived.name);
-                        sessionStorage.setItem("UserId", responseReceived.builderId);
+                    if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password) {
+                        navigate("/SUPERADMIN");
+                      
                     }
 
                 }
             }
             console.log(Credentials.emailId + " " + Credentials.password)
-            helper.open("POST", "http://localhost:7078/users/builderLogin");
+            helper.open("POST", "http://localhost:7078/users/super_admin_login");
             helper.setRequestHeader("Content-Type", "application/json");
             helper.send(JSON.stringify(Credentials));
         }
@@ -50,9 +60,10 @@ function Login() {
                 debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
+                    // setUser(responseReceived);
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
-                    if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password && Role == responseReceived.role) {
-                        navigate("/" + Role);
+                    if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password ) {
+                        navigate("/" + responseReceived.role);
                         sessionStorage.setItem("UserName", responseReceived.name);
                         sessionStorage.setItem("UserId", responseReceived.id);
                     }
