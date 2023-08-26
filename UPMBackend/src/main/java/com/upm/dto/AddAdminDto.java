@@ -18,7 +18,9 @@ import lombok.Setter;
 public class AddAdminDto {
 
 	private Long id;
+	
 	private LocalDate addedDate;
+	
 	private String name;
 	
 	private String emailId;

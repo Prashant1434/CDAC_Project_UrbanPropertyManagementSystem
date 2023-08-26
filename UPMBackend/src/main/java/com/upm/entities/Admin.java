@@ -47,6 +47,7 @@ public class Admin{
 	@OneToMany(mappedBy = "adminsBuilding",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Building> buildingList = new ArrayList<Building>();
 
+			
 	public Users getAdmin() {
 		return admin;
 	}
@@ -74,10 +75,20 @@ public class Admin{
 		building.setAdminsBuilding(null);
 	}
 
-	@Override
-	public String toString() {
-		return "Admin [admin=" + admin + ", builder=" + adminBuilder + "]";
+//	@Override
+//	public String toString() {
+//		return "Admin [admin=" + admin + ", builder=" + adminBuilder + "]";
+//	}
+
+	public Long getId() {
+		return id;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
 	
 	
 }

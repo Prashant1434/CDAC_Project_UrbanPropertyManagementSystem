@@ -64,7 +64,9 @@ public class Building {
 	@JsonIgnore
 	private Builder buildingBuilder;
 	
-	@ManyToOne
+	
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "admin_building_id")
 	private Admin adminsBuilding;
 	

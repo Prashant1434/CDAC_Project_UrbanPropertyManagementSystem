@@ -24,6 +24,7 @@ import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.AddOwnerDto;
 import com.upm.dto.AddTenantDto;
+import com.upm.dto.ApiResponse;
 import com.upm.dto.FlatDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Building;
@@ -72,20 +73,21 @@ public class AdminServiceImpl implements AdminService {
 		return mapper.map(newOwner, AddOwnerDto.class); 
 	}
 
-	public String addFaltToOwner(Long id, Long oId) {
+	public ApiResponse addFaltToOwner(Long id, Long oId) {
 		Flat flat = flatDao.findById(id).orElseThrow();
 		Owner owner = ownerDao.findById(oId).orElseThrow();
 		owner.addFlat(flat);
+		flat.setFullEmptyStatus(true);
 		flatDao.save(flat);
-		return "flat added to owner successfully";
+		return new ApiResponse("flat added to owner successfully");
 	}
 
 	@Override
 	public List<AddBuildingDto> getBuildingList(Long adminId) {
 		// TODO Auto-generated method stub
-		Admin admin = adminDao.findById(adminId).orElseThrow();
+		Users user = userDao.findById(adminId).orElseThrow();
 
-		List<Building> buildingList = buildingDao.findByAdminsBuilding(admin);
+		List<Building> buildingList = buildingDao.findByAdminsBuilding(user.getAdmin());
 
 		return buildingList.stream().map(building -> mapper.map(building, AddBuildingDto.class))
 				.collect(Collectors.toList());
