@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-function OwnerDetails() {
+function AdminDetails() {
 
-    const [Owner, setOwner] = useState([]);
+    const [Admin, setAdmin] = useState([]);
 
     useEffect(() => { getOwnerList() }, []);
     const getOwnerList = () => {
@@ -10,11 +10,11 @@ function OwnerDetails() {
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText);
-                setOwner(responseReceived);
-                console.log("responseReceived : " + responseReceived);
+                setAdmin(responseReceived);
+                console.log("responseReceived : " + responseReceived.emailId);
             }
         }
-        helper.open("GET", "http://localhost:7078/admin/ownerlist/" + 1);
+        helper.open("GET", "http://localhost:7078/builder/adminlist/" +sessionStorage.getItem("UserId"));
         helper.send();
     }
     return (<>
@@ -32,13 +32,13 @@ function OwnerDetails() {
                     </thead>
                     <tbody>
                         {
-                            Owner.map((owner) => {
+                            Admin.map((admin) => {
                                 return <tr>
-                                    <td>{owner.name}</td>
-                                    <td>{owner.emailId}</td>
-                                    <td>{owner.contact}</td>
-                                    <td>{owner.permanentAddress}</td>
-                                    <td>{owner.role}</td>
+                                    <td>{admin.name}</td>
+                                    <td>{admin.emailId}</td>
+                                    <td>{admin.contact}</td>
+                                    <td>{admin.permanentAddress}</td>
+                                    <td>{admin.role}</td>
                                 </tr>
                             })
 
@@ -52,4 +52,4 @@ function OwnerDetails() {
     </>);
 }
 
-export default OwnerDetails;
+export default AdminDetails;

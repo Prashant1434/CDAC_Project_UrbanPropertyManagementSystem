@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function BuildingList() {
+function BuildersBuildingList() {
     const [Building, setBuilding] = useState([]);
-    var adminId = sessionStorage.getItem("UserId");
+    var builderId = sessionStorage.getItem("UserId");
     useEffect(() => { getBuildingList() }, [])
 
     const getBuildingList = () => {
@@ -19,7 +19,7 @@ function BuildingList() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/admin/buildinglist/" + adminId);
+        helper.open("GET", "http://localhost:7078/builder/buildinglist/" + builderId);
         helper.send();
     }
     return (<>
@@ -63,4 +63,4 @@ function BuildingList() {
     </>);
 }
 
-export default BuildingList;
+export default BuildersBuildingList;
