@@ -2,6 +2,7 @@ package com.upm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upm.dto.AddTenantDto;
+import com.upm.dto.ApiResponse;
 import com.upm.dto.FlatDto;
 import com.upm.dto.UpdateProfileDto;
+import com.upm.dto.UserDto;
 import com.upm.service.AdminService;
 import com.upm.service.OwnerService;
 import com.upm.service.UserService;
 
 @RestController
 @RequestMapping("/owner")
+@CrossOrigin
 public class OwnerController {
 	@Autowired
 	private OwnerService ownerService;
@@ -45,7 +49,7 @@ public class OwnerController {
 	}
 	
 	@PutMapping("/updateprofile/{userId}")
-	public String updateProfile(@RequestBody UpdateProfileDto updateProfileDto,@PathVariable Long userId)
+	public ApiResponse updateProfile(@RequestBody UserDto updateProfileDto,@PathVariable Long userId)
 	{
 		return userService.editProfile(updateProfileDto,userId);
 	}

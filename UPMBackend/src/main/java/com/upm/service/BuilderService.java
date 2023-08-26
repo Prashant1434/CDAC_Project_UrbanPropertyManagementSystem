@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
+import com.upm.dto.ApiResponse;
 import com.upm.dto.AssignBuildingToAdminDto;
 import com.upm.dto.LoginDto;
 import com.upm.entities.Builder;
@@ -13,11 +14,11 @@ import com.upm.entities.Users;
 
 public interface BuilderService {
 
-	String addAdmin(AddAdminDto admin);
+	ApiResponse addAdmin(AddAdminDto admin,Long builderId);
 	
-	String addBuilding(AddBuildingDto buildingDto);
+	ApiResponse addBuilding(AddBuildingDto buildingDto,Long builderId);
 	
-	String assignBuildingToAdmin(AssignBuildingToAdminDto asssignBuildingToAdminDto);
+	ApiResponse assignBuildingToAdmin(Long adminId,Long buildingId);
 	
 	String removeBuilding(Long buildingId);
 	
@@ -30,4 +31,6 @@ public interface BuilderService {
 	List<AddBuildingDto> getBuildingList(Long builderId);
 
 	List<AddAdminDto> getAdminList(Long builderId);
+
+	AddBuildingDto getBuildingDetails(Long buildingId);
 }

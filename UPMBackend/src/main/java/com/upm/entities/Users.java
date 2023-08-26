@@ -52,7 +52,7 @@ public class Users extends RoleBaseEntity{
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "admin" , orphanRemoval = true)
+	@OneToOne(cascade =CascadeType.REMOVE ,mappedBy = "admin" , orphanRemoval = true)
 	private Admin admin;
 
 	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "owner" , orphanRemoval = true)
@@ -64,9 +64,9 @@ public class Users extends RoleBaseEntity{
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "userBuilder",orphanRemoval = true)
     private Builder builder;
 	
-	@Override
-	public String toString() {
-		return "Users [name=" + name + ", emailId=" + emailId + ", contact=" + contact + ", password=" + password
-				+ ", permanentAddress=" + permanentAddress + ", imagePath=" + imagePath + ", role=" + role + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Users [name=" + name + ", emailId=" + emailId + ", contact=" + contact + ", password=" + password
+//				+ ", permanentAddress=" + permanentAddress + ", imagePath=" + imagePath + ", role=" + role + "]";
+//	}
 }

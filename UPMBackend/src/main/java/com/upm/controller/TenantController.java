@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.upm.dto.ApiResponse;
 import com.upm.dto.UpdateProfileDto;
+import com.upm.dto.UserDto;
 import com.upm.service.TenantService;
 import com.upm.service.UserService;
 
@@ -36,8 +38,8 @@ public class TenantController {
 		return tenantService.updateRentStatus(false, id);
 	}
 	
-	@PutMapping("/updateprofile/{userId}")
-	public String updateProfile(@RequestBody UpdateProfileDto updateProfileDto,@PathVariable Long userId)
+  @PutMapping("/updateprofile/{userId}")
+	public ApiResponse updateProfile(@RequestBody UserDto updateProfileDto,@PathVariable Long userId)
 	{
 		return userService.editProfile(updateProfileDto,userId);
 	}

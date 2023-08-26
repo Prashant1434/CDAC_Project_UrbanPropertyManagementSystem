@@ -21,4 +21,7 @@ public class SuperAdmin extends BaseEntity {
 	private String emailId;
 	
 	private String password;
+	
+	private String contact;
+	
 }
