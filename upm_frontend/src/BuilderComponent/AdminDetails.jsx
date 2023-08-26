@@ -4,8 +4,8 @@ function AdminDetails() {
 
     const [Admin, setAdmin] = useState([]);
 
-    useEffect(() => { getOwnerList() }, []);
-    const getOwnerList = () => {
+    useEffect(() => { getAdminList() }, []);
+    const getAdminList = () => {
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {

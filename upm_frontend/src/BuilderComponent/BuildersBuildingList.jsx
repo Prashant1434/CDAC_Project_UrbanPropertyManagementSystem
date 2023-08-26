@@ -35,6 +35,7 @@ function BuildersBuildingList() {
                             <th>Contact</th>
                             <th>Made Year</th>
                             <th>Floor Count</th>
+                            <th colSpan={2}>Actions</th>
 
                         </tr>
                     </thead>
@@ -50,7 +51,7 @@ function BuildersBuildingList() {
                                     <td>
                                         <Link to="/getflatlist">View Flats</Link>
                                     </td>
-
+                                    <td>{b.status != false ? "---" : <Link to={`/assign_building/${b.id}`}>assign Admin </Link>}</td>
                                 </tr>
                             })
                         }
