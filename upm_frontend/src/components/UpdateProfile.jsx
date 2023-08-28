@@ -44,7 +44,7 @@ function UpdateProfile() {
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText);
                 console.log("responseReceived : " + responseReceived);
-                navigate("/ADMIN");
+                navigate("/"+sessionStorage.getItem("Role"));
             }
         }
         helper.open("PUT", "http://localhost:7078/admin/updateprofile/" + parseInt(userId));

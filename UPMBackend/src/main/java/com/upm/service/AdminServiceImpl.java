@@ -161,7 +161,8 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<FlatDto> getFlatListByOwner(Long ownerId) {
 		// TODO Auto-generated method stub
-		List<Flat> flatList=flatDao.findByOwner(ownerDao.findById(ownerId).orElseThrow());
+		Users user = userDao.findById(ownerId).orElseThrow();
+		List<Flat> flatList=flatDao.findByOwner(ownerDao.findByOwner(user));
 		return flatList.stream()
 				.map(flat ->mapper.map(flat, FlatDto.class))
 				.collect(Collectors.toList());

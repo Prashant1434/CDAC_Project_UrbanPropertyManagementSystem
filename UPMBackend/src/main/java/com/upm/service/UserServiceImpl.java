@@ -37,8 +37,9 @@ public class UserServiceImpl implements UserService{
 	public ApiResponse editProfile(UserDto updateProfileDto,Long userId) {
 		// TODO Auto-generated method stub
 		Users user=userDao.findById(userId).orElseThrow();
+		
 		Users u=mapper.map(updateProfileDto, Users.class);
-		u.setId(userId);
+
 		//Admin admin=adminDao.findByAdmin(user);
 		userDao.save(u);
 		return new ApiResponse("profile updated successfully");

@@ -6,6 +6,7 @@ import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.ApiResponse;
 import com.upm.dto.AssignBuildingToAdminDto;
+import com.upm.dto.FlatDto;
 import com.upm.dto.LoginDto;
 import com.upm.entities.Builder;
 import com.upm.entities.Building;
@@ -24,7 +25,7 @@ public interface BuilderService {
 	
 	String updateAdmin(Long adminId);
 	
-	String addFlat(Flat flat,Long builddingId);
+	ApiResponse addFlat(FlatDto flatDto,Long builddingId);
 
 	String findByEmailAndPasswordService(String emailId);
 

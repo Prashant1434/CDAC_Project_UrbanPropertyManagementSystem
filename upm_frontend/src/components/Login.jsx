@@ -20,7 +20,9 @@ function Login() {
     const option = ['BUILDER','ADMIN', 'OWNER', 'TENANT','SUPERADMIN'];
     var [Role, SetRole] = useState("");
     const onOptionChange = (event) => {
+        debugger;
         SetRole(event.target.value);
+        
     }
 
     const navigate = useNavigate();
@@ -43,6 +45,7 @@ function Login() {
                     // setUser(responseReceived);
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password) {
+                        SetRole("/SUPERADMIN");
                         navigate("/SUPERADMIN");
                       
                     }
@@ -64,6 +67,8 @@ function Login() {
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password ) {
                         navigate("/" + responseReceived.role);
+                        SetRole("/"+responseReceived.role);
+                        sessionStorage.setItem("Role",responseReceived.role);
                         sessionStorage.setItem("UserName", responseReceived.name);
                         sessionStorage.setItem("UserId", responseReceived.id);
                     }
@@ -108,14 +113,14 @@ function Login() {
                                 </tr>
                                 <br></br>
                                 <tr>
-                                    <select onChange={onOptionChange} className='inputBox'>
+                                    {/* <select onChange={onOptionChange} className='inputBox'>
                                         <option>Select Role</option>
                                         {option.map((option, index) => {
                                             return <option key={index}>
                                                 {option}
                                             </option>
                                         })}
-                                    </select>
+                                    </select> */}
                                 </tr><br />
                                 <tr>
                                     <td colSpan={2}>

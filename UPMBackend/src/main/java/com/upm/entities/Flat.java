@@ -34,9 +34,15 @@ public class Flat {
 
 	@Column(name = "floor_no")
 	private Long floorNo;
+	
+	@Column(name = "flat_no")
+	private Long flatNo;
 
 	@Column(name = "full_empty_status")
 	private boolean fullEmptyStatus;
+	
+	@Column(name = "full_empty_status_tenant")
+	private boolean fullEmptyStatusOfTenant;
 
 	@Column(name = "flat_type")
 	private String flatType;

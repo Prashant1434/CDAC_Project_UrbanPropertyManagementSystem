@@ -14,10 +14,21 @@ import AddBilding from '../BuilderComponent/AddBuilding';
 import BuildersBuildingList from '../BuilderComponent/BuildersBuildingList';
 import AdminDetails from '../BuilderComponent/AdminDetails';
 import Builder from '../BuilderComponent/Builder';
-import UpdateProfile from '../AdminComponents/UpdateProfile'
-import ViewProfile from '../AdminComponents/ViewProfile'
+import UpdateProfile from './UpdateProfile'
+import ViewProfile from './ViewProfile'
 import GetFlatList from '../AdminComponents/GetFlatList';
 import AssignBuildingToAdmin from '../BuilderComponent/AssignAdminToBuilding';
+import AddFlat from '../BuilderComponent/AddFlat';
+import Owner from '../OwnerComponent/Owner';
+import AddTenant from '../OwnerComponent/AddTenant';
+import GetFlatListOfOwner from '../OwnerComponent/GetFlatListOfOwner';
+import assignFlatToTenant from '../OwnerComponent/AssignFlatToTenant';
+import ViewTenantProfile from '../OwnerComponent/ViewTenantProfileFromFlat';
+import AssignUtilityToTenant from '../OwnerComponent/AssignUtilityToTenant';
+import GetUtilityList from '../OwnerComponent/GetUtilityList';
+import Tenant from '../TenantComponent/Tenant';
+import GetUtilityListOfTenant from '../TenantComponent/GetUtilityOfTenant';
+import RentPayment from '../TenantComponent/RentPayment';
 
 function Launcher() {
     return (<Router>
@@ -41,7 +52,18 @@ function Launcher() {
             <Route exact path='/updateprofile' Component={UpdateProfile}/>
             <Route exact path='/viewprofile' Component={ViewProfile}/>
             <Route exact path='/assign_building/:id' Component={AssignBuildingToAdmin}/>
-            
+            <Route exact path='/addflat' Component={AddFlat}/>
+            <Route exact path='/OWNER' Component={Owner}/>
+            <Route exact path='/TENANT' Component={Tenant}/>
+            <Route exact path='/addTenant' Component={AddTenant}/>
+            <Route exact path='/getflatlistofowner'Component={GetFlatListOfOwner}/>
+            <Route exact path='/assigntenanttoflat/:id/:flatNo' Component={assignFlatToTenant}/>
+            <Route exact path='/viewtenantprofile/:id' Component={ViewTenantProfile}/>
+            <Route exact path='/assignUtility' Component={AssignUtilityToTenant}/>
+            <Route exact path='/getUtilityList/:id' Component={GetUtilityList}/>
+            <Route exact path='/getUtilityListOfTenant' Component={GetUtilityListOfTenant}/>
+            <Route exact path='/payRent/:id' Component={RentPayment}/>
+        
         </Routes>
     </Router>);
 }

@@ -8,5 +8,5 @@ import com.upm.entities.RentUtility;
 
 public interface UtilityDao extends JpaRepository<RentUtility, Long> {
 	Optional<RentUtility> findByTenantUtilityId(Long id);
-	Optional<RentUtility> findByBillStatusAndTenantUtilityId(boolean status, Long tId);
+	Optional<RentUtility> findByBillStatusAndId(boolean status, Long utilityId);
 }

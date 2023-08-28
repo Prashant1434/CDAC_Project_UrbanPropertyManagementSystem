@@ -25,6 +25,7 @@ import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.ApiResponse;
 import com.upm.dto.AssignBuildingToAdminDto;
+import com.upm.dto.FlatDto;
 import com.upm.dto.LoginDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Builder;
@@ -107,11 +108,14 @@ public class BuilderServiceImpl implements BuilderService {
 	}
 
 	@Override
-	public String addFlat(Flat flat,Long buildingId) {
+	public ApiResponse addFlat(FlatDto flatDto,Long buildingId) {
 		Building building=buildingDao.findById(buildingId).orElseThrow();
+		Flat flat = mapper.map(flatDto, Flat.class);
+		flat.setFullEmptyStatus(false);
+		flat.setFullEmptyStatusOfTenant(false);
 		building.addFlat(flat);
 		flatDao.save(flat);
-		return "flat added successfully";
+		return new ApiResponse("flat added successfully");
 	}
 
 	@Override
