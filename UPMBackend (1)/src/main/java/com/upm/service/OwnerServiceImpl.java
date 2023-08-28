@@ -124,7 +124,7 @@ public class OwnerServiceImpl implements OwnerService {
 	public List<AddTenantDto> getTenantInfoByOwnerId(Long ownerId) {
 		// TODO Auto-generated method stub
 		Users user = userDao.findById(ownerId).orElseThrow();
-		Owner owner = ownerDao.findByOwner(user);
+		Owner owner = ownerDao.findByOwner(user).orElseThrow();
 		List<Flat> tenantFlatList = flatDao.findByOwner(owner);
 		List<AddTenantDto> tenantList = new ArrayList<>();
 		for (Flat flat : tenantFlatList) {
