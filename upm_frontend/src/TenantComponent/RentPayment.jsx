@@ -62,7 +62,7 @@ function RentPayment() {
                 // ReverseToBuilder();
                 // navigate("/")
                 setUtility(responseReceived);
-                window.alert("Payment Successfull !!! ");
+                toast.success("Payment Successfull !!! ");
                 navigate("/getUtilityListOfTenant")
             }
         }

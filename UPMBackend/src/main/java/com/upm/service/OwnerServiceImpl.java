@@ -62,7 +62,7 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public String assignFlatToTenant(Long id, Long tId) {
+	public ApiResponse assignFlatToTenant(Long id, Long tId) {
 		Flat flat = flatDao.findById(id).orElseThrow();
 		System.out.println("flat : " + flat.toString());
 //		User user = userDao.findById(iId)
@@ -72,7 +72,7 @@ public class OwnerServiceImpl implements OwnerService {
 		flat.setTenantFlat(tenant);
 		tenant.setFlat(flat);
 		flatDao.save(flat);
-		return "Flat Added To Tenant";
+		return new ApiResponse("Flat Added To Tenant");
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import com.upm.dto.FlatDto;
 public interface OwnerService {
 	public AddTenantDto addTenant(AddTenantDto tenantDto);
 
-	public String assignFlatToTenant(Long id, Long tId);
+	public ApiResponse assignFlatToTenant(Long id, Long tId);
 
 	public ApiResponse assignUtilityToTenant(Long fId, Long tId, AddUtilityDto addUtilityDto);
 

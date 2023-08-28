@@ -6,7 +6,7 @@ function AddTenant() {
 
     const navigate = useNavigate();
 
-    var [flatid, setflatid] = useState('');
+    var flatid = sessionStorage.getItem("flatId");
 
     var a;
 
@@ -29,8 +29,7 @@ function AddTenant() {
     );
     const onOptionChange = (event) => {
         debugger;
-        a = event.target.value;
-        setflatid(a);
+        sessionStorage.setItem("flatId",event.target.value);
 
         console.log("Flat iD  : " + flatid);
     }
@@ -54,7 +53,7 @@ function AddTenant() {
         if(Tenant.deposite.length == ""){
             toast.warn("Deposite Can Not Be Empty")
         }
-        if(a == null){
+        if(flatid == null){
             toast.warn("Select Flat")
         }
     }
@@ -63,12 +62,14 @@ function AddTenant() {
        Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
+            debugger
             if (helper.readyState == 4 && helper.status == 200) {
-                //  var responseReceived = JSON.parse(helper.responseText);
-                navigate("/Tenant")
+                 var responseReceived = JSON.parse(helper.responseText);
+                 toast.success("Tenant Added Successfully")
+                navigate("/OWNER")
             }
         }
-        helper.open("POST", "http://localhost:7078/Tenant/assignFlatToTenant/" + a);
+        helper.open("POST", "http://localhost:7078/owner/assignFlatToTenant/" + flatid);
         helper.setRequestHeader("Content-Type", "application/json");
         helper.send(JSON.stringify(Tenant));
 
@@ -89,7 +90,7 @@ function AddTenant() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/Tenant/flatlist/" + sessionStorage.getItem("UserId"))
+        helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"))
         helper.send()
     }
 

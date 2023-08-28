@@ -6,26 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Login() {
+
     const [Credentials, setCredentials] = useState({ emailId: "", password: "" });
-    // const [User, setUser] = useState(
-    //     {
-    //         "id": 0,
-    //         "addedDate": "",
-    //         "name": "",
-    //         "emailId": "",
-    //         "contact": "",
-    //         "password": "",
-    //         "permanentAddress": "",
-    //         "imagePath": null,
-    //         "role": ""
-    //     });
-    const option = ['BUILDER','ADMIN', 'OWNER', 'TENANT','SUPERADMIN'];
+
+    // const option = ['BUILDER','ADMIN', 'OWNER', 'TENANT','SUPERADMIN'];
+
     var [Role, SetRole] = useState("");
-    const onOptionChange = (event) => {
-        debugger;
-        SetRole(event.target.value);
-        
-    }
+    
+    // const onOptionChange = (event) => {
+    //     debugger;
+    //     SetRole(event.target.value);
+    // }
 
     const navigate = useNavigate();
     const onTextChange = (args) => {
@@ -57,6 +48,7 @@ function Login() {
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password) {
                         SetRole("/SUPERADMIN");
+                        sessionStorage.setItem("Role","SUPERADMIN");
                         navigate("/SUPERADMIN");
                         toast.success("Login Successfull");
                     }
@@ -131,14 +123,14 @@ function Login() {
                                 </tr>
                                 <br></br>
                                 <tr>
-                                    <select onChange={onOptionChange} className='inputBox'>
+                                    {/* <select onChange={onOptionChange} className='inputBox'>
                                         <option>Select Role</option>
                                         {option.map((option, index) => {
                                             return <option key={index}>
                                                 {option}
                                             </option>
                                         })}
-                                    </select>
+                                    </select> */}
                                 </tr><br />
                                 <tr>
                                     <td colSpan={2}>
