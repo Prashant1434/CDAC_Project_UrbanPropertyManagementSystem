@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AssignUtilityToTenant() {
     const navigate = useNavigate();
@@ -24,6 +25,24 @@ function AssignUtilityToTenant() {
         }
     );
 
+    const Validate = () =>{
+        if(Utility.gasBill.length == ""){
+            toast.warn("Gas Bill Can Not Be Empty")
+        }
+        if(Utility.waterBill.length == ""){
+            toast.warn("Water Bill Can Not Be Empty")
+        }
+        if(Utility.electricityBill.length == ""){
+            toast.warn("Electricity Bill Can Not Be Empty")
+        }
+        if(Utility.rentAmount.length == ""){
+            toast.warn("Rent Amount Can Not Be Empty")
+        }
+        if(Utility.addedDate.length == ""){
+            toast.warn("Date Can Not Be Empty")
+        }
+    }
+
     const [Tenant, setTenant] = useState([]);
 
     const onOptionChange = (event) => {
@@ -35,6 +54,7 @@ function AssignUtilityToTenant() {
     }
 
     const addUtility = () => {
+        Validate();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AddFlat() {
 
@@ -63,8 +64,19 @@ function AddFlat() {
         helper.open("GET", "http://localhost:7078/builder/buildinglist/" + builderId);
         helper.send();
     }
-
+    const Validation = () =>{
+        if(Flat.floorNo.length == ""){
+            toast.warn("Floor No Can Not Be Empty")
+        }
+        if(Flat.flatNo.length == ""){
+            toast.warn("Flat No Can Not Be Empty")
+        }
+        if(Flat.flatType.length == ""){
+            toast.warn("Flat Type Can Not Be Empty")
+        }
+    }
     const AddFlat = () => {
+        Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             debugger;

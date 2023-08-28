@@ -86,7 +86,7 @@ function ViewProfile() {
                     </div>
                     <div className="form-group">
                         <center>
-                            <input type="button" className="btn-primary" id="" name="password" onClick={UpdateProfile} value={"Update"} />
+                            {/* <input type="button" className="btn-primary" id="" name="password" onClick={UpdateProfile} value={"Update"} /> */}
 
                         </center>
                     </div>

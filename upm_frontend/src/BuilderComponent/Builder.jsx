@@ -25,6 +25,9 @@ function Admin() {
     const ViewProfile = () => {
         navigate("/viewprofile")
     }
+    const Help = () =>{
+        navigate("/Help")
+    }
     
     return (<>
     <Navbar login="logout"/>
@@ -39,6 +42,7 @@ function Admin() {
             <input type='button' onClick={GoToAddFlat} value="Add Flat" /><br></br><br />
             <input type='button' onClick={UpdateProfile} value="Update Profile" /><br></br><br />
             <input type='button' onClick={ViewProfile} value="View Profile" /><br></br><br />
+            <input type='button' onClick={Help} value="Help ?" /><br></br><br />
             
         </div>
         

@@ -3,6 +3,8 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../cssfiles/common.css'
 import Logo from '../assets/icons/logo black line.png'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Login() {
     const [Credentials, setCredentials] = useState({ emailId: "", password: "" });
     // const [User, setUser] = useState(
@@ -34,20 +36,32 @@ function Login() {
         console.log(Credentials.emailId + "   " + Credentials.password);
     }
 
+    const Validation = () =>{
+        if(Credentials.emailId.length == ""){
+            toast.warn("Email Can Not Be Empty")
+        }
+        if(Credentials.password.length == ""){
+            toast.warn("Password Can Not Be Empty")
+        }
+    }
+
     const SignIn = () => {
-        debugger;
+        // debugger;
+        Validation();   
         if (Role == "SUPERADMIN") {
             var helper = new XMLHttpRequest();
             helper.onreadystatechange = () => {
-                debugger;
+                // debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
-                    // setUser(responseReceived);
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password) {
                         SetRole("/SUPERADMIN");
                         navigate("/SUPERADMIN");
-                      
+                        toast.success("Login Successfull");
+                    }
+                    else{
+                        toast.error("Invalid Credentials");
                     }
 
                 }
@@ -60,7 +74,7 @@ function Login() {
         else {
             var helper = new XMLHttpRequest();
             helper.onreadystatechange = () => {
-                debugger;
+                // debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
                     // setUser(responseReceived);
@@ -71,6 +85,10 @@ function Login() {
                         sessionStorage.setItem("Role",responseReceived.role);
                         sessionStorage.setItem("UserName", responseReceived.name);
                         sessionStorage.setItem("UserId", responseReceived.id);
+                        toast.success("Login Successfull");
+                    }
+                    else{
+                        toast.error("Invalid Credentials");
                     }
 
                 }
@@ -82,7 +100,7 @@ function Login() {
         }
     }
     return (
-
+<>
         <div className='background'>
 
             <center>
@@ -113,14 +131,14 @@ function Login() {
                                 </tr>
                                 <br></br>
                                 <tr>
-                                    {/* <select onChange={onOptionChange} className='inputBox'>
+                                    <select onChange={onOptionChange} className='inputBox'>
                                         <option>Select Role</option>
                                         {option.map((option, index) => {
                                             return <option key={index}>
                                                 {option}
                                             </option>
                                         })}
-                                    </select> */}
+                                    </select>
                                 </tr><br />
                                 <tr>
                                     <td colSpan={2}>
@@ -135,6 +153,8 @@ function Login() {
                 </div>
             </center>
         </div>
+        
+        </>
     );
 
 }

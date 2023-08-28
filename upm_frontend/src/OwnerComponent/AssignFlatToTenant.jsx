@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 function AssignFlatToTenant() {
@@ -24,8 +25,31 @@ function AssignFlatToTenant() {
         }
     );
 
+    const Validation = () => {
+        if(Tenant.name.length == ""){
+            toast.warn("Name Can Not Be Empty")
+        }
+        if(Tenant.emailId.length == ""){
+            toast.warn("Email Can Not Be Empty")
+        }
+        if(Tenant.contact.length == ""){
+            toast.warn("Contact Can Not Be Empty")
+        }
+        if(Tenant.password.length == ""){
+            toast.warn("Password Can Not Be Empty")
+        }
+        if(Tenant.permanentAddress.length == ""){
+            toast.warn("Address Can Not Be Empty")
+        }
+        if(Tenant.deposite.length == ""){
+            toast.warn("Deposite Can Not Be Empty")
+        }
+        
+    }
+
 
     const addTenant = () => {
+        Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {
