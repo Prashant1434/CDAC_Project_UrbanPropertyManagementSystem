@@ -52,16 +52,16 @@ public class Users extends RoleBaseEntity{
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-	@OneToOne(cascade =CascadeType.REMOVE ,mappedBy = "admin" , orphanRemoval = true)
+	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "admin" , orphanRemoval = true)
 	private Admin admin;
 
 	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "owner" , orphanRemoval = true)
 	private Owner owner;
 	
-	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "tenant" , orphanRemoval = true)
+	@OneToOne(cascade =CascadeType.ALL,mappedBy = "tenant" , orphanRemoval = true)
 	private Tenant tenant;
 	
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "userBuilder",orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL,mappedBy= "userBuilder",orphanRemoval = true)
     private Builder builder;
 	
 //	@Override

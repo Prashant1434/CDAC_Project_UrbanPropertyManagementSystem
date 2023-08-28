@@ -16,6 +16,16 @@ function Admin() {
     const GoToBuildingDetails = () => {
         navigate("/builders_buildinglist")
     }
+    const GoToAddFlat  = () => {
+        navigate("/addflat");
+    }
+    const UpdateProfile = () =>{
+        navigate("/updateprofile");
+    }
+    const ViewProfile = () => {
+        navigate("/viewprofile")
+    }
+    
     return (<>
     <Navbar login="logout"/>
     <div className="container">
@@ -26,6 +36,10 @@ function Admin() {
             <input type='button' onClick={GoToAddBuilding} value="AddBuilding" /><br></br><br />
             <input type='button' onClick={GoToAdminDetails} value="Admin Details" /><br></br><br />
             <input type='button' onClick={GoToBuildingDetails} value="Building Details" /><br></br><br />
+            <input type='button' onClick={GoToAddFlat} value="Add Flat" /><br></br><br />
+            <input type='button' onClick={UpdateProfile} value="Update Profile" /><br></br><br />
+            <input type='button' onClick={ViewProfile} value="View Profile" /><br></br><br />
+            
         </div>
         
         

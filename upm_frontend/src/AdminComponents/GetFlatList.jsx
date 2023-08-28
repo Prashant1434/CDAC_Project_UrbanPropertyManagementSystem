@@ -36,17 +36,31 @@ function GetFlatList() {
                     </thead>
                     <tbody>
                         {
-                            Flat.map((f) => {
-                                return <tr>
-                                    <td>{f.flatId}</td>
-                                    <td>{f.floorNo}</td>
-                                    <td>{f.flatNo == null ? "-" : f.flatNo}</td>
-                                    <td>{f.fullEmptyStatus == true ? "full" : "empty"}</td>
-                                    <td>{f.flatType}</td>
-                                    <td>{f.fullEmptyStatus == true ? "---" : <Link to="/addowner">assign Owner </Link>}</td>
-                                </tr>
-                            })
+                            sessionStorage.getItem("Role") == "ADMIN" ?
+                                Flat.map((f) => {
+                                    return <tr>
+                                        <td>{f.flatId}</td>
+                                        <td>{f.floorNo}</td>
+                                        <td>{f.flatNo == null ? "-" : f.flatNo}</td>
+                                        <td>{f.fullEmptyStatus == true ? "full" : "empty"}</td>
+                                        <td>{f.flatType}</td>
+                                        <td>{f.fullEmptyStatus == true ? "---" : <Link to="/addowner">assign Owner </Link>}</td>
+                                    </tr>
+                                })
 
+
+
+                                :
+                                Flat.map((f) => {
+                                    return <tr>
+                                        <td>{f.flatId}</td>
+                                        <td>{f.floorNo}</td>
+                                        <td>{f.flatNo == null ? "-" : f.flatNo}</td>
+                                        <td>{f.fullEmptyStatus == true ? "full" : "empty"}</td>
+                                        <td>{f.flatType}</td>
+                                        {/* <td>{f.fullEmptyStatus == true ? "---" : <Link to="/addowner">assign Owner </Link>}</td> */}
+                                    </tr>
+                                })
 
                         }
                     </tbody>

@@ -17,6 +17,7 @@ import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.ApiResponse;
 import com.upm.dto.AssignBuildingToAdminDto;
+import com.upm.dto.FlatDto;
 import com.upm.dto.UpdateProfileDto;
 import com.upm.dto.UserDto;
 import com.upm.entities.Building;
@@ -38,7 +39,7 @@ public class BuilderController {
 	private UserService userService;
 	
 	@GetMapping("/buildinglist/{builderId}")
-	public List<AddBuildingDto> findAllBuilding(@PathVariable Long builderId)
+	public List<AddBuildingDto> getBuildingList(@PathVariable Long builderId)
 	{
 		return builderService.getBuildingList(builderId);
 	}
@@ -68,7 +69,7 @@ public class BuilderController {
 	}
 	
 	@PostMapping("/addFlat/{buildingId}")
-	public String addFlatInBuilding(@RequestBody Flat flat,@PathVariable Long buildingId)
+	public ApiResponse addFlatInBuilding(@RequestBody FlatDto flat,@PathVariable Long buildingId)
 	{
 		return builderService.addFlat(flat,buildingId);
 	}

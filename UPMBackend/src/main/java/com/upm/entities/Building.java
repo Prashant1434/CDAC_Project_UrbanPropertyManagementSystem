@@ -66,7 +66,7 @@ public class Building {
 	
 	
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "admin_building_id")
 	private Admin adminsBuilding;
 	
