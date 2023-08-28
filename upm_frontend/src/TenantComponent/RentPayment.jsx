@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function RentPayment() {
     var { id } = useParams();
@@ -15,6 +16,23 @@ function RentPayment() {
             "rentPaidDate": ""
         }
     );
+    const Validate = () =>{
+        if(Utility.gasBill.length == ""){
+            toast.warn("Gas Bill Can Not Be Empty")
+        }
+        if(Utility.waterBill.length == ""){
+            toast.warn("Water Bill Can Not Be Empty")
+        }
+        if(Utility.electricityBill.length == ""){
+            toast.warn("Electricity Bill Can Not Be Empty")
+        }
+        if(Utility.rentAmount.length == ""){
+            toast.warn("Rent Amount Can Not Be Empty")
+        }
+        if(Utility.addedDate.length == ""){
+            toast.warn("Date Can Not Be Empty")
+        }
+    }
 
     useEffect(() => { getUtility() }, [])
 
@@ -35,6 +53,7 @@ function RentPayment() {
     }
 
     const payRent = () => {
+        Validate();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {

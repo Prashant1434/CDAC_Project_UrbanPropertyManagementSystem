@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AddTenant() {
 
@@ -34,17 +35,40 @@ function AddTenant() {
         console.log("Flat iD  : " + flatid);
     }
 
+    const Validation = () => {
+        if(Tenant.name.length == ""){
+            toast.warn("Name Can Not Be Empty")
+        }
+        if(Tenant.emailId.length == ""){
+            toast.warn("Email Can Not Be Empty")
+        }
+        if(Tenant.contact.length == ""){
+            toast.warn("Contact Can Not Be Empty")
+        }
+        if(Tenant.password.length == ""){
+            toast.warn("Password Can Not Be Empty")
+        }
+        if(Tenant.permanentAddress.length == ""){
+            toast.warn("Address Can Not Be Empty")
+        }
+        if(Tenant.deposite.length == ""){
+            toast.warn("Deposite Can Not Be Empty")
+        }
+        if(a == null){
+            toast.warn("Select Flat")
+        }
+    }
+
     const addTenant = () => {
+       Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {
                 //  var responseReceived = JSON.parse(helper.responseText);
-                // console.log("responseReceived : " + responseReceived);
-                // ReverseToBuilder();
-                navigate("/OWNER")
+                navigate("/Tenant")
             }
         }
-        helper.open("POST", "http://localhost:7078/owner/assignFlatToTenant/" + a);
+        helper.open("POST", "http://localhost:7078/Tenant/assignFlatToTenant/" + a);
         helper.setRequestHeader("Content-Type", "application/json");
         helper.send(JSON.stringify(Tenant));
 
@@ -65,7 +89,7 @@ function AddTenant() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"))
+        helper.open("GET", "http://localhost:7078/Tenant/flatlist/" + sessionStorage.getItem("UserId"))
         helper.send()
     }
 
@@ -83,7 +107,7 @@ function AddTenant() {
 
 
     return (<>
-        <div className="AddOwner">
+        <div className="AddTenant">
             <div className="container registerDetails">
                 <form>
                     <center><legend>Assign Tenant To Flat</legend></center>

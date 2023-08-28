@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 function AddOwner() {
@@ -74,8 +75,31 @@ function AddOwner() {
         helper.open("GET", "http://localhost:7078/admin/emptyflats/" + parseInt(buildingId));
         helper.send();
     }
-
+    const Validation = () => {
+        if(Owner.name.length == ""){
+            toast.warn("Name Can Not Be Empty")
+        }
+        if(Owner.emailId.length == ""){
+            toast.warn("Email Can Not Be Empty")
+        }
+        if(Owner.contact.length == ""){
+            toast.warn("Contact Can Not Be Empty")
+        }
+        if(Owner.password.length == ""){
+            toast.warn("Password Can Not Be Empty")
+        }
+        if(Owner.permanentAddress.length == ""){
+            toast.warn("Address Can Not Be Empty")
+        }
+        if(buildingId == null){
+            toast.warn("Select Building")
+        }
+        if(flatId == null){
+            toast.warn("Select Flat")
+        }
+    }
     const addOwner = () => {
+        Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {

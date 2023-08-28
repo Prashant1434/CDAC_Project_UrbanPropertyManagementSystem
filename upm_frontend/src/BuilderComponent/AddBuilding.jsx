@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 function AddBilding() {
@@ -14,17 +15,38 @@ function AddBilding() {
 
  
     const addBilding = () => {
+        Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {
               //  var responseReceived = JSON.parse(helper.responseText);
                // console.log("responseReceived : " + responseReceived);
+               toast("Building Added Successfully")
                 ReverseToBuilder();
             }
         }
         helper.open("POST", "http://localhost:7078/builder/addBuilding/"+sessionStorage.getItem("UserId"));
         helper.setRequestHeader("Content-Type", "application/json");
         helper.send(JSON.stringify(Building));
+
+    }
+
+    const Validation = () => {
+        if (Building.name.length == "") {
+            toast.warn("Name Can Not Be Empty")
+        }
+        if (Building.floorCount.length == "") {
+            toast.warn("Floor Count Can Not Be Empty")
+        }
+        if (Building.phone.length == "") {
+            toast.warn("Contact Can Not Be Empty")
+        }
+        if (Building.madeYear.length == "") {
+            toast.warn("Made Year Can Not Be Empty")
+        }
+        if (Building.address.length == "") {
+            toast.warn("Address Can Not Be Empty")
+        }
 
     }
 
@@ -78,7 +100,7 @@ function AddBilding() {
                     </div>
          
                     <center>
-                        <button type="button" className="btn btn-primary" onClick={addBilding}>Add Admin</button>
+                        <button type="button" className="btn btn-primary" onClick={addBilding}>Add Building</button>
                     </center>
                 </form>
             </div>

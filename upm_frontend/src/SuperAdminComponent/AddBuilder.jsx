@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 function AddBuilder() {
@@ -15,6 +16,7 @@ function AddBuilder() {
 
  
     const addBuilder = () => {
+        Validation();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {
@@ -27,6 +29,24 @@ function AddBuilder() {
         helper.setRequestHeader("Content-Type", "application/json");
         helper.send(JSON.stringify(Builder));
 
+    }
+
+    const Validation = () => {
+        if(Builder.name.length == ""){
+            toast.warn("Name Can Not Be Empty")
+        }
+        if(Builder.emailId.length == ""){
+            toast.warn("Email Can Not Be Empty")
+        }
+        if(Builder.contact.length == ""){
+            toast.warn("Contact Can Not Be Empty")
+        }
+        if(Builder.password.length == ""){
+            toast.warn("Password Can Not Be Empty")
+        }
+        if(Builder.permanentAddress.length == ""){
+            toast.warn("Address Can Not Be Empty")
+        }
     }
 
 
@@ -55,7 +75,7 @@ function AddBuilder() {
     }
 
     return (<>
-        <div className="AddOwner">
+        <div className="AddBuilder">
             <div className="container registerDetails">
                 <form>
                     <center><legend>Add Builder</legend></center>
