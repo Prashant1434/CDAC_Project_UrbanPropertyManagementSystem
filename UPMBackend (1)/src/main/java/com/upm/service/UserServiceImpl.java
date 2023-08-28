@@ -55,13 +55,13 @@ public class UserServiceImpl implements UserService{
 		Users user1 = userDao.findByEmailId(loginDto.getEmailId()).orElseThrow();
 		UserDto user = mapper.map(user1,UserDto.class);
 //		System.out.println("user : " + user.toString());
-		if ((user.getPassword().equals(loginDto.getPassword())) && (user.getRole().name() == "ADMIN")) {
+		if ((user.getPassword().equals(loginDto.getPassword())) && (user.getRole().name() == "ROLE_ADMIN")) {
 			return user;
-		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "OWNER") {
+		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "ROLE_OWNER") {
 			return user;
-		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "TENANT") {
+		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "ROLE_TENANT") {
 			return user;
-		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "BUILDER") {
+		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "ROLE_BUILDER") {
 			return user;
 		} else
 			return null;
