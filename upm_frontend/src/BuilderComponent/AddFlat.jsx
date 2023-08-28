@@ -8,7 +8,7 @@ function AddFlat() {
 
     var builderId = sessionStorage.getItem("UserId");
 
-    const [buildingId, setBuildingId] = useState("");
+    var buildingId = sessionStorage.getItem("buildingId");
 
     const TypeList = ['1BHK', '2BHk', '3BHk'];
 
@@ -37,7 +37,8 @@ function AddFlat() {
 
     const onOptionChange = (event) => {
         debugger;
-        setBuildingId(event.target.value);
+        // setBuildingId(event.target.value);
+        sessionStorage.setItem("buildingId",event.target.value)
 
     }
     const onOptionChangeFlat = (event) => {
@@ -85,6 +86,7 @@ function AddFlat() {
                 // console.log(responseReceived);
                 setFlat(responseReceived);
                 console.log(Flat);
+                toast.success("Flat Added Successfully")
                 navigate("/BUILDER")
             }
         };

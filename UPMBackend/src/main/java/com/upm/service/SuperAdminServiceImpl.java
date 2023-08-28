@@ -1,5 +1,6 @@
 package com.upm.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -34,9 +35,10 @@ public class SuperAdminServiceImpl implements SuperAdminService{
 	private SuperAdminDao superAdminDao;
 	
 	public AddBuilderDto addBuilder(AddBuilderDto addBuilderDto) {
-		
+		addBuilderDto.setAddedDate(LocalDate.now());
 		Users user = mapper.map(addBuilderDto, Users.class);
 		Builder builder = new Builder();
+		
 		builder.setUserBuilder(user);
 		user.setBuilder(builder);
 		Users newUser=userDao.save(user);

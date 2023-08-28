@@ -22,6 +22,7 @@ function AddBuilder() {
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText);
                 console.log("responseReceived : " + responseReceived);
+                toast.success("Builder Added Successfully")
                 ReverseToSuperAdmin();
             }
         }
@@ -67,7 +68,6 @@ function AddBuilder() {
 
         var copyofBuilder = { ...Builder };
         copyofBuilder[args.target.name] = args.target.value;
-        copyofBuilder.addedDate = new Date().getDate();
         console.log(new Date().getDate());
         copyofBuilder.role = "BUILDER";
         setBuilder(copyofBuilder);

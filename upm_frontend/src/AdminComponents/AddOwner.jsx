@@ -22,7 +22,6 @@ function AddOwner() {
 
     useEffect(() => {
         getBuildingList();
-
     }, [])
 
     var adminId = sessionStorage.getItem("UserId");
@@ -105,6 +104,7 @@ function AddOwner() {
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText);
                 console.log("responseReceived : " + responseReceived);
+                toast.success("Owner Added To Flat Successfully")
                 ReverseToOwner();
             }
         }

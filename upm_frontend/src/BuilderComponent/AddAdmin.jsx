@@ -38,7 +38,7 @@ function AddAdmin() {
             if (helper.readyState == 4 && helper.status == 200) {
                 //  var responseReceived = JSON.parse(helper.responseText);
                 // console.log("responseReceived : " + responseReceived);
-                toast("Admin Added Successfully")
+                toast.success("Admin Added Successfully")
                 ReverseToBuilder();
             }
         }

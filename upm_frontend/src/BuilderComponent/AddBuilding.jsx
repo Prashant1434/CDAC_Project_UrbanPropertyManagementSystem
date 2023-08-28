@@ -21,7 +21,7 @@ function AddBilding() {
             if (helper.readyState == 4 && helper.status == 200) {
               //  var responseReceived = JSON.parse(helper.responseText);
                // console.log("responseReceived : " + responseReceived);
-               toast("Building Added Successfully")
+               toast.success("Building Added Successfully")
                 ReverseToBuilder();
             }
         }

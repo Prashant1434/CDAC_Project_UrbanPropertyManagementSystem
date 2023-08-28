@@ -5,13 +5,11 @@ import { toast } from "react-toastify";
 function AssignUtilityToTenant() {
     const navigate = useNavigate();
 
-    // var [flatid, setflatid] = useState('');
-
-    var flatid;
+    var flatid = sessionStorage.getItem("flatId");
 
     var [Flat, setFlat] = useState([]);
 
-    var TenantId;
+    var TenantId = sessionStorage.getItem("tenantId");
 
     const [Utility, setUtility] = useState(
         {
@@ -25,20 +23,20 @@ function AssignUtilityToTenant() {
         }
     );
 
-    const Validate = () =>{
-        if(Utility.gasBill.length == ""){
+    const Validate = () => {
+        if (Utility.gasBill.length == "") {
             toast.warn("Gas Bill Can Not Be Empty")
         }
-        if(Utility.waterBill.length == ""){
+        if (Utility.waterBill.length == "") {
             toast.warn("Water Bill Can Not Be Empty")
         }
-        if(Utility.electricityBill.length == ""){
+        if (Utility.electricityBill.length == "") {
             toast.warn("Electricity Bill Can Not Be Empty")
         }
-        if(Utility.rentAmount.length == ""){
+        if (Utility.rentAmount.length == "") {
             toast.warn("Rent Amount Can Not Be Empty")
         }
-        if(Utility.addedDate.length == ""){
+        if (Utility.addedDate.length == "") {
             toast.warn("Date Can Not Be Empty")
         }
     }
@@ -47,9 +45,9 @@ function AssignUtilityToTenant() {
 
     const onOptionChange = (event) => {
         debugger;
-        flatid = event.target.value;
-        // setflatid(a);
-
+        // setflatid(event.target.value);
+        // // setflatid(a);
+        sessionStorage.setItem("flatId",event.target.value)
         console.log("Flat iD  : " + flatid);
     }
 
@@ -61,6 +59,7 @@ function AssignUtilityToTenant() {
                 //  var responseReceived = JSON.parse(helper.responseText);
                 // console.log("responseReceived : " + responseReceived);
                 // ReverseToBuilder();
+                toast.success("Utility Added Successfully")
                 navigate("/OWNER")
             }
         }
@@ -110,15 +109,17 @@ function AssignUtilityToTenant() {
 
         var copyofUtility = { ...Utility };
         copyofUtility[args.target.name] = args.target.value;
-        
+
         setUtility(copyofUtility);
         console.log(Utility);
     }
 
-    const onOptionChangeTenant = (event) =>{
+    const onOptionChangeTenant = (event) => {
         debugger;
-        TenantId=event.target.value;
-    debugger;
+        // setTenantId(event.target.value);
+        sessionStorage.setItem("tenantId",event.target.value)
+        console.log(TenantId)
+        debugger;
     }
 
     return (<>
@@ -131,12 +132,12 @@ function AssignUtilityToTenant() {
                         <label>Gas Bill</label>
                         <input type="number" className="form-control" id="" placeholder="Enter Gas Bill" name="gasBill" onChange={onTextChange} />
                     </div>
-                  
+
                     <div className="form-group">
                         <label>Water Bill</label>
                         <input type="number" className="form-control" id="" placeholder="Enter Water Bill" name="waterBill" onChange={onTextChange} />
                     </div>
-                  
+
                     <div className="form-group">
                         <label>Electricity Bill</label>
                         <input type="number" className="form-control" id="" placeholder="Enter Electricity Bill" name="electricityBill" onChange={onTextChange} />
@@ -154,12 +155,12 @@ function AssignUtilityToTenant() {
 
                     <div className="form-group">
                         <label>Total</label>
-                        <input type="number" className="form-control" id="" name="addedDate" value={parseFloat(Utility.waterBill) + parseFloat(Utility.gasBill) + parseFloat(Utility.electricityBill) + parseFloat(Utility.rentAmount)} readOnly/>
+                        <input type="number" className="form-control" id="" name="addedDate" value={parseFloat(Utility.waterBill) + parseFloat(Utility.gasBill) + parseFloat(Utility.electricityBill) + parseFloat(Utility.rentAmount)} readOnly />
                     </div>
 
                     <div className="form-group">
                         <select onChange={onOptionChange} className='inputBox'>
-                            <option>Select Flat</option>
+                            <option key={0} value={0}>Select Flat</option>
                             {Flat.map((item) => {
                                 return <option key={item.flatId} value={item.flatId}>
                                     {item.flatNo}
