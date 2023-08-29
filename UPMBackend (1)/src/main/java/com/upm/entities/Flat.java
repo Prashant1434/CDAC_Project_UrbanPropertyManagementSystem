@@ -52,11 +52,17 @@ public class Flat {
 	@JoinColumn(name = "owner_id")
 	@JsonIgnore
 	private Owner owner;
+	
+	@Column(name ="flat_no")
+	private Long flatNo;
 
 	@OneToOne
 	@JoinColumn(name = "tenant_id")
 	@JsonIgnore
 	private Tenant tenantFlat;
+	
+	@Column(name ="full_empty_status_tenant")
+	private boolean fullEmptyStatusOfTenant;
 
 	@OneToMany(mappedBy = "flatUtility", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<RentUtility> utilityList = new ArrayList<RentUtility>();

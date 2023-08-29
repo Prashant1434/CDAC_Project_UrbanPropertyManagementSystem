@@ -24,4 +24,6 @@ public class FlatDto {
 	private boolean fullEmptyStatus;
 	
 	private String flatType;
+	
+	private boolean fullEmptyStatusOfTenant;
 }

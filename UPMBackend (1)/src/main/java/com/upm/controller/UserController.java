@@ -94,6 +94,16 @@ public class UserController {
 //	{
 //		return userService.getLoggedInUser(userId);
 //	}
+@GetMapping("/getuser/{userId}")
+	public UserDto getUser(@PathVariable Long userId)
+	{
+		return userService.getLoggedInUser(userId);
+	}
+	
+	@PutMapping("/updateUser/{id}")
+	public String updateUser(@PathVariable Long id  , @RequestBody UserDto userDto) {
+		return userService.updateUser(id, userDto);
+	}
 	
 
 }

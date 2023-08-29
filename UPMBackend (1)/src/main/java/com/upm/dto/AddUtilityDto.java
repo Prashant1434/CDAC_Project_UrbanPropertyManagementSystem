@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddUtilityDto {
 
+	private Long id;
+
 	private double gasBill;
 
 	private double waterBill;
@@ -21,8 +23,6 @@ public class AddUtilityDto {
 	private boolean billStatus;
 
 	private double rentAmount;
-
-	private boolean rentStatus;
 
 	private LocalDate addedDate;
 

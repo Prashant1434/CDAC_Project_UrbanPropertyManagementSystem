@@ -45,6 +45,7 @@ public class Admin{
 	
 	@ManyToOne
 	@JoinColumn(name="builder_admin_id")
+	@JsonIgnore
 	private Builder adminBuilder;
 	
 	@OneToMany(mappedBy = "adminsBuilding",cascade = CascadeType.ALL,orphanRemoval = true)
