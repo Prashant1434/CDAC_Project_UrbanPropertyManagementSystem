@@ -11,6 +11,9 @@ function AssignUtilityToTenant() {
 
     var TenantId = sessionStorage.getItem("tenantId");
 
+    const [isValidPassed, setIsValidPassed] = useState(false)
+
+
     const [Utility, setUtility] = useState(
         {
             "gasBill": "",
@@ -24,20 +27,29 @@ function AssignUtilityToTenant() {
     );
 
     const Validate = () => {
+        let isValid = true;
         if (Utility.gasBill.length == "") {
             toast.warn("Gas Bill Can Not Be Empty")
+            isValid = false;
         }
         if (Utility.waterBill.length == "") {
             toast.warn("Water Bill Can Not Be Empty")
+            isValid = false;
         }
         if (Utility.electricityBill.length == "") {
             toast.warn("Electricity Bill Can Not Be Empty")
+            isValid = false;
         }
         if (Utility.rentAmount.length == "") {
             toast.warn("Rent Amount Can Not Be Empty")
+            isValid = false;
         }
         if (Utility.addedDate.length == "") {
             toast.warn("Date Can Not Be Empty")
+            isValid = false;
+        }
+        if (isValid) {
+            setIsValidPassed(isValid)
         }
     }
 
@@ -47,29 +59,31 @@ function AssignUtilityToTenant() {
         debugger;
         // setflatid(event.target.value);
         // // setflatid(a);
-        sessionStorage.setItem("flatId",event.target.value)
+        sessionStorage.setItem("flatId", event.target.value)
         console.log("Flat iD  : " + flatid);
     }
 
     const addUtility = () => {
         Validate();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            if (helper.readyState == 4 && helper.status == 200) {
-                //  var responseReceived = JSON.parse(helper.responseText);
-                // console.log("responseReceived : " + responseReceived);
-                // ReverseToBuilder();
-                toast.success("Utility Added Successfully")
-                navigate("/OWNER")
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 && helper.status == 200) {
+                    //  var responseReceived = JSON.parse(helper.responseText);
+                    // console.log("responseReceived : " + responseReceived);
+                    // ReverseToBuilder();
+                    toast.success("Utility Added Successfully")
+                    navigate("/OWNER")
+                }
             }
+            helper.open("POST", "http://localhost:7078/owner/assignUtilityToTenant/" + flatid + "/" + TenantId);
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Utility));
         }
-        helper.open("POST", "http://localhost:7078/owner/assignUtilityToTenant/" + flatid + "/" + TenantId);
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Utility));
-
     }
 
-    useEffect(() => { getFlatList(); getTenantList() }, [])
+    useEffect(() => { getFlatList(); }, [])
 
     const getFlatList = () => {
         var helper = new XMLHttpRequest()
@@ -84,9 +98,13 @@ function AssignUtilityToTenant() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"))
+        helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"));
+        helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send()
     }
+
+    useEffect(() => { getTenantList() }, [getFlatList])
 
     const getTenantList = () => {
         var helper = new XMLHttpRequest()
@@ -101,7 +119,9 @@ function AssignUtilityToTenant() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/owner/tenantlist/" + sessionStorage.getItem("UserId"))
+        helper.open("GET", "http://localhost:7078/owner/tenantlist/" + sessionStorage.getItem("UserId"));
+        helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send()
     }
 
@@ -117,7 +137,7 @@ function AssignUtilityToTenant() {
     const onOptionChangeTenant = (event) => {
         debugger;
         // setTenantId(event.target.value);
-        sessionStorage.setItem("tenantId",event.target.value)
+        sessionStorage.setItem("tenantId", event.target.value)
         console.log(TenantId)
         debugger;
     }

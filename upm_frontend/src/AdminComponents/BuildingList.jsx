@@ -20,6 +20,8 @@ function BuildingList() {
         };
 
         helper.open("GET", "http://localhost:7078/admin/buildinglist/" + adminId);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send();
     }
     return (<>

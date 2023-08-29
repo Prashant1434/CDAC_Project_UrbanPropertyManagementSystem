@@ -7,7 +7,7 @@ function AssignBuildingToAdmin() {
 
     const [AdminList, setAdminList] = useState([]);
 
-    const adminId = sessionStorage.getItem("adminId");
+    // const adminId = sessionStorage.getItem("adminId");
 
     const ReverseToBuilder = () => {
         navigate("/BUILDER");
@@ -47,6 +47,8 @@ function AssignBuildingToAdmin() {
         };
 
         helper.open("GET", "http://localhost:7078/builder/getBuilding/" + id);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send();
     }
 
@@ -61,7 +63,9 @@ function AssignBuildingToAdmin() {
                 ReverseToBuilder();
             }
         }
-        helper.open("PUT", "http://localhost:7078/builder/assignBuilding/" + adminId + "/" + id);
+        helper.open("PUT", "http://localhost:7078/builder/assignBuilding/" + sessionStorage.getItem("adminId") + "/" + id);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send();
 
     }
@@ -77,6 +81,8 @@ function AssignBuildingToAdmin() {
             }
         }
         helper.open("GET", "http://localhost:7078/builder/adminlist/" + sessionStorage.getItem("UserId"));
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send();
     }
 

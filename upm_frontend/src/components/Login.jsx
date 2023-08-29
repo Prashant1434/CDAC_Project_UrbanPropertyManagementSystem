@@ -9,14 +9,14 @@ function Login() {
 
     const [Credentials, setCredentials] = useState({ emailId: "", password: "" });
 
-    // const option = ['BUILDER','ADMIN', 'OWNER', 'TENANT','SUPERADMIN'];
+    const option = ['SUPERADMIN', 'BUILDER', 'ADMIN', 'OWNER', 'TENANT'];
 
     var [Role, SetRole] = useState("");
-    
-    // const onOptionChange = (event) => {
-    //     debugger;
-    //     SetRole(event.target.value);
-    // }
+
+    const onOptionChange = (event) => {
+        debugger;
+        SetRole(event.target.value);
+    }
 
     const navigate = useNavigate();
     const onTextChange = (args) => {
@@ -27,18 +27,19 @@ function Login() {
         console.log(Credentials.emailId + "   " + Credentials.password);
     }
 
-    const Validation = () =>{
-        if(Credentials.emailId.length == ""){
+    const Validation = () => {
+
+        if (Credentials.emailId.length == "") {
             toast.warn("Email Can Not Be Empty")
         }
-        if(Credentials.password.length == ""){
+        if (Credentials.password.length == "") {
             toast.warn("Password Can Not Be Empty")
         }
     }
 
     const SignIn = () => {
         // debugger;
-        Validation();   
+        Validation();
         if (Role == "SUPERADMIN") {
             var helper = new XMLHttpRequest();
             helper.onreadystatechange = () => {
@@ -48,11 +49,11 @@ function Login() {
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
                     if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password) {
                         SetRole("/SUPERADMIN");
-                        sessionStorage.setItem("Role","SUPERADMIN");
+                        sessionStorage.setItem("Role", "SUPERADMIN");
                         navigate("/SUPERADMIN");
                         toast.success("Login Successfull");
                     }
-                    else{
+                    else {
                         toast.error("Invalid Credentials");
                     }
 
@@ -71,15 +72,16 @@ function Login() {
                     var responseReceived = JSON.parse(helper.responseText);
                     // setUser(responseReceived);
                     console.log(responseReceived.emailId + "  " + responseReceived.password);
-                    if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password ) {
-                        navigate("/" + responseReceived.role);
-                        SetRole("/"+responseReceived.role);
-                        sessionStorage.setItem("Role",responseReceived.role);
-                        sessionStorage.setItem("UserName", responseReceived.name);
-                        sessionStorage.setItem("UserId", responseReceived.id);
+                    if (responseReceived.jwt != null) {
+                        navigate("/" + responseReceived.user.role);
+                        SetRole("/" + responseReceived.user.role);
+                        sessionStorage.setItem("Role", responseReceived.user.role);
+                        sessionStorage.setItem("UserName", responseReceived.user.name);
+                        sessionStorage.setItem("UserId", responseReceived.user.id);
+                        sessionStorage.setItem("token".responseReceived.jwt)
                         toast.success("Login Successfull");
                     }
-                    else{
+                    else {
                         toast.error("Invalid Credentials");
                     }
 
@@ -92,60 +94,60 @@ function Login() {
         }
     }
     return (
-<>
-        <div className='background'>
+        <>
+            <div className='background'>
 
-            <center>
-                <div className='registerDetails'>
+                <center>
+                    <div className='registerDetails'>
 
-                    <center>
-                        <table className='table-responsive'>
-                            <center>
-                                <div>
-                                    <img src={Logo} alt='' className='logo' />
-                                </div>
-                                <tr>
-                                    <td>
-                                        Username
-                                    </td>
-                                    <td>
-                                        <input placeholder='Enter username' className='inputBox' type='text' onChange={onTextChange} value={Credentials.emailId} name='emailId'></input>
-                                    </td>
-                                </tr>
-                                <br />
-                                <tr>
-                                    <td>
-                                        Password
-                                    </td>
-                                    <td>
-                                        <input placeholder='Enter password' className='inputBox' type='password' onChange={onTextChange} value={Credentials.password} name='password'></input>
-                                    </td>
-                                </tr>
-                                <br></br>
-                                <tr>
-                                    {/* <select onChange={onOptionChange} className='inputBox'>
-                                        <option>Select Role</option>
-                                        {option.map((option, index) => {
-                                            return <option key={index}>
-                                                {option}
-                                            </option>
-                                        })}
-                                    </select> */}
-                                </tr><br />
-                                <tr>
-                                    <td colSpan={2}>
-                                        <button className='loginButton' onClick={SignIn}>
-                                            Login
-                                        </button><br /><br />
-                                    </td>
-                                </tr>
-                            </center>
-                        </table>
-                    </center>
-                </div>
-            </center>
-        </div>
-        
+                        <center>
+                            <table className='table-responsive'>
+                                <center>
+                                    <div>
+                                        <img src={Logo} alt='' className='logo' />
+                                    </div>
+                                    <tr>
+                                        <td>
+                                            Username
+                                        </td>
+                                        <td>
+                                            <input placeholder='Enter username' className='inputBox' type='text' onChange={onTextChange} value={Credentials.emailId} name='emailId'></input>
+                                        </td>
+                                    </tr>
+                                    <br />
+                                    <tr>
+                                        <td>
+                                            Password
+                                        </td>
+                                        <td>
+                                            <input placeholder='Enter password' className='inputBox' type='password' onChange={onTextChange} value={Credentials.password} name='password'></input>
+                                        </td>
+                                    </tr>
+                                    <br></br>
+                                    <tr>
+                                        <select onChange={onOptionChange} className='inputBox'>
+                                            <option>Select Role</option>
+                                            {option.map((option, index) => {
+                                                return <option key={index}>
+                                                    {option}
+                                                </option>
+                                            })}
+                                        </select>
+                                    </tr><br />
+                                    <tr>
+                                        <td colSpan={2}>
+                                            <button className='loginButton' onClick={SignIn}>
+                                                Login
+                                            </button><br /><br />
+                                        </td>
+                                    </tr>
+                                </center>
+                            </table>
+                        </center>
+                    </div>
+                </center>
+            </div>
+
         </>
     );
 

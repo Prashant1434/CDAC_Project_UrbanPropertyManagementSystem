@@ -16,6 +16,7 @@ function Navbar(props) {
         sessionStorage.removeItem("buildingId");
         sessionStorage.removeItem("flatId");
         sessionStorage.removeItem("Role")
+        sessionStorage.removeItem("token");
         navigate("/login");
     }
     return (

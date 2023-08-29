@@ -4,48 +4,59 @@ import { toast } from "react-toastify";
 
 
 function AddBilding() {
-    
+
     const navigate = useNavigate()
 
-    
-    
+    const [isValidPassed, setIsValidPassed] = useState(false)
+
     const ReverseToBuilder = () => {
         navigate("/BUILDER");
     }
 
- 
+
     const addBilding = () => {
         Validation();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            if (helper.readyState == 4 && helper.status == 200) {
-              //  var responseReceived = JSON.parse(helper.responseText);
-               // console.log("responseReceived : " + responseReceived);
-               toast.success("Building Added Successfully")
-                ReverseToBuilder();
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 && helper.status == 200) {
+                    //  var responseReceived = JSON.parse(helper.responseText);
+                    // console.log("responseReceived : " + responseReceived);
+                    toast.success("Building Added Successfully")
+                    ReverseToBuilder();
+                }
             }
+            helper.open("POST", "http://localhost:7078/builder/addBuilding/" + sessionStorage.getItem("UserId"));
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Building));
         }
-        helper.open("POST", "http://localhost:7078/builder/addBuilding/"+sessionStorage.getItem("UserId"));
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Building));
-
     }
 
     const Validation = () => {
+        let isValid = true;
         if (Building.name.length == "") {
             toast.warn("Name Can Not Be Empty")
+            isValid = false;
         }
         if (Building.floorCount.length == "") {
             toast.warn("Floor Count Can Not Be Empty")
+            isValid = false;
         }
         if (Building.phone.length == "") {
             toast.warn("Contact Can Not Be Empty")
+            isValid = false;
         }
         if (Building.madeYear.length == "") {
             toast.warn("Made Year Can Not Be Empty")
+            isValid = false;
         }
         if (Building.address.length == "") {
             toast.warn("Address Can Not Be Empty")
+            isValid = false;
+        }
+        if (isValid) {
+            setIsValidPassed(isValid);
         }
 
     }
@@ -58,7 +69,7 @@ function AddBilding() {
             "phone": "",
             "floorCount": "",
             "address": "",
-            "madeYear":""
+            "madeYear": ""
         }
     );
 
@@ -98,7 +109,7 @@ function AddBilding() {
                         <label>Address</label>
                         <textarea className="form-control" id="" placeholder="Enter Address" name="address" onChange={onTextChange} />
                     </div>
-         
+
                     <center>
                         <button type="button" className="btn btn-primary" onClick={addBilding}>Add Building</button>
                     </center>
@@ -107,7 +118,7 @@ function AddBilding() {
         </div>
     </>);
 
-    
+
 }
 
 export default AddBilding;

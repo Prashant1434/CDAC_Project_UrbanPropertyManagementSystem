@@ -8,9 +8,9 @@ function AddTenant() {
 
     var flatid = sessionStorage.getItem("flatId");
 
-    var a;
-
     var [Flat, setFlat] = useState([]);
+
+    const [isValidPassed, setIsValidPassed] = useState(false)
 
     const [Tenant, setTenant] = useState(
         {
@@ -29,50 +29,63 @@ function AddTenant() {
     );
     const onOptionChange = (event) => {
         debugger;
-        sessionStorage.setItem("flatId",event.target.value);
+        sessionStorage.setItem("flatId", event.target.value);
 
         console.log("Flat iD  : " + flatid);
     }
-
+    var flatid = sessionStorage.getItem("flatId");
     const Validation = () => {
-        if(Tenant.name.length == ""){
+        let isValid = true;
+        if (Tenant.name.length == "") {
             toast.warn("Name Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.emailId.length == ""){
+        if (Tenant.emailId.length == "") {
             toast.warn("Email Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.contact.length == ""){
+        if (Tenant.contact.length == "") {
             toast.warn("Contact Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.password.length == ""){
+        if (Tenant.password.length == "") {
             toast.warn("Password Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.permanentAddress.length == ""){
+        if (Tenant.permanentAddress.length == "") {
             toast.warn("Address Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.deposite.length == ""){
+        if (Tenant.deposite.length == "") {
             toast.warn("Deposite Can Not Be Empty")
+            isValid = false;
         }
-        if(flatid == null){
+        if (flatid == null) {
             toast.warn("Select Flat")
+            isValid = false;
+        }
+        if (isValid) {
+            setIsValidPassed(isValid)
         }
     }
 
     const addTenant = () => {
-       Validation();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            debugger
-            if (helper.readyState == 4 && helper.status == 200) {
-                 var responseReceived = JSON.parse(helper.responseText);
-                 toast.success("Tenant Added Successfully")
-                navigate("/OWNER")
+        Validation();
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                debugger
+                if (helper.readyState == 4 && helper.status == 200) {
+                    var responseReceived = JSON.parse(helper.responseText);
+                    toast.success("Tenant Added Successfully")
+                    navigate("/OWNER")
+                }
             }
+            helper.open("POST", "http://localhost:7078/owner/assignFlatToTenant/" + flatid);
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Tenant));
         }
-        helper.open("POST", "http://localhost:7078/owner/assignFlatToTenant/" + flatid);
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Tenant));
-
     }
 
     useEffect(() => { getFlatList() }, [])
@@ -90,7 +103,9 @@ function AddTenant() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"))
+        helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"));
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send()
     }
 

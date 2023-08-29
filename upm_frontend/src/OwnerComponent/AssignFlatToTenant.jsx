@@ -5,8 +5,10 @@ import { toast } from "react-toastify";
 
 function AssignFlatToTenant() {
     var { id } = useParams()
-    var {flatNo} = useParams();
+    var { flatNo } = useParams();
     const navigate = useNavigate();
+
+    const [isValidPassed, setIsValidPassed] = useState(false)
 
 
     const [Tenant, setTenant] = useState(
@@ -26,43 +28,55 @@ function AssignFlatToTenant() {
     );
 
     const Validation = () => {
-        if(Tenant.name.length == ""){
+        let isValid = true;
+        if (Tenant.name.length == "") {
             toast.warn("Name Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.emailId.length == ""){
+        if (Tenant.emailId.length == "") {
             toast.warn("Email Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.contact.length == ""){
+        if (Tenant.contact.length == "") {
             toast.warn("Contact Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.password.length == ""){
+        if (Tenant.password.length == "") {
             toast.warn("Password Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.permanentAddress.length == ""){
+        if (Tenant.permanentAddress.length == "") {
             toast.warn("Address Can Not Be Empty")
+            isValid = false;
         }
-        if(Tenant.deposite.length == ""){
+        if (Tenant.deposite.length == "") {
             toast.warn("Deposite Can Not Be Empty")
+            isValid = false;
         }
-        
+        if (isValid = false) {
+            setIsValidPassed(isValid)
+        }
+
     }
 
 
     const addTenant = () => {
         Validation();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            if (helper.readyState == 4 && helper.status == 200) {
-                //  var responseReceived = JSON.parse(helper.responseText);
-                // console.log("responseReceived : " + responseReceived);
-                // ReverseToBuilder();
-                navigate("/OWNER")
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 && helper.status == 200) {
+                    //  var responseReceived = JSON.parse(helper.responseText);
+                    // console.log("responseReceived : " + responseReceived);
+                    // ReverseToBuilder();
+                    navigate("/OWNER")
+                }
             }
+            helper.open("POST", "http://localhost:7078/owner/assignFlatToTenant/" + id);
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Tenant));
         }
-        helper.open("POST", "http://localhost:7078/owner/assignFlatToTenant/" + id);
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Tenant));
-
     }
 
     const onTextChange = (args) => {
