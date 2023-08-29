@@ -34,6 +34,9 @@ function ViewProfile() {
         };
 
         helper.open("GET", "http://localhost:7078/users/getuser/" + userId)
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send()
     }
 

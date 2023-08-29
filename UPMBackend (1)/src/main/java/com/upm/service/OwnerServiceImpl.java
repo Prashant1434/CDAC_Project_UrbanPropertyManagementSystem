@@ -10,8 +10,12 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.upm.custom_exceptions.ResourceNotFoundException;
 import com.upm.dao.FlatDao;
 import com.upm.dao.OwnerDao;
 import com.upm.dao.TenantDao;
@@ -47,32 +51,32 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public AddTenantDto addTenant(AddTenantDto tenantDto) {
 		Users user = mapper.map(tenantDto, Users.class);
-
+		user.setPassword(encoder.encode(tenantDto.getPassword()));
 		Tenant tenant = new Tenant(tenantDto.getStatus(), tenantDto.getLeaveDate(), tenantDto.getDeposite());
-
 		user.setTenant(tenant);
 		tenant.setTenant(user);
 		Tenant newTenant = tenantDao.findByTenant(userDao.save(user));
-
 		return mapper.map(newTenant, AddTenantDto.class);
 	}
 
 	@Override
-	public String assignFlatToTenant(Long id, Long tId) {
-		Flat flat = flatDao.findById(id).orElseThrow();
+	public ResponseEntity<?> assignFlatToTenant(Long id, Long tId) {
+		Flat flat = flatDao.findById(id).orElseThrow(()->new ResourceNotFoundException("Invalid flat Id"));
 		System.out.println("flat : " + flat.toString());
-//		User user = userDao.findById(iId)
-		Tenant tenant = tenantDao.findById(tId).orElseThrow();
+		Tenant tenant = tenantDao.findById(tId).orElseThrow(()->new ResourceNotFoundException("Invalid tenant Id"));
 		System.out.println("tenant : " + tenant.toString());
 		flat.setFullEmptyStatusOfTenant(true);
 		flat.setTenantFlat(tenant);
 		tenant.setFlat(flat);
 		flatDao.save(flat);
-		return "Flat Added To Tenant";
+		return ResponseEntity.status(HttpStatus.OK).body("Tenant Added To Tenant");
 	}
 
 	@Override
@@ -103,12 +107,8 @@ public class OwnerServiceImpl implements OwnerService {
 			tenantDto.setStatus(tenant.isStatus());
 			tenantDto.setDeposite(tenant.getDeposite());
 
-//		AddTenantDto tenantDto;
-//		if(flat.getTenantFlat()!=null) {
-//		 tenantDto = mapper.map(flat.getTenantFlat(), AddTenantDto.class);
-//		
-//				 
-//				 
+	 
+		 
 			return tenantDto;
 		} else
 			return null;

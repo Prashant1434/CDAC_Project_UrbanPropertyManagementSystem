@@ -48,8 +48,9 @@ function UpdateProfile() {
             }
         }
         helper.open("PUT", "http://localhost:7078/admin/updateprofile/" + parseInt(userId));
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Admin));
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+
+        helper.setRequestHeader("Content-Type", "application/json");        helper.send(JSON.stringify(Admin));
     }
 
     const onTextChange = (args) => {

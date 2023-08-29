@@ -17,7 +17,6 @@ import com.upm.service.UserService;
 @Service
 @Transactional
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
-	// dep user dao
 	@Autowired
 	private UsersDao userDao;
 	
@@ -30,11 +29,8 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// invoke dao's method to get uer details form DB
 		Users user = userDao.findByEmailId(email).orElseThrow(() ->new UsernameNotFoundException("Invalid Email !!!!!"));
-		//=> user email exists
 		System.out.println(user);
-//		UserDto userDto=mapper.map(user, UserDto.class);
 		return new CustomUserDetails(user);
 	}
 

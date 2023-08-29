@@ -10,9 +10,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.upm.custom_exceptions.ResourceNotFoundException;
 import com.upm.dao.UsersDao;
 import com.upm.entities.Users;
 
@@ -45,9 +48,9 @@ public class ImageHandlingServiceImpl implements ImageHandlingService {
 	}
 
 	@Override
-	public String uploadImage(Long userId, MultipartFile image) throws IOException {
+	public ResponseEntity<?> uploadImage(Long userId, MultipartFile image) throws IOException {
 		// TODO Auto-generated method stub
-		Users users=usersDao.findById(userId).orElseThrow();
+		Users users=usersDao.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid userId Id!!"));
 		
 		String path=folderLocation.concat(image.getOriginalFilename());
 		
@@ -55,7 +58,7 @@ public class ImageHandlingServiceImpl implements ImageHandlingService {
 		
 		users.setImagePath(path);
 		
-		return "image is uploaded succesfully";
+		return ResponseEntity.status(HttpStatus.OK).body("image is uploaded succesfully");
 	}
 
 	@Override

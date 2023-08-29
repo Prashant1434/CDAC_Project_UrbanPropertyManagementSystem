@@ -12,9 +12,8 @@ import com.upm.entities.Users;
 
 public interface UserService {
 	UserDto loginUser(LoginDto loginDto);
-	String updateUser(Long id, UserDto userDto);
-	ApiResponse editProfile(UserDto updateProfileDto,Long userId);
+	ResponseEntity<?>  editProfile(UserDto updateProfileDto,Long userId);
 	SuperAdmin superAdminLoginService(SuperAdmin superAdmin);
 	UserDto getLoggedInUser(Long userId);
-    ResponseEntity<String> changeCustomerPassword(String email, String oldPassword, String newPassword);
+    ResponseEntity<String> changeUserPassword(String email, String oldPassword, String newPassword);
 }

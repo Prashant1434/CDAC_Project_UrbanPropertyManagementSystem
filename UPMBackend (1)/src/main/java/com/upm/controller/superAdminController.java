@@ -3,6 +3,8 @@ package com.upm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +22,14 @@ import com.upm.service.SuperAdminServiceImpl;
 @RequestMapping("/superadmin")
 @CrossOrigin( methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, 
 allowedHeaders = {"Authorization", "Content-Type"})
+@Validated
 public class superAdminController {
 	
 	@Autowired
 	private SuperAdminService superAdminService;
 	
 	@PostMapping("/addBuilder")
-	public AddBuilderDto addBuilder(@RequestBody AddBuilderDto addBuilderDto)
+	public ResponseEntity<?> addBuilder(@RequestBody AddBuilderDto addBuilderDto)
 	{
 		return superAdminService.addBuilder(addBuilderDto);
 	}

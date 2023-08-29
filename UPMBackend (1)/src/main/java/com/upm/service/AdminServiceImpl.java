@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,16 +73,17 @@ public class AdminServiceImpl implements AdminService {
 	public AddOwnerDto addOwner(AddOwnerDto ownerDto) {
 		Users user = mapper.map(ownerDto, Users.class);
 		Owner owner = new Owner();
+		user.setPassword(encoder.encode(ownerDto.getPassword()));
 		owner.setOwner(user);
 		user.setOwner(owner);
 		Users newUser=userDao.save(user);
-		Owner newOwner=ownerDao.findByOwner(newUser).orElseThrow();
+		Owner newOwner=ownerDao.findByOwner(newUser).orElseThrow(()->new ResourceNotFoundException("Invalid User!!"));
 		return mapper.map(newOwner, AddOwnerDto.class); 
 	}
 
 	public ApiResponse addFaltToOwner(Long id, Long oId) {
-		Flat flat = flatDao.findById(id).orElseThrow();
-		Owner owner = ownerDao.findById(oId).orElseThrow();
+		Flat flat = flatDao.findById(id).orElseThrow(()->new ResourceNotFoundException("Invalid Flat Id!!"));
+		Owner owner = ownerDao.findById(oId).orElseThrow(()->new ResourceNotFoundException("Invalid Owner Id!!"));
 		owner.addFlat(flat);
 		flat.setFullEmptyStatus(true);
 		flatDao.save(flat);
@@ -89,8 +92,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<AddBuildingDto> getBuildingList(Long adminId) {
-		// TODO Auto-generated method stub
-		Users user = userDao.findById(adminId).orElseThrow(()-> new ResourceNotFoundException("no data available!!"));
+		Users user = userDao.findById(adminId).orElseThrow(()-> new ResourceNotFoundException("Invalid Admin Id"));
 
 		List<Building> buildingList = buildingDao.findByAdminsBuilding(user.getAdmin());
 
@@ -100,8 +102,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<FlatDto> getFlatList(Long buildingId) {
-		// TODO Auto-generated method stub
-		Building building = buildingDao.findById(buildingId).orElseThrow();
+		Building building = buildingDao.findById(buildingId).orElseThrow(()->new ResourceNotFoundException("Invalid Building Id!!"));
 
 		List<Flat> flatList = flatDao.findByBuilding(building);
 
@@ -110,31 +111,30 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public AddOwnerDto getOwner(Long flatId) {
-		// TODO Auto-generated method stub
-		Flat flat = flatDao.findById(flatId).orElseThrow();
+		Flat flat = flatDao.findById(flatId).orElseThrow(()->new ResourceNotFoundException("Invalid flat Id!!!"));
 		Owner owner = flat.getOwner();
 		if(owner==null)
 		{
-			return null;
+			 throw new ResourceNotFoundException("Owner not found!!");
 		}
 		Users user = owner.getOwner();
+		
 		return mapper.map(user, AddOwnerDto.class);
 	}
 
 	@Override
 	public AddTenantDto getTenant(Long flatId) {
-		// TODO Auto-generated method stub
-		Flat flat = flatDao.findById(flatId).orElseThrow();
+		Flat flat = flatDao.findById(flatId).orElseThrow(()->new ResourceNotFoundException("invalid Flat Id!!"));
 		Tenant tenant = flat.getTenantFlat();
 		Users user = tenant.getTenant();
+		if(user==null)
+			throw new ResourceNotFoundException("Tenant not found!!");
 		return mapper.map(user, AddTenantDto.class);
 	}
 
 	@Override
 	public List<AddOwnerDto> getAllOwnerList(Long adminId) {
-		// TODO Auto-generated method stub
 		List<AddBuildingDto> buildingList = getBuildingList(adminId);
-		buildingList.forEach(i -> System.out.println(i.getName()));
 		List<FlatDto> flatList = new ArrayList<FlatDto>();
 
 		for (AddBuildingDto buildingDto : buildingList) {
@@ -153,10 +153,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<FlatDto> getAllEmptyFlats(Long buildingId) {
-		// TODO Auto-generated method stub
-		Building building=buildingDao.findById(buildingId).orElseThrow();
+		Building building=buildingDao.findById(buildingId).orElseThrow(()->new ResourceNotFoundException("Invalid building id!!"));
 		List<Flat> flatList=flatDao.findByBuilding(building);
-		flatList.forEach(i->System.out.println(i.getFlatType()));
 		return flatList.stream()
 					.filter(i-> i.getOwner()==null)
 					.map(flat -> mapper.map(flat, FlatDto.class))
@@ -165,8 +163,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<FlatDto> getFlatListByOwner(Long ownerId) {
-		// TODO Auto-generated method stub
-		List<Flat> flatList=flatDao.findByOwner(ownerDao.findById(ownerId).orElseThrow());
+		List<Flat> flatList=flatDao.findByOwner(ownerDao.findById(ownerId).orElseThrow(()->new ResourceNotFoundException("Invalid Owner Id!!")));
 		return flatList.stream()
 				.map(flat ->mapper.map(flat, FlatDto.class))
 				.collect(Collectors.toList());

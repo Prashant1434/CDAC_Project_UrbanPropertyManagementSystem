@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import static org.springframework.http.MediaType.*;
 
 import com.upm.dto.SigninResponse;
 import com.upm.dao.BuilderDao;
+import com.upm.dto.ForgetPasswordDto;
 import com.upm.dto.LoginDto;
 import com.upm.dto.UserDto;
 import com.upm.entities.Builder;
@@ -38,8 +40,10 @@ import com.upm.service.UserService;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin( methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, 
-allowedHeaders = {"Authorization", "Content-Type"})
+@CrossOrigin//(origins = "http://localhost:7078/",
+//methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, 
+//allowedHeaders = {"Authorization", "Content-Type"})
+@Validated
 public class UserController {
 
 	@Autowired
@@ -59,7 +63,7 @@ public class UserController {
 	
 	
 	@PostMapping(value = "/images/{usersId}", consumes = "multipart/form-data")
-	public String uploadImage(@PathVariable Long usersId,@RequestParam MultipartFile imageFile) throws IOException
+	public ResponseEntity<?> uploadImage(@PathVariable Long usersId,@RequestParam MultipartFile imageFile) throws IOException
 	{
 		return imageHandlingService.uploadImage(usersId, imageFile);
 	}
@@ -73,12 +77,14 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<?>  loginUsers(@RequestBody LoginDto loginDto) {
 		System.out.println("login Dto : " + loginDto.toString());
+		UserDto user=userService.loginUser(loginDto);
 		Authentication principal = mgr
 				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmailId(), loginDto.getPassword()));
 		String jwtToken = utils.generateJwtToken(principal);
 		System.out.println(jwtToken);
+		System.out.println(user.getRole());
 		return ResponseEntity.ok(
-				new SigninResponse(jwtToken, "User authentication success!!!"));
+				new SigninResponse(jwtToken, "User authentication success!!!",user));
 	}
 	
 	@PostMapping("/super_admin_login")
@@ -87,23 +93,17 @@ public class UserController {
 	   return userService.superAdminLoginService(superAdmin);
 	}
 	
-   // ResponseEntity<String> changeCustomerPassword(String email, String oldPassword, String newPassword);
+	@PostMapping("/forgetpasword")
+  ResponseEntity<String> changeCustomerPassword(@RequestBody ForgetPasswordDto forgetPasswordDto)
+  {
+	  return userService.changeUserPassword(forgetPasswordDto.getEmailId(), forgetPasswordDto.getOldPassword(), forgetPasswordDto.getNewPassword());
+  }
 
-//	@GetMapping("/getuser/{userId}")
-//	public UserDto getUser(@PathVariable Long userId)
-//	{
-//		return userService.getLoggedInUser(userId);
-//	}
+
 @GetMapping("/getuser/{userId}")
 	public UserDto getUser(@PathVariable Long userId)
 	{
 		return userService.getLoggedInUser(userId);
 	}
-	
-	@PutMapping("/updateUser/{id}")
-	public String updateUser(@PathVariable Long id  , @RequestBody UserDto userDto) {
-		return userService.updateUser(id, userDto);
-	}
-	
 
 }

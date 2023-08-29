@@ -9,9 +9,12 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.upm.custom_exceptions.ResourceNotFoundException;
 import com.upm.dao.AdminDao;
 import com.upm.dao.BuilderDao;
 import com.upm.dao.BuildingDao;
@@ -25,7 +28,6 @@ import com.upm.dao.UsersDao;
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.AddBuildingDto;
 import com.upm.dto.ApiResponse;
-import com.upm.dto.AssignBuildingToAdminDto;
 import com.upm.dto.LoginDto;
 import com.upm.entities.Admin;
 import com.upm.entities.Builder;
@@ -54,31 +56,21 @@ public class BuilderServiceImpl implements BuilderService {
 	
 	@Override
 	public ApiResponse addAdmin(AddAdminDto adminDto,Long builderId) {
-//		Building building=buildingDao.findById(adminDto.getBuildingId()).orElseThrow();
-//		Builder builder= builderDao.findById(adminDto.getBuilderId()).orElseThrow();
-		Users users=usersDao.findById(builderId).orElseThrow();
+		Users users=usersDao.findById(builderId).orElseThrow(()->new ResourceNotFoundException("Invalid Builder Id"));
 		Admin admin=new Admin();
 		Users user=mapper.map(adminDto, Users.class);
+		user.setPassword(encoder.encode(adminDto.getPassword()));
 		Builder builder=builderDao.findByUserBuilder(users);
-//		Users userAdmin=mapper.map(adminDto, Users.class);
-//		System.out.println(userAdmin.toString());
-//		usersDao.save(userAdmin);
-//		admin.addBuilding(building);
-//		admin.setBuilder(builder);
 		user.setAdmin(admin);
 		builder.addAdmin(admin);
 		admin.setAdmin(user);
-		
-		
-		
-	   // builderDao.save(builder);
 		usersDao.save(user);
 		return new ApiResponse("admin added successfully!!");	
 	}
 
 	@Override
 	public ApiResponse addBuilding(AddBuildingDto addbuildingDto,Long builderId) {
-		Users user=usersDao.findById(builderId).orElseThrow();
+		Users user=usersDao.findById(builderId).orElseThrow(()->new ResourceNotFoundException("Invalid Builder Id"));
 		Builder builder=builderDao.findByUserBuilder(user);
 		builder.addBuilding(mapper.map(addbuildingDto, Building.class));
 		builderDao.save(builder);
@@ -88,55 +80,35 @@ public class BuilderServiceImpl implements BuilderService {
 
 	@Override
 	public ApiResponse assignBuildingToAdmin(Long adminId,Long buildingId) {
-		Users user=usersDao.findById(adminId).orElseThrow();
-
+		Users user=usersDao.findById(adminId).orElseThrow(()->new ResourceNotFoundException("Invalid Builder Id"));
 		Admin admin=adminDao.findByAdmin(user);
-		System.out.println(admin.toString());
-		admin.addBuilding(buildingDao.findById(buildingId).orElseThrow());
+		admin.addBuilding(buildingDao.findById(buildingId).orElseThrow(()->new ResourceNotFoundException("Invalid Building Id")));
 		adminDao.save(admin);
 		return new ApiResponse("building assigned to admin successfully");
 	}
 
 	@Override
-	public String removeBuilding(Long buildingId) {
-		// TODO Auto-generated method stub
+	public ResponseEntity<?> removeBuilding(Long buildingId) {
+		Building building=buildingDao.findById(buildingId).orElseThrow(()->new ResourceNotFoundException("Invalid Building Id!!"));
 		 buildingDao.deleteById(buildingId);
-		 return "building deleted successfully";
+		 return  ResponseEntity.status(HttpStatus.OK).body("building deleted successfully");
 	}
 
-	@Override
-	public String updateAdmin(Long adminId) {
-		return null;
-	}
 
 	@Override
-	public String addFlat(Flat flat,Long buildingId) {
-		Building building=buildingDao.findById(buildingId).orElseThrow();
+	public ResponseEntity<?> addFlat(Flat flat,Long buildingId) {
+		Building building=buildingDao.findById(buildingId).orElseThrow(()->new ResourceNotFoundException("Invalid Building Id!!"));
 		building.addFlat(flat);
 		flatDao.save(flat);
-		return "flat added successfully";
+		 return  ResponseEntity.status(HttpStatus.OK).body("Flat added successfully");
 	}
 
-	@Override
-	public String findByEmailAndPasswordService(String emailId) {
-		// TODO Auto-generated method stub
-		try {
-			 Optional<Builder> builder=builderDao.findByUserBuilderEmailId(emailId);
-			
-			 return "builder Login successful";
-		}
-		catch(Exception e)
-		{
-			return "Oops wrong credentials!!";
-		}
-	}
 
 	@Override
 	public List<AddBuildingDto> getBuildingList(Long builderId) {
-		Users user=usersDao.findById(builderId).orElseThrow();
+		Users user=usersDao.findById(builderId).orElseThrow(()->new ResourceNotFoundException("Invalid builder Id!!"));
 		Builder builder=builderDao.findByUserBuilder(user);
 		List<Building> buildingList = buildingDao.findByBuildingBuilder(builder);
-		//buildingList.forEach(i->System.out.println(i.getName()));
 		List<AddBuildingDto> blist= buildingList.stream()
 				.map(building ->mapper.map(building, AddBuildingDto.class))
 				.collect(Collectors.toList());
@@ -151,11 +123,8 @@ public class BuilderServiceImpl implements BuilderService {
 
 	@Override
 	public List<AddAdminDto> getAdminList(Long builderId) {
-		// TODO Auto-generated method stub
 		Users user=usersDao.findById(builderId).orElseThrow();
-
 		Builder builder=builderDao.findByUserBuilder(user);
-		System.out.println(builder.getUserBuilder().getName());
 		List<Admin> adminList = adminDao.findByAdminBuilder(builder);
 		for (Admin admin2 : adminList) {
 			System.out.println(admin2.getAdmin().getName());
@@ -167,7 +136,7 @@ public class BuilderServiceImpl implements BuilderService {
 
 	@Override
 	public AddBuildingDto getBuildingDetails(Long buildingId) {
-		// TODO Auto-generated method stub
 		return mapper.map(buildingDao.findById(buildingId).orElseThrow(), AddBuildingDto.class);
 	}
+
 }

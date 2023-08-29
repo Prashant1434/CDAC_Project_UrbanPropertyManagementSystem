@@ -43,6 +43,7 @@ function AddAdmin() {
             }
         }
         helper.open("POST", "http://localhost:7078/builder/addAdmin/" + sessionStorage.getItem("UserId"));
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
         helper.setRequestHeader("Content-Type", "application/json");
         helper.send(JSON.stringify(Admin));
 

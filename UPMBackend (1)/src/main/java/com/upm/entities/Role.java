@@ -1,5 +1,7 @@
 package com.upm.entities;
 
-public enum Role {
-	ROLE_ADMIN,ROLE_OWNER,ROLE_TENANT,ROLE_BUILDER
+import java.io.Serializable;
+
+public enum Role implements Serializable{
+	ADMIN,OWNER,TENANT,BUILDER
 }

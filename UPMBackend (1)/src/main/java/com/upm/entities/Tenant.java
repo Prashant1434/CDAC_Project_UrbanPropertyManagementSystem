@@ -41,6 +41,7 @@ public class Tenant   {
 	private boolean status;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate leaveDate;
+	
 	private Double deposite;
 
 	@OneToOne(fetch = FetchType.LAZY)

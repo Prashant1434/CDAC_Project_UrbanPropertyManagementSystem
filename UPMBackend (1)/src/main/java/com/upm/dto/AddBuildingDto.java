@@ -3,11 +3,15 @@ package com.upm.dto;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.upm.entities.Admin;
 
 import lombok.AllArgsConstructor;
@@ -19,12 +23,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddBuildingDto {
+	
+	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
 	
+	@NotBlank(message ="name cannot be blnck")
 	private String name;
 	
+	@NotBlank(message ="address cannot be blnck")
 	private String address;
 	
+	@NotBlank(message ="phone cannot be blnck")
 	private String phone;
 	
 	private LocalDate madeYear;
@@ -33,7 +42,10 @@ public class AddBuildingDto {
 	
 	private Long floorCount;
 	
+	@JsonProperty(access = Access.READ_ONLY)
 	private Long builderId;
+	
+	@JsonProperty(access = Access.READ_ONLY)
 	private Long adminId;
 	
 	@JsonIgnore

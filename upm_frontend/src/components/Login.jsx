@@ -28,6 +28,7 @@ function Login() {
     }
 
     const navigate = useNavigate();
+
     const onTextChange = (args) => {
 
         var copyofCredentials = { ...Credentials };
@@ -74,17 +75,18 @@ function Login() {
         else {
             var helper = new XMLHttpRequest();
             helper.onreadystatechange = () => {
-                // debugger;
+                 debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
                     // setUser(responseReceived);
-                    console.log(responseReceived.emailId + "  " + responseReceived.password);
-                    if (responseReceived.emailId == Credentials.emailId && responseReceived.password == Credentials.password ) {
-                        navigate("/" + responseReceived.role);
+                    console.log(responseReceived.jwt+""+responseReceived.user);
+                    if (responseReceived.jwt!=null) {
+                        navigate("/" + responseReceived.user.role);
                         SetRole("/"+responseReceived.role);
-                        sessionStorage.setItem("Role",responseReceived.role);
-                        sessionStorage.setItem("UserName", responseReceived.name);
-                        sessionStorage.setItem("UserId", responseReceived.id);
+                        sessionStorage.setItem("Role",responseReceived.user.role);
+                        sessionStorage.setItem("UserName", responseReceived.user.name);
+                        sessionStorage.setItem("UserId", responseReceived.user.id);
+                        sessionStorage.setItem("token",responseReceived.jwt);
                         toast.success("Login Successfull");
                     }
                     else{

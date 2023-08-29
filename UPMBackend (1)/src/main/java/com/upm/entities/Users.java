@@ -60,19 +60,19 @@ public class Users extends RoleBaseEntity{
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-	@OneToOne
+	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "admin" , orphanRemoval = true)
 	@JsonIgnore
 	private Admin admin;
 
-	@OneToOne
+	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "owner" , orphanRemoval = true)
 	@JsonIgnore
 	private Owner owner;
 	
-	@OneToOne
+	@OneToOne(cascade =CascadeType.ALL ,mappedBy = "tenant" , orphanRemoval = true)
 	@JsonIgnore
 	private Tenant tenant;
 	
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "userBuilder",orphanRemoval = true)
 	@JsonIgnore
     private Builder builder;
 	

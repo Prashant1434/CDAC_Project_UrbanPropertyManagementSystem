@@ -65,8 +65,9 @@ function AssignUtilityToTenant() {
             }
         }
         helper.open("POST", "http://localhost:7078/owner/assignUtilityToTenant/" + flatid + "/" + TenantId);
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Utility));
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+
+        helper.setRequestHeader("Content-Type", "application/json");        helper.send(JSON.stringify(Utility));
 
     }
 

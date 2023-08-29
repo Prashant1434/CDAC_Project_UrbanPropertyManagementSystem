@@ -30,7 +30,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// check for authorization hdr
 		String authHeadr = request.getHeader("Authorization");
 		if (authHeadr != null && authHeadr.startsWith("Bearer")) {
 			
@@ -40,24 +39,19 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 			
 			Claims claims = utils.validateJwtToken(token);
 			
-			// extract subject from the token
 			String email = utils.getUserNameFromJwtToken(claims);
 			
-			// extract authorities from the token
 			List<GrantedAuthority> authorities = utils.getAuthoritiesFromClaims(claims);
 			
-			// wrap user details (username/email +granted authorities ) in the
-			// username pwd token
 			UsernamePasswordAuthenticationToken authentication = 
 					new UsernamePasswordAuthenticationToken(email, null,
 					authorities);
-			//save above auth object in the spric sec ctx
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
 		} 
 		
 		
-		filterChain.doFilter(request, response);// passing the control to the nexyt filter in the chain
+		filterChain.doFilter(request, response);
 		
 	}
 

@@ -24,4 +24,6 @@ public class SuperAdmin extends BaseEntity {
 	
 	private String contact;
 	
+	private static String role="SUPERADMIN"; 
+	
 }

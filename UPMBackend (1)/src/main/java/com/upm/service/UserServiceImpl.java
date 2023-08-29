@@ -14,7 +14,10 @@ import com.upm.dao.SuperAdminDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.UpdateProfileDto;
 import com.upm.entities.Admin;
+import com.upm.entities.Builder;
+import com.upm.entities.Owner;
 import com.upm.entities.SuperAdmin;
+import com.upm.entities.Tenant;
 import com.upm.entities.Users;
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.ApiResponse;
@@ -41,75 +44,53 @@ public class UserServiceImpl implements UserService{
 	private PasswordEncoder encoder;
 	
 	@Override
-	public ApiResponse editProfile(UserDto updateProfileDto,Long userId) {
-		// TODO Auto-generated method stub
-		Users user=userDao.findById(userId).orElseThrow();
+	public ResponseEntity<?> editProfile(UserDto updateProfileDto,Long userId) {
+		Users user=userDao.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid user id!!"));
+		Admin admin=user.getAdmin();
+		Tenant tenant=user.getTenant();
+		Builder builder=user.getBuilder();
+		Owner owner=user.getOwner();
 		Users u=mapper.map(updateProfileDto, Users.class);
-		u.setId(userId);
-		//Admin admin=adminDao.findByAdmin(user);
+		u.setAdmin(admin);
+		u.setBuilder(builder);
+		u.setTenant(tenant);
+		u.setOwner(owner);
+		u.setPassword(encoder.encode(updateProfileDto.getPassword()));
 		userDao.save(u);
-		return new ApiResponse("profile updated successfully");
+		return ResponseEntity.status(HttpStatus.OK).body("profile updated successfully");
 	}
 	@Override
 	public UserDto loginUser(LoginDto loginDto) {
-		Users user1 = userDao.findByEmailId(loginDto.getEmailId()).orElseThrow();
+		Users user1 = userDao.findByEmailId(loginDto.getEmailId()).orElseThrow(()->new ResourceNotFoundException("Invalid user Email id!!"));
 		UserDto user = mapper.map(user1,UserDto.class);
-//		System.out.println("user : " + user.toString());
-		if ((user.getPassword().equals(loginDto.getPassword())) && (user.getRole().name() == "ROLE_ADMIN")) {
-			return user;
-		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "ROLE_OWNER") {
-			return user;
-		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "ROLE_TENANT") {
-			return user;
-		} else if (user.getPassword().equals(loginDto.getPassword()) && user.getRole().name() == "ROLE_BUILDER") {
-			return user;
+		if (encoder.matches( loginDto.getPassword(),user1.getPassword())) {
+			return user;	
 		} else
-			return null;
+			throw new ResourceNotFoundException("User Not found!! Login unsuccessful!!");
 	}
 
 	@Override
-	public String updateUser(Long id, UserDto userDto) {
-		Users user = userDao.findById(id).orElseThrow();
-		if (user != null) {
-			Users u = mapper.map(userDto, Users.class);
-			u.setId(id);
-			System.out.println("us : " + u.toString());
-			userDao.save(u);
-			return "Update Successfull !!! ";
-		} else {
-			return "user not exits !!! ";
-		}
-	}
-	@Override
 	public SuperAdmin superAdminLoginService(SuperAdmin superAdmin) {
-		// TODO Auto-generated method stub
-		SuperAdmin superadmin =superAdminDao.findByEmailId(superAdmin.getEmailId()).orElseThrow();
+		SuperAdmin superadmin =superAdminDao.findByEmailId(superAdmin.getEmailId()).orElseThrow(()->new ResourceNotFoundException("Invalid credentials!!"));
 		System.out.println(superadmin.getEmailId());
 
 		if(superadmin.getPassword().equals(superadmin.getPassword()))
 		    return superadmin;
 		else
-			return null;
+			 throw new ResourceNotFoundException("Invalid Credentials!!");
 	}
 	@Override
 	public UserDto getLoggedInUser(Long userId) {
-		Users user = userDao.findById(userId).orElseThrow();
+		Users user = userDao.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid user id!!"));
 		UserDto userDto = mapper.map(user, UserDto.class);
 		System.out.println(userDto.getEmailId());
 		return userDto;
 	}
 	
 	@Override
-	public ResponseEntity<String> changeCustomerPassword(String email, String oldPassword, String newPassword) {
+	public ResponseEntity<String> changeUserPassword(String email, String oldPassword, String newPassword) {
 		Users user = userDao.findByEmailId(email)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Email Id !!!!"));
-		
-
-//		Customer customer = customerRepo.findByEmail(email);
-//		String encodedOldPassword = encoder.encode(oldPassword);
-//		System.out.println(customer.getUser().getPassword());
-//		System.out.println(encodedOldPassword);
-//		System.out.println(encoder.matches(customer.getUser().getPassword(),encodedOldPassword));
 
 		if (encoder.matches(oldPassword, user.getPassword()) && user != null) {
 			user.setPassword(encoder.encode(newPassword));

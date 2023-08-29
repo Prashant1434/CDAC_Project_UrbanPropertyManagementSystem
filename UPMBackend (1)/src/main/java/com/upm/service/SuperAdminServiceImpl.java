@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +39,7 @@ public class SuperAdminServiceImpl implements SuperAdminService{
 	@Autowired
 	private PasswordEncoder encoder;
 	
-	public AddBuilderDto addBuilder(AddBuilderDto addBuilderDto) {
+	public ResponseEntity<?> addBuilder(AddBuilderDto addBuilderDto) {
 		
 		Users user = mapper.map(addBuilderDto, Users.class);
 		user.setPassword(encoder.encode(addBuilderDto.getPassword()));
@@ -46,7 +48,7 @@ public class SuperAdminServiceImpl implements SuperAdminService{
 		user.setBuilder(builder);
 		Users newUser=userDao.save(user);
 		Builder newBuider=builderDao.findByUserBuilder(newUser);
-		return mapper.map(newBuider, AddBuilderDto.class); 
+		return ResponseEntity.status(HttpStatus.OK).body("Tenant Added To Tenant");
 		
 	}
 

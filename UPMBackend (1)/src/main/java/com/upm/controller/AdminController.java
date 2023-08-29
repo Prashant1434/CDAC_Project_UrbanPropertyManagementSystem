@@ -2,6 +2,8 @@ package com.upm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ import com.upm.service.UserService;
 @RequestMapping("/admin")
 @CrossOrigin( methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, 
 allowedHeaders = {"Authorization", "Content-Type"})
+@Validated
 public class AdminController {
 	@Autowired
 	private  AdminService adminService;
@@ -83,7 +86,7 @@ public class AdminController {
 	}
 	
 	@PutMapping("/updateprofile/{userId}")
-	public ApiResponse updateProfile(@RequestBody UserDto updateProfileDto,@PathVariable Long userId)
+	public ResponseEntity<?>  updateProfile(@RequestBody UserDto updateProfileDto,@PathVariable Long userId)
 	{
 		return userService.editProfile(updateProfileDto,userId);
 	}

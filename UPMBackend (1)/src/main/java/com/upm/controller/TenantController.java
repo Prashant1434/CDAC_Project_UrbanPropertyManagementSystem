@@ -3,6 +3,8 @@ package com.upm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import com.upm.service.UserService;
 @RestController
 @CrossOrigin
 @RequestMapping("/tenant")
+@Validated
 public class TenantController {
 
 	@Autowired
@@ -36,7 +39,7 @@ public class TenantController {
 	}
 
 	@PutMapping("/rentPayment/{id}")
-	public ApiResponse rentPayment(@PathVariable Long id) {
+	public ResponseEntity<?> rentPayment(@PathVariable Long id) {
 		return tenantService.updateRentStatus(false, id);
 	}
 	
@@ -46,7 +49,7 @@ public class TenantController {
 	}
 
 	@PutMapping("/updateprofile/{userId}")
-	public ApiResponse updateProfile(@RequestBody UserDto updateProfileDto, @PathVariable Long userId) {
+	public ResponseEntity<?> updateProfile(@RequestBody UserDto updateProfileDto, @PathVariable Long userId) {
 		return userService.editProfile(updateProfileDto, userId);
 	}
 	

@@ -46,6 +46,9 @@ function AssignBuildingToAdmin() {
         };
 
         helper.open("GET", "http://localhost:7078/builder/getBuilding/" + id);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send();
     }
  
