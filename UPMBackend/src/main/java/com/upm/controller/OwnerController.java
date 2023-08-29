@@ -1,4 +1,5 @@
 package com.upm.controller;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,9 @@ public class OwnerController {
 	}
 	
 	@PostMapping("/assignFlatToTenant/{fid}")
-	public String assignFlatToTenant(@PathVariable Long fid,@RequestBody AddTenantDto tenantDto) {
+	public ApiResponse assignFlatToTenant(@PathVariable Long fid,@RequestBody AddTenantDto tenantDto) {
 		tenantDto.setStatus(true);
+		tenantDto.setAddedDate(LocalDate.now());
 		AddTenantDto tenant=addTenant(tenantDto);
 		return ownerService.assignFlatToTenant(fid, tenant.getId());
 	}

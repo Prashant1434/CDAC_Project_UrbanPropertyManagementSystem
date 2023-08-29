@@ -4,48 +4,59 @@ import { toast } from "react-toastify";
 
 
 function AddBuilder() {
-    
+
     const navigate = useNavigate()
 
-    
-    
+    const [isValidPassed, setIsValidPassed] = useState(false)
+
     const ReverseToSuperAdmin = () => {
         navigate("/SUPERADMIN");
 
     }
 
- 
     const addBuilder = () => {
         Validation();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            if (helper.readyState == 4 && helper.status == 200) {
-                var responseReceived = JSON.parse(helper.responseText);
-                console.log("responseReceived : " + responseReceived);
-                ReverseToSuperAdmin();
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 && helper.status == 200) {
+                    var responseReceived = JSON.parse(helper.responseText);
+                    console.log("responseReceived : " + responseReceived);
+                    toast.success("Builder Added Successfully")
+                    ReverseToSuperAdmin();
+                }
             }
+            helper.open("POST", "http://localhost:7078/superadmin/addBuilder");
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Builder));
         }
-        helper.open("POST", "http://localhost:7078/superadmin/addBuilder");
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Builder));
-
     }
 
     const Validation = () => {
-        if(Builder.name.length == ""){
+        let isValid = true;
+        if (Builder.name.length == "") {
             toast.warn("Name Can Not Be Empty")
+            isValid = false;
         }
-        if(Builder.emailId.length == ""){
+        if (Builder.emailId.length == "") {
             toast.warn("Email Can Not Be Empty")
+            isValid = false;
         }
-        if(Builder.contact.length == ""){
+        if (Builder.contact.length == "") {
             toast.warn("Contact Can Not Be Empty")
+            isValid = false;
         }
-        if(Builder.password.length == ""){
+        if (Builder.password.length == "") {
             toast.warn("Password Can Not Be Empty")
+            isValid = false;
         }
-        if(Builder.permanentAddress.length == ""){
+        if (Builder.permanentAddress.length == "") {
             toast.warn("Address Can Not Be Empty")
+            isValid = false;
+        }
+        if (isValid) {
+            setIsValidPassed(isValid)
         }
     }
 
@@ -67,7 +78,6 @@ function AddBuilder() {
 
         var copyofBuilder = { ...Builder };
         copyofBuilder[args.target.name] = args.target.value;
-        copyofBuilder.addedDate = new Date().getDate();
         console.log(new Date().getDate());
         copyofBuilder.role = "BUILDER";
         setBuilder(copyofBuilder);
@@ -100,7 +110,7 @@ function AddBuilder() {
                         <label>Permanent Address</label>
                         <textarea className="form-control" id="" placeholder="Enter Address" name="permanentAddress" onChange={onTextChange} />
                     </div>
-         
+
                     <center>
                         <button type="button" className="btn btn-primary" onClick={addBuilder}>Add Builder</button>
                     </center>
@@ -109,7 +119,7 @@ function AddBuilder() {
         </div>
     </>);
 
-    
+
 }
 
 export default AddBuilder;

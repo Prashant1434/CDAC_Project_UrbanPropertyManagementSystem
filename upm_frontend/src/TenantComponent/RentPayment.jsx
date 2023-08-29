@@ -16,23 +16,6 @@ function RentPayment() {
             "rentPaidDate": ""
         }
     );
-    const Validate = () =>{
-        if(Utility.gasBill.length == ""){
-            toast.warn("Gas Bill Can Not Be Empty")
-        }
-        if(Utility.waterBill.length == ""){
-            toast.warn("Water Bill Can Not Be Empty")
-        }
-        if(Utility.electricityBill.length == ""){
-            toast.warn("Electricity Bill Can Not Be Empty")
-        }
-        if(Utility.rentAmount.length == ""){
-            toast.warn("Rent Amount Can Not Be Empty")
-        }
-        if(Utility.addedDate.length == ""){
-            toast.warn("Date Can Not Be Empty")
-        }
-    }
 
     useEffect(() => { getUtility() }, [])
 
@@ -53,7 +36,6 @@ function RentPayment() {
     }
 
     const payRent = () => {
-        Validate();
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
             if (helper.readyState == 4 && helper.status == 200) {
@@ -62,11 +44,13 @@ function RentPayment() {
                 // ReverseToBuilder();
                 // navigate("/")
                 setUtility(responseReceived);
-                window.alert("Payment Successfull !!! ");
+                toast.success("Payment Successfull !!! ");
                 navigate("/getUtilityListOfTenant")
             }
         }
         helper.open("PUT", "http://localhost:7078/tenant/rentPayment/" + id);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send();
 
     }
@@ -78,27 +62,27 @@ function RentPayment() {
 
                     <div className="form-group">
                         <label>Gas Bill</label>
-                        <input type="number" className="form-control" id="" placeholder="Enter Gas Bill" name="gasBill" value={Utility.gasBill} />
+                        <input type="number" className="form-control" id=""  name="gasBill" value={Utility.gasBill} readOnly />
                     </div>
 
                     <div className="form-group">
                         <label>Water Bill</label>
-                        <input type="number" className="form-control" id="" placeholder="Enter Water Bill" name="waterBill" value={Utility.waterBill} />
+                        <input type="number" className="form-control" id="" name="waterBill" value={Utility.waterBill} readOnly />
                     </div>
 
                     <div className="form-group">
                         <label>Electricity Bill</label>
-                        <input type="number" className="form-control" id="" placeholder="Enter Electricity Bill" name="electricityBill" value={Utility.electricityBill} />
+                        <input type="number" className="form-control" id="" name="electricityBill" value={Utility.electricityBill} readOnly />
                     </div>
 
                     <div className="form-group">
                         <label>Rent Amount</label>
-                        <input type="number" className="form-control" id="" placeholder="Enter Rent Amount" name="rentAmount" value={Utility.rentAmount} />
+                        <input type="number" className="form-control" id="" name="rentAmount" value={Utility.rentAmount} readOnly />
                     </div>
 
                     <div className="form-group">
                         <label>Added Date</label>
-                        <input type="Date" className="form-control" id="" placeholder="Enter Rent Amount" name="addedDate" value={Utility.addedDate} />
+                        <input type="Date" className="form-control" id="" name="addedDate" value={Utility.addedDate} readOnly />
                     </div>
                     <div className="form-group">
                         <label>Total</label>

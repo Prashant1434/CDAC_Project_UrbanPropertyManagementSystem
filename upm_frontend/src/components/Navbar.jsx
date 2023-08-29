@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../css/Navbar.css'
+import { toast } from 'react-toastify';
 
 function Navbar(props) {
 
@@ -9,10 +10,13 @@ function Navbar(props) {
         navigate('/login');
     }
     const Logout = () =>{
+        toast("Logout Successfully !!! Visit Again")
         sessionStorage.removeItem("UserName");
         sessionStorage.removeItem("UserId");
         sessionStorage.removeItem("buildingId");
         sessionStorage.removeItem("flatId");
+        sessionStorage.removeItem("Role")
+        sessionStorage.removeItem("token");
         navigate("/login");
     }
     return (
