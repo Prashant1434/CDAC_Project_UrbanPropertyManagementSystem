@@ -38,7 +38,9 @@ function AddOwner() {
         getFlatList();
     }
     useEffect(() => {
-        getFlatList()
+        if(buildingList.length != 0){
+            getFlatList();
+        }
     }, [onOptionChange])
     const onOptionChangeFlat = (event) => {
         debugger;
@@ -198,14 +200,21 @@ function AddOwner() {
                         </button>
                     </div> */}
                     <div className="form-group">
-                        <select onChange={onOptionChange} className='inputBox'>
-                            <option>Select Building</option>
-                            {buildingList.map((item) => {
-                                return <option key={item.id} value={item.id}>
-                                    {item.name}
-                                </option>
-                            })}
-                        </select>
+                        {buildingList.length == 0 ?
+                            <select onChange={onOptionChange} className='inputBox'>
+                                <option>No Building Available</option>
+                            </select>
+                            :
+                            <select onChange={onOptionChange} className='inputBox'>
+                                <option>Select Building</option>
+                                {buildingList.map((item) => {
+                                    return <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                })}
+                            </select>
+
+                        }
 
                     </div>
                     <div className="form-group">

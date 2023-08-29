@@ -22,7 +22,7 @@ import com.upm.service.SuperAdminServiceImpl;
 @RequestMapping("/superadmin")
 @CrossOrigin( methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, 
 allowedHeaders = {"Authorization", "Content-Type"})
-@Validated
+//@Validated
 public class superAdminController {
 	
 	@Autowired

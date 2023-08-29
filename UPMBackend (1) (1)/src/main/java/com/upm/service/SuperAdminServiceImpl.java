@@ -1,5 +1,6 @@
 package com.upm.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import com.upm.dao.SuperAdminDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.AddBuilderDto;
 import com.upm.dto.AddOwnerDto;
+import com.upm.dto.ApiResponse;
 import com.upm.entities.Builder;
 import com.upm.entities.Owner;
 import com.upm.entities.SuperAdmin;
@@ -42,13 +44,14 @@ public class SuperAdminServiceImpl implements SuperAdminService{
 	public ResponseEntity<?> addBuilder(AddBuilderDto addBuilderDto) {
 		
 		Users user = mapper.map(addBuilderDto, Users.class);
+		user.setAddedDate(LocalDate.now());
 		user.setPassword(encoder.encode(addBuilderDto.getPassword()));
 		Builder builder = new Builder();
 		builder.setUserBuilder(user);
 		user.setBuilder(builder);
 		Users newUser=userDao.save(user);
 		Builder newBuider=builderDao.findByUserBuilder(newUser);
-		return ResponseEntity.status(HttpStatus.OK).body("Tenant Added To Tenant");
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Builder Added Successfully"));
 		
 	}
 

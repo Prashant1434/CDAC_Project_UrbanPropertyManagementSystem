@@ -51,13 +51,14 @@ public class UserServiceImpl implements UserService{
 		Builder builder=user.getBuilder();
 		Owner owner=user.getOwner();
 		Users u=mapper.map(updateProfileDto, Users.class);
+		u.setId(userId);
 		u.setAdmin(admin);
 		u.setBuilder(builder);
 		u.setTenant(tenant);
 		u.setOwner(owner);
 		u.setPassword(encoder.encode(updateProfileDto.getPassword()));
 		userDao.save(u);
-		return ResponseEntity.status(HttpStatus.OK).body("profile updated successfully");
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("profile updated successfully"));
 	}
 	@Override
 	public UserDto loginUser(LoginDto loginDto) {

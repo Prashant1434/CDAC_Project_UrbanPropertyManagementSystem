@@ -18,8 +18,11 @@ function AddBuilder() {
         Validation();
         if (isValidPassed) {
             var helper = new XMLHttpRequest();
+            
             helper.onreadystatechange = () => {
+               
                 if (helper.readyState == 4 && helper.status == 200) {
+                 
                     var responseReceived = JSON.parse(helper.responseText);
                     console.log("responseReceived : " + responseReceived);
                     toast.success("Builder Added Successfully")
@@ -27,7 +30,6 @@ function AddBuilder() {
                 }
             }
             helper.open("POST", "http://localhost:7078/superadmin/addBuilder");
-            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
             helper.setRequestHeader("Content-Type", "application/json");
             helper.send(JSON.stringify(Builder));
         }
