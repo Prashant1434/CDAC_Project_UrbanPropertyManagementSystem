@@ -7,25 +7,37 @@ function AddAdmin() {
 
     const navigate = useNavigate()
 
+    const [isValidPassed, setIsValidPassed] = useState(false)
+
     const ReverseToBuilder = () => {
         navigate("/BUILDER");
     }
 
     const Validation = () => {
+        debugger
+        let isValid = true;
         if (Admin.name.length == "") {
             toast.warn("Name Can Not Be Empty")
+            isValid = false;
         }
         if (Admin.emailId.length == "") {
             toast.warn("Email Can Not Be Empty")
+            isValid = false;
         }
         if (Admin.contact.length == "") {
             toast.warn("Contact Can Not Be Empty")
+            isValid = false;
         }
         if (Admin.password.length == "") {
             toast.warn("Password Can Not Be Empty")
+            isValid = false;
         }
         if (Admin.permanentAddress.length == "") {
             toast.warn("Address Can Not Be Empty")
+            isValid = false;
+        }
+        if (isValid) {
+            setIsValidPassed(isValid);
         }
 
     }
@@ -33,19 +45,21 @@ function AddAdmin() {
 
     const addAdmin = () => {
         Validation();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            if (helper.readyState == 4 && helper.status == 200) {
-                //  var responseReceived = JSON.parse(helper.responseText);
-                // console.log("responseReceived : " + responseReceived);
-                toast.success("Admin Added Successfully")
-                ReverseToBuilder();
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 && helper.status == 200) {
+                    //  var responseReceived = JSON.parse(helper.responseText);
+                    // console.log("responseReceived : " + responseReceived);
+                    toast.success("Admin Added Successfully")
+                    ReverseToBuilder();
+                }
             }
+            helper.open("POST", "http://localhost:7078/builder/addAdmin/" + sessionStorage.getItem("UserId"));
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Admin));
         }
-        helper.open("POST", "http://localhost:7078/builder/addAdmin/" + sessionStorage.getItem("UserId"));
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Admin));
-
     }
 
 

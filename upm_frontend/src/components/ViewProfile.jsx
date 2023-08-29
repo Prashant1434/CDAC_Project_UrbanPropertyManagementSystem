@@ -33,7 +33,9 @@ function ViewProfile() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/users/getuser/" + userId)
+        helper.open("GET", "http://localhost:7078/users/getuser/" + userId);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send()
     }
 
@@ -86,7 +88,7 @@ function ViewProfile() {
                     </div>
                     <div className="form-group">
                         <center>
-                            {/* <input type="button" className="btn-primary" id="" name="password" onClick={UpdateProfile} value={"Update"} /> */}
+                            <input type="button" className="btn-primary" id="" name="password" onClick={UpdateProfile} value={"Update"} />
 
                         </center>
                     </div>

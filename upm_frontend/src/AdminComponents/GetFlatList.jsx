@@ -18,7 +18,9 @@ function GetFlatList() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/admin/flatlist/" + id)
+        helper.open("GET", "http://localhost:7078/admin/flatlist/" + id);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send()
     }
     return (<>

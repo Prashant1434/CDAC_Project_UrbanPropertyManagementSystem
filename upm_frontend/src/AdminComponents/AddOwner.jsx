@@ -9,6 +9,8 @@ function AddOwner() {
     // var [flatId, setFlatId] = useState("1")
     var flatId = sessionStorage.getItem("flatId");
 
+    const [isValidPassed, setIsValidPassed] = useState(false)
+
     const navigate = useNavigate()
 
     const [buildingList, setBuildingList] = useState([])
@@ -27,6 +29,7 @@ function AddOwner() {
     var adminId = sessionStorage.getItem("UserId");
 
 
+
     const onOptionChange = (event) => {
         debugger;
         var id = event.target.value;
@@ -34,6 +37,9 @@ function AddOwner() {
         console.log("building iD  : " + buildingId);
         getFlatList();
     }
+    useEffect(() => {
+        getFlatList()
+    }, [onOptionChange])
     const onOptionChangeFlat = (event) => {
         debugger;
         var id = event.target.value;
@@ -57,6 +63,8 @@ function AddOwner() {
         };
 
         helper.open("GET", "http://localhost:7078/admin/buildinglist/" + adminId);
+        helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send();
     }
     const getFlatList = () => {
@@ -72,46 +80,61 @@ function AddOwner() {
         };
 
         helper.open("GET", "http://localhost:7078/admin/emptyflats/" + parseInt(buildingId));
+        helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send();
     }
     const Validation = () => {
-        if(Owner.name.length == ""){
+        let isValid = true;
+        if (Owner.name.length == "") {
             toast.warn("Name Can Not Be Empty")
+            isValid = false;
         }
-        if(Owner.emailId.length == ""){
+        if (Owner.emailId.length == "") {
             toast.warn("Email Can Not Be Empty")
+            isValid = false;
         }
-        if(Owner.contact.length == ""){
+        if (Owner.contact.length == "") {
             toast.warn("Contact Can Not Be Empty")
+            isValid = false;
         }
-        if(Owner.password.length == ""){
+        if (Owner.password.length == "") {
             toast.warn("Password Can Not Be Empty")
+            isValid = false;
         }
-        if(Owner.permanentAddress.length == ""){
+        if (Owner.permanentAddress.length == "") {
             toast.warn("Address Can Not Be Empty")
+            isValid = false;
         }
-        if(buildingId == null){
+        if (buildingId == null) {
             toast.warn("Select Building")
+            isValid = false;
         }
-        if(flatId == null){
+        if (flatId == null) {
             toast.warn("Select Flat")
+            isValid = false;
+        }
+        if (isValid) {
+            setIsValidPassed(isValid)
         }
     }
     const addOwner = () => {
         Validation();
-        var helper = new XMLHttpRequest();
-        helper.onreadystatechange = () => {
-            if (helper.readyState == 4 && helper.status == 200) {
-                var responseReceived = JSON.parse(helper.responseText);
-                console.log("responseReceived : " + responseReceived);
-                toast.success("Owner Added To Flat Successfully")
-                ReverseToOwner();
+        if (isValidPassed) {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 && helper.status == 200) {
+                    var responseReceived = JSON.parse(helper.responseText);
+                    console.log("responseReceived : " + responseReceived);
+                    toast.success("Owner Added To Flat Successfully")
+                    ReverseToOwner();
+                }
             }
+            helper.open("PUT", "http://localhost:7078/admin/addFlatToOwner/" + parseInt(flatId));
+            helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(Owner));
         }
-        helper.open("PUT", "http://localhost:7078/admin/addFlatToOwner/" + parseInt(flatId));
-        helper.setRequestHeader("Content-Type", "application/json");
-        helper.send(JSON.stringify(Owner));
-
     }
 
     const [Owner, setOwner] = useState(

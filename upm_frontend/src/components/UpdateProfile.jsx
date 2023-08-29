@@ -32,7 +32,9 @@ function UpdateProfile() {
             }
         };
 
-        helper.open("GET", "http://localhost:7078/users/getuser/" + userId)
+        helper.open("GET", "http://localhost:7078/users/getuser/" + userId);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send()
     }
 
@@ -48,7 +50,8 @@ function UpdateProfile() {
             }
         }
         helper.open("PUT", "http://localhost:7078/admin/updateprofile/" + parseInt(userId));
-        helper.setRequestHeader("Content-Type", "application/json");
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send(JSON.stringify(Admin));
     }
 

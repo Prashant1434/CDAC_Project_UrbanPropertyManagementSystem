@@ -10,7 +10,10 @@ import com.upm.dao.SuperAdminDao;
 import com.upm.dao.UsersDao;
 import com.upm.dto.UpdateProfileDto;
 import com.upm.entities.Admin;
+import com.upm.entities.Builder;
+import com.upm.entities.Owner;
 import com.upm.entities.SuperAdmin;
+import com.upm.entities.Tenant;
 import com.upm.entities.Users;
 import com.upm.dto.AddAdminDto;
 import com.upm.dto.ApiResponse;
@@ -37,9 +40,15 @@ public class UserServiceImpl implements UserService{
 	public ApiResponse editProfile(UserDto updateProfileDto,Long userId) {
 		// TODO Auto-generated method stub
 		Users user=userDao.findById(userId).orElseThrow();
-		
+		Admin admin = user.getAdmin();
+		Builder builder = user.getBuilder();
+		Owner owner = user.getOwner();
+		Tenant tenat = user.getTenant();
 		Users u=mapper.map(updateProfileDto, Users.class);
-
+		u.setAdmin(admin);
+		u.setBuilder(builder);
+		u.setOwner(owner);
+		u.setTenant(tenat);
 		//Admin admin=adminDao.findByAdmin(user);
 		userDao.save(u);
 		return new ApiResponse("profile updated successfully");
