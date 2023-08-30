@@ -50,7 +50,7 @@ public class TenantServiceImpl implements TenantService {
 		rent.setBillStatus(true);
 		rent.setRentPaidDate(LocalDate.now());
 		utilityDao.save(rent);
-		return ResponseEntity.status(HttpStatus.OK).body("Payment Successful...!!!!");
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Payment Successful...!!!!"));
 	}
 
 	@Override

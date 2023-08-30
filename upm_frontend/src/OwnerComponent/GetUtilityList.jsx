@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 function GetUtilityList() {
     var { id } = useParams();
     var [Utility, setUtility] = useState([]);
-    useEffect(() => { getUtilityList() }, [])
+
+    useEffect(() => { getUtilityList() }, []);
 
     const getUtilityList = () => {
         var helper = new XMLHttpRequest()
@@ -12,7 +13,6 @@ function GetUtilityList() {
             debugger;
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText)
-
                 console.log(responseReceived)
                 setUtility(responseReceived)
                 console.log(Utility)
@@ -20,8 +20,8 @@ function GetUtilityList() {
         };
 
         helper.open("GET", "http://localhost:7078/owner/utilityList/" + id);
-        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
-        helper.setRequestHeader("Content-Type","application/json");
+        helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type", "application/json");
         helper.send()
     }
     return (<>

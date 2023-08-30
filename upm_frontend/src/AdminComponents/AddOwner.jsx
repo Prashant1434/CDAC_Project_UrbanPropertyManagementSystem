@@ -37,16 +37,11 @@ function AddOwner() {
         console.log("building iD  : " + buildingId);
         getFlatList();
     }
-    useEffect(() => {
-        if(buildingList.length != 0){
-            getFlatList();
-        }
-    }, [onOptionChange])
+
     const onOptionChangeFlat = (event) => {
-        debugger;
-        var id = event.target.value;
+      debugger
         // setFlatId(event.target.value);
-        sessionStorage.setItem("flatId", id);
+        sessionStorage.setItem("flatId", event.target.value);
 
         console.log("flat Id" + flatId);
     }
@@ -128,7 +123,7 @@ function AddOwner() {
                 if (helper.readyState == 4 && helper.status == 200) {
                     var responseReceived = JSON.parse(helper.responseText);
                     console.log("responseReceived : " + responseReceived);
-                    toast.success("Owner Added To Flat Successfully")
+                    toast.success(responseReceived.message)
                     ReverseToOwner();
                 }
             }
@@ -226,8 +221,8 @@ function AddOwner() {
                             <select onChange={onOptionChangeFlat} className='inputBox'>
                                 <option>Select Flat</option>
                                 {flatList.map((item) => {
-                                    return <option key={item.id} value={item.id}>
-                                        {item.flatId}
+                                    return <option key={item.id} value={item.flatId}>
+                                        {item.flatNo}
                                     </option>
                                 })}
                             </select>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function BuildersBuildingList() {
     const [Building, setBuilding] = useState([]);
@@ -16,6 +17,9 @@ function BuildersBuildingList() {
                 // console.log(responseReceived);
                 setBuilding(responseReceived);
                 console.log(Building);
+                // if(Building.length == 0){
+                //     toast.warn("No Data Available")
+                // }
             }
         };
 

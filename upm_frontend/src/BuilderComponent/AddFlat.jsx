@@ -97,7 +97,7 @@ function AddFlat() {
                     // console.log(responseReceived);
                     setFlat(responseReceived);
                     console.log(Flat);
-                    toast.success("Flat Added Successfully")
+                    toast.success(responseReceived.message)
                     navigate("/BUILDER")
                 }
             };

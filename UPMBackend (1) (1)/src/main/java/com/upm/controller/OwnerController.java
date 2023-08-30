@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upm.dto.AddTenantDto;
+import com.upm.dto.AddUtilityDto;
 import com.upm.dto.ApiResponse;
 import com.upm.dto.FlatDto;
 import com.upm.dto.UpdateProfileDto;
@@ -81,5 +82,14 @@ public class OwnerController {
 	public List<AddTenantDto> findAllTenant(@PathVariable Long ownerId)
 	{
 		return  ownerService.getTenantInfoByOwnerId(ownerId);
+	}
+	@PostMapping("/assignUtilityToTenant/{fId}/{tId}")
+	public ApiResponse assignUtilityToTenant(@PathVariable Long fId,@PathVariable Long tId, @RequestBody AddUtilityDto addUtilityDto) {
+	return	ownerService.assignUtilityToTenant(fId, tId, addUtilityDto);
+	}
+	
+	@GetMapping("/utilityList/{flatId}")
+	public List<AddUtilityDto> getUtilityListOfFlat(@PathVariable Long flatId){
+		return ownerService.getUtilityListOfFlat(flatId);
 	}
 }

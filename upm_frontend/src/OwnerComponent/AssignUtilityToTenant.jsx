@@ -13,6 +13,7 @@ function AssignUtilityToTenant() {
 
     const [isValidPassed, setIsValidPassed] = useState(false)
 
+    useEffect(() => { getFlatList(); getTenantList() }, []);
 
     const [Utility, setUtility] = useState(
         {
@@ -67,12 +68,14 @@ function AssignUtilityToTenant() {
         Validate();
         if (isValidPassed) {
             var helper = new XMLHttpRequest();
+            debugger
             helper.onreadystatechange = () => {
+                debugger;
                 if (helper.readyState == 4 && helper.status == 200) {
-                    //  var responseReceived = JSON.parse(helper.responseText);
-                    // console.log("responseReceived : " + responseReceived);
+                    var responseReceived = JSON.parse(helper.responseText);
+                    console.log("responseReceived : " + responseReceived);
                     // ReverseToBuilder();
-                    toast.success("Utility Added Successfully")
+                    toast.success(responseReceived.message)
                     navigate("/OWNER")
                 }
             }
@@ -83,7 +86,6 @@ function AssignUtilityToTenant() {
         }
     }
 
-    useEffect(() => { getFlatList(); }, [])
 
     const getFlatList = () => {
         var helper = new XMLHttpRequest()
@@ -91,34 +93,27 @@ function AssignUtilityToTenant() {
             debugger;
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText)
-
                 console.log(responseReceived)
                 setFlat(responseReceived)
                 console.log(Flat)
             }
-        };
-
+        }
         helper.open("GET", "http://localhost:7078/owner/flatlist/" + sessionStorage.getItem("UserId"));
         helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
         helper.setRequestHeader("Content-Type", "application/json");
-        helper.send()
+        helper.send();
     }
-
-    useEffect(() => { getTenantList() }, [getFlatList])
 
     const getTenantList = () => {
         var helper = new XMLHttpRequest()
         helper.onreadystatechange = () => {
-            debugger;
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText)
-
                 console.log(responseReceived)
                 setTenant(responseReceived)
                 console.log(Tenant)
             }
-        };
-
+        }
         helper.open("GET", "http://localhost:7078/owner/tenantlist/" + sessionStorage.getItem("UserId"));
         helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
         helper.setRequestHeader("Content-Type", "application/json");

@@ -25,7 +25,7 @@ function AddBuilder() {
                  
                     var responseReceived = JSON.parse(helper.responseText);
                     console.log("responseReceived : " + responseReceived);
-                    toast.success("Builder Added Successfully")
+                    toast.success(responseReceived.message  )
                     ReverseToSuperAdmin();
                 }
             }

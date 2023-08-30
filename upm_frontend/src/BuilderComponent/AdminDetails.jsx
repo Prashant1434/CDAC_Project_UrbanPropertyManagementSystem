@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function AdminDetails() {
 
@@ -12,6 +13,10 @@ function AdminDetails() {
                 var responseReceived = JSON.parse(helper.responseText);
                 setAdmin(responseReceived);
                 console.log("responseReceived : " + responseReceived.emailId);
+                // if(Admin.length == 0){
+                //     toast.warn("No Data Available")
+                    
+                // }
             }
         }
         helper.open("GET", "http://localhost:7078/builder/adminlist/" +sessionStorage.getItem("UserId"));

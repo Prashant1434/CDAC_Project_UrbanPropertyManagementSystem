@@ -1,5 +1,6 @@
 package com.upm.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +59,7 @@ public class OwnerServiceImpl implements OwnerService {
 	@Override
 	public AddTenantDto addTenant(AddTenantDto tenantDto) {
 		Users user = mapper.map(tenantDto, Users.class);
+		user.setAddedDate(LocalDate.now());
 		user.setPassword(encoder.encode(tenantDto.getPassword()));
 		Tenant tenant = new Tenant(tenantDto.getStatus(), tenantDto.getLeaveDate(), tenantDto.getDeposite());
 		user.setTenant(tenant);
@@ -76,12 +78,13 @@ public class OwnerServiceImpl implements OwnerService {
 		flat.setTenantFlat(tenant);
 		tenant.setFlat(flat);
 		flatDao.save(flat);
-		return ResponseEntity.status(HttpStatus.OK).body("Tenant Added To Tenant");
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Tenant Added To Tenant"));
 	}
 
 	@Override
 	public ApiResponse assignUtilityToTenant(Long fId, Long tId, AddUtilityDto addUtilityDto) {
 		Flat flat = flatDao.findById(fId).orElseThrow();
+//		Users user = userDao.findById(tId).orElseThrow(()-> new ResourceNotFoundException("Invalid Tenant"));
 		Tenant tenant = tenantDao.findById(tId).orElseThrow();
 		addUtilityDto.setBillStatus(false);
 		addUtilityDto.setRentPaidDate(null);

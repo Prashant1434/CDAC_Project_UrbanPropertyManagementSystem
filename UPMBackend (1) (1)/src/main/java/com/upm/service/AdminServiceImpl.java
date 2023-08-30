@@ -1,5 +1,6 @@
 package com.upm.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +75,7 @@ public class AdminServiceImpl implements AdminService {
 		Users user = mapper.map(ownerDto, Users.class);
 		Owner owner = new Owner();
 		user.setPassword(encoder.encode(ownerDto.getPassword()));
+		user.setAddedDate(LocalDate.now());
 		owner.setOwner(user);
 		user.setOwner(owner);
 		Users newUser=userDao.save(user);
@@ -163,7 +165,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<FlatDto> getFlatListByOwner(Long ownerId) {
-		List<Flat> flatList=flatDao.findByOwner(ownerDao.findById(ownerId).orElseThrow(()->new ResourceNotFoundException("Invalid Owner Id!!")));
+		Users user = userDao.findById(ownerId).orElseThrow(()->new ResourceNotFoundException("Invalid Owner"));
+		List<Flat> flatList=flatDao.findByOwner(ownerDao.findById(user.getOwner().getId()).orElseThrow(()->new ResourceNotFoundException("Invalid Owner Id!!")));
 		return flatList.stream()
 				.map(flat ->mapper.map(flat, FlatDto.class))
 				.collect(Collectors.toList());

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function UpdateProfile() {
     var userId = sessionStorage.getItem("UserId");
@@ -47,6 +48,7 @@ function UpdateProfile() {
                 var responseReceived = JSON.parse(helper.responseText);
                 console.log("responseReceived : " + responseReceived);
                 navigate("/"+sessionStorage.getItem("Role"));
+                toast.warn(responseReceived.message)
             }
         }
         helper.open("PUT", "http://localhost:7078/admin/updateprofile/" + parseInt(userId));

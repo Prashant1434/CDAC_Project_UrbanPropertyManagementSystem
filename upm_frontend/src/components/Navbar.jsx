@@ -17,6 +17,8 @@ function Navbar(props) {
         sessionStorage.removeItem("flatId");
         sessionStorage.removeItem("Role")
         sessionStorage.removeItem("token");
+        sessionStorage.removeItem("tenantId");
+        sessionStorage.removeItem("adminId");
         navigate("/login");
     }
     return (

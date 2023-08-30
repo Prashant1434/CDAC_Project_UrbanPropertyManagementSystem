@@ -22,6 +22,7 @@ function RentPayment() {
     const getUtility = () => {
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
+            debugger;
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText);
                 // console.log("responseReceived : " + responseReceived);
@@ -31,6 +32,8 @@ function RentPayment() {
             }
         }
         helper.open("GET", "http://localhost:7078/tenant/getUtilityByUtilityId/" + id);
+        helper.setRequestHeader("Authorization",`Bearer ${sessionStorage.getItem("token")}`);
+        helper.setRequestHeader("Content-Type","application/json");
         helper.send();
 
     }
@@ -38,13 +41,14 @@ function RentPayment() {
     const payRent = () => {
         var helper = new XMLHttpRequest();
         helper.onreadystatechange = () => {
+            debugger
             if (helper.readyState == 4 && helper.status == 200) {
                 var responseReceived = JSON.parse(helper.responseText);
                 // console.log("responseReceived : " + responseReceived);
                 // ReverseToBuilder();
                 // navigate("/")
                 setUtility(responseReceived);
-                toast.success("Payment Successfull !!! ");
+                toast.success(responseReceived.message);
                 navigate("/getUtilityListOfTenant")
             }
         }
@@ -58,7 +62,7 @@ function RentPayment() {
         <div className="AddOwner">
             <div className="container registerDetails">
                 <form>
-                    <center><legend>Assign Utility To Flat</legend></center>
+                    <center><legend>Pay Utility</legend></center>
 
                     <div className="form-group">
                         <label>Gas Bill</label>
