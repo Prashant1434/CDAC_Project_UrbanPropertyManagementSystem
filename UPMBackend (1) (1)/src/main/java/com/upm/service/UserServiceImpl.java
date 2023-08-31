@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,8 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	
+	
 	@Override
 	public ResponseEntity<?> editProfile(UserDto updateProfileDto,Long userId) {
 		Users user=userDao.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid user id!!"));
@@ -64,7 +67,8 @@ public class UserServiceImpl implements UserService{
 	public UserDto loginUser(LoginDto loginDto) {
 		Users user1 = userDao.findByEmailId(loginDto.getEmailId()).orElseThrow(()->new ResourceNotFoundException("Invalid user Email id!!"));
 		UserDto user = mapper.map(user1,UserDto.class);
-		if (encoder.matches( loginDto.getPassword(),user1.getPassword())) {
+		System.out.println(encoder.matches(loginDto.getPassword(),user1.getPassword()));
+		if (encoder.matches(loginDto.getPassword(),user1.getPassword())) {
 			return user;	
 		} else
 			throw new ResourceNotFoundException("User Not found!! Login unsuccessful!!");
@@ -82,8 +86,9 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public UserDto getLoggedInUser(Long userId) {
-		Users user = userDao.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid user id!!"));
+		Users user = userDao.findById(userId).orElseThrow(()->new ResourceNotFoundException("Invalid user id!!"));	
 		UserDto userDto = mapper.map(user, UserDto.class);
+		System.out.println(userDto.getPassword());
 		System.out.println(userDto.getEmailId());
 		return userDto;
 	}
