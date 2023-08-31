@@ -103,7 +103,9 @@ public class UserController {
 @GetMapping("/getuser/{userId}")
 	public UserDto getUser(@PathVariable Long userId)
 	{
-		return userService.getLoggedInUser(userId);
+	   UserDto userDto= userService.getLoggedInUser(userId);
+//	   userDto.setPassword(null);
+	   return userDto;
 	}
 
 }
