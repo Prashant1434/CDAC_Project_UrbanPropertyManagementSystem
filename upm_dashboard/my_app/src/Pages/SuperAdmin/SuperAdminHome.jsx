@@ -31,7 +31,7 @@ export default function SuperAdmin() {
   
                     <Box sx={{minHeight:"50px"}}/>
                     <Typography sx={{ fontSize: 30}} color="text.primary" gutterBottom>
-                      Welcome {sessionStorage.getItem("UserName")}
+                      Welcome Super Admin
                     </Typography>
                     <Box sx={{minHeight:"50px"}}/>
                     <Typography sx={{ fontSize: 25 }} color="text.secondary" gutterBottom>

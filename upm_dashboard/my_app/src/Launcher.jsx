@@ -26,48 +26,52 @@ import GetUtilityList from './Pages/Owner/GetUtilityList';
 import TenantHome from './Pages/Tenant/Tenanthome';
 import GetUtilityListOfTenant from './Pages/Tenant/GetUtilityOfTenant';
 import RentPayment from './Pages/Tenant/RentPayment';
+import { ToastContainer } from 'react-toastify';
 
 function Launcher() {
-    return (<Router>
-        <Routes>
-            <Route exact path='/' Component={Homepage} />
-            <Route exact path='/ADMIN' Component={Adminhome} />
-            <Route exact path='/ADMIN/addowner' Component={Addowner} />
-            <Route exact path='/ADMIN/ownerlist' Component={Ownerlist} />
-            <Route exact path='/ADMIN/buildinglist' Component={Buildinglist} />
+    return (<>
+        <Router>
+            <Routes>
+                <Route exact path='/' Component={Homepage} />
+                <Route exact path='/ADMIN' Component={Adminhome} />
+                <Route exact path='/ADMIN/addowner' Component={Addowner} />
+                <Route exact path='/ADMIN/ownerlist' Component={Ownerlist} />
+                <Route exact path='/ADMIN/buildinglist' Component={Buildinglist} />
 
-            <Route exact path='/login' Component={Login} />
-            <Route exact path='/viewprofileall' Component={ViewProfileall} />
-            <Route exact path='/updateprofile' Component={UpdateProfile} />
-
-            
-            <Route exact path='/BUILDER' Component={Builderhome} />
-            <Route exact path='/BUILDER/addadmin' Component={AddAdmin} />
-            <Route exact path='/BUILDER/addbuilding' Component={AddBuilding} />
-            <Route exact path='/BUILDER/Adminlist' Component={Adminlist} />
-            <Route exact path='/BUILDER/buildinglist' Component={BuildersBuildingList} />
-            <Route exact path='/BUILDER/addflat' Component={AddFlat} />
-            <Route exact path="/getflatlist/:id" Component={GetFlatList}/>
-            <Route exact path='/assign_building/:id' Component={AssignBuildingToAdmin}/>
-
-            <Route exact path='/OWNER' Component={Ownerhome} />
-            <Route exact path='/OWNER/addtenant' Component={AddTenant} />
-            <Route exact path='/OWNER/flatlist' Component={GetFlatListOfOwner} />
-            <Route exact path='/viewtenantprofile/:id' Component={ViewTenantProfile} />
-            <Route exact path='/assignUtility' Component={AssignUtilityToTenant} />
-            <Route exact path='/getUtilityList/:id' Component={GetUtilityList} />
-
-            <Route exact path='/TENANT' Component={TenantHome} />
-            <Route exact path='/getUtilityListOfTenant' Component={GetUtilityListOfTenant} />
-            <Route exact path='/payRent/:id' Component={RentPayment} />
-
-            
-            <Route exact path='/SUPERADMIN' Component={SuperAdmin} />
-            <Route exact path='/SUPERADMIN/addbuilder' Component={AddBuilder} />
+                <Route exact path='/login' Component={Login} />
+                <Route exact path='/viewprofileall' Component={ViewProfileall} />
+                <Route exact path='/updateprofile' Component={UpdateProfile} />
 
 
+                <Route exact path='/BUILDER' Component={Builderhome} />
+                <Route exact path='/BUILDER/addadmin' Component={AddAdmin} />
+                <Route exact path='/BUILDER/addbuilding' Component={AddBuilding} />
+                <Route exact path='/BUILDER/Adminlist' Component={Adminlist} />
+                <Route exact path='/BUILDER/buildinglist' Component={BuildersBuildingList} />
+                <Route exact path='/BUILDER/addflat' Component={AddFlat} />
+                <Route exact path="/getflatlist/:id" Component={GetFlatList} />
+                <Route exact path='/assign_building/:id' Component={AssignBuildingToAdmin} />
 
-        </Routes>
-    </Router>);
+                <Route exact path='/OWNER' Component={Ownerhome} />
+                <Route exact path='/OWNER/addtenant' Component={AddTenant} />
+                <Route exact path='/OWNER/flatlist' Component={GetFlatListOfOwner} />
+                <Route exact path='/viewtenantprofile/:id' Component={ViewTenantProfile} />
+                <Route exact path='/assignUtility' Component={AssignUtilityToTenant} />
+                <Route exact path='/getUtilityList/:id' Component={GetUtilityList} />
+
+                <Route exact path='/TENANT' Component={TenantHome} />
+                <Route exact path='/getUtilityListOfTenant' Component={GetUtilityListOfTenant} />
+                <Route exact path='/payRent/:id' Component={RentPayment} />
+
+
+                <Route exact path='/SUPERADMIN' Component={SuperAdmin} />
+                <Route exact path='/SUPERADMIN/addbuilder' Component={AddBuilder} />
+
+
+
+            </Routes>
+        </Router>
+        <ToastContainer />
+        </>);
 }
 export default Launcher;

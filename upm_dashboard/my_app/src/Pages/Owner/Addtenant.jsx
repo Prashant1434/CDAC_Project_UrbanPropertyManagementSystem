@@ -84,7 +84,9 @@ export default function AddTenant() {
 
     const addTenant = () => {
         Validation();
-        if (isValidPassed) {
+        // debugger
+        // if (isValidPassed) {
+            debugger
             var helper = new XMLHttpRequest();
             helper.onreadystatechange = () => {
                 debugger
@@ -99,7 +101,7 @@ export default function AddTenant() {
             helper.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
             helper.setRequestHeader("Content-Type", "application/json");
             helper.send(JSON.stringify(Tenant));
-        }
+        // }
     }
 
     useEffect(() => { getFlatList() }, [])
